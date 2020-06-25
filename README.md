@@ -79,22 +79,49 @@ var hexadecimal = 0xa
 Underscores and appended letters are ignored. Letters can also be used inside literals
 
 ```
+64_000 -> 64
+640km -> 64
 64_000km -> 64000
 64e3 -> 64000
 ```
 
-There is also a shorthand way of writing numbers (only integers) in bases from 2 to 64. Bases from 10 to 36 use the decimal numerals appended with letters from the English alphabet and can be used to write js functions which can :
+There is also a shorthand way of writing numbers (only integers) in bases from 2 to 64. Bases from 10 to 36 use the decimal numerals appended with letters from the English alphabet, and can be written in mixed case, while bases higher than 36 use the Greek alphabet and each digits has to be lowercase:
 Base 64: `0123456789abcdefghijklmnopqrstuvwxyzαβγδεζηθικλμνξπρσςτυφχψωϙϛϝϸ`
 
+```
+Digit Chart
+[
+  '0:0',  '1:1',  '2:2',  '3:3',  '4:4',  '5:5',
+  '6:6',  '7:7',  '8:8',  '9:9',  '10:a', '11:b',
+  '12:c', '13:d', '14:e', '15:f', '16:g', '17:h',
+  '18:i', '19:j', '20:k', '21:l', '22:m', '23:n',
+  '24:o', '25:p', '26:q', '27:r', '28:s', '29:t',
+  '30:u', '31:v', '32:w', '33:x', '34:y', '35:z',
+  '36:α', '37:β', '38:γ', '39:δ', '40:ε', '41:ζ',
+  '42:η', '43:θ', '44:ι', '45:κ', '46:λ', '47:μ',
+  '48:ν', '49:ξ', '50:π', '51:ρ', '52:σ', '53:ς',
+  '54:τ', '55:υ', '56:φ', '57:χ', '58:ψ', '59:ω',
+  '60:ϙ', '61:ϛ', '62:ϝ', '63:ϸ'
+]
+```
 ```
 1000001b1 -> 65
 41b16 -> 65
 1tb36 -> 65
 15b60 -> 65
 11b64 -> 65
+
+akalib36 -> 17743014
+13θπγb64 -> 17743014
 ```
 
 For any base larger than 64, digits are either separated by dots or underscores.
+```
+1_3_43_50_38b64 -> 17743014
+1.3.43.50.38b64 -> 17743014
+```
+
+### Booleans, null, void and other global objects
 
 ### Strings
 
@@ -230,7 +257,7 @@ The built in property `.len`, `.size` or `.length` returns the length of a strin
 
 Expression syntax is straightforward: the operators `+`, `-`, `*` and `/` work just like in most other languages (for example, Pascal or C); parentheses `(())` can be used for grouping. For example:
 
-```py
+```
 2 + 2 // 4
 50 - 5 * 6 // 20
 
