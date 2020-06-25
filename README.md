@@ -10,11 +10,11 @@ However, I found out that many of the functions and features which Python had, s
 
 I wanted to create a new way to produce an entire library to bring Python functions to be used in the JS context. But since I have gotten used to web development and hence JS programming a lot, I wanted to create a new language that would get the best of both worlds, as well as combining features which I had liked from different languages, so that seasoned programmers in these languages won't have a steep learning curve.
 
-## An informal introduction
+## Basics
 
 ### Sample boilerplate code
 
-Straight outta Python.
+Straight outta Python. Just a simple Hello World program.
 
 ```
 print('Hello world!')
@@ -431,4 +431,3 @@ These operators produce booleans.
 ## Error-handling
 
 ## OOP
-
