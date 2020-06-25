@@ -104,6 +104,7 @@ Digit Chart
   '60:ϙ', '61:ϛ', '62:ϝ', '63:ϸ'
 ]
 ```
+
 ```
 1000001b1 -> 65
 41b16 -> 65
@@ -116,16 +117,28 @@ akalib36 -> 17743014
 ```
 
 For any base larger than 64, digits are either separated by dots or underscores.
+
 ```
 1_3_43_50_38b64 -> 17743014
 1.3.43.50.38b64 -> 17743014
 ```
 
-### Booleans, null, void and other global objects
+### Booleans, null, void, undefined and other type aliases
+
+See the correspondence table below.
+|Alias|Compilation value|
+|-|-|
+|`true`, `yes`, `on`|`true`|
+|`false`, `no`, `off`|`true`|
+|`void` (compiles to none)|`undefined`|
+|`undefined` (can be redefined)|`undefined`|
+|`null`, `none`|`null`|
+|`infinity`|`Infinity`|
+|`nan`|`NaN`|
 
 ### Strings
 
-Zenith can also manipulate strings, which can be expressed in several ways. They can be enclosed in single quotes `'...'` (evaluated by default) or double quotes `"..."` with the same result 2. The backslash `\` is used to escape quotes.
+Zenith can also manipulate strings, which can be expressed in several ways. They can be enclosed in single quotes `'...'` (evaluated by default in the console) or double quotes `"..."`. The backslash `\` is used to escape quotes, other characters and itself.
 
 ```
 // single quotes
@@ -150,23 +163,21 @@ This is a list of escape characters.
 - Single quote: `\'`
 - Double quote: `\"`
 - Backslash: `\\`
-- Unicode characters:`\4-digit codepoint` or `\{5-digit codepoint}`, such as `\ud83d`, or `\u{1f680}`
+- Unicode characters:`\4-digit codepoint` or `\{5/6-digit codepoint}`, such as `\ud83d`, or `\u{1f680}`
 
 ```
-> 'hello' == 'hell\u{6f}'
-true
+> 'hell\u{6f}'
+'hello'
 ```
 
-If you don't want characters prefaced by \ to be interpreted as special characters, you can use raw strings by encasing your string in backticks, like this. Which means, strings can now span multiple lines. Except `\`.
+If you don't want characters prefaced by \ to be interpreted as special characters, you can use raw strings by encasing your string in backticks (``), like this.
 
 ```
 > print(`Hello,
 world!`)
-`Hello,
-World!`
+'Hello,\nworld!'
 > print("Hello," + '\nworld!')
-`Hello,
-World!`
+'Hello,\nworld!'
 ```
 
 Two or more strings next to each other are automatically concatenated. Strings can span multiple lines, however are read as one continuous string when there is a backslash at the end of a line.
