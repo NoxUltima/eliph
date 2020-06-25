@@ -382,11 +382,11 @@ These operators produce booleans.
 |                             `<=`                             | comparison |  `lte`  |           Less than or equal to            |      `3 <= 3: true`      |
 |                             `>=`                             | comparison |  `gte`  |          Greater than or equal to          |      `3 <= 3: true`      |
 |                             `&&`                             |   logic    |  `and`  |                Logical and                 | `true && false == false` |
-|                             `||`                             |   logic    |  `or`   |                 Logical or                 | `true || false == true`  |
+|                             `ǀǀ`                             |   logic    |  `or`   |                 Logical or                 | `true ǀǀ false == true`  |
 | `/\` | logic | `and` | Logical and |`true /\ false == false` |
 |                             `\/`                             |   logic    |  `or`   |                 Logical or                 | `true \/ false == true`  |
 |                             `!`                              |   logic    |  `not`  |                Logical not                 |     `!true == false`     |
-|                            `-||-`                            |   logic    |  `not`  |                Logical not                 |   `-|true|- == false`    |
+|                            `-ǀǀ-`                            |   logic    |  `not`  |                Logical not                 |   `-ǀtrueǀ- == false`    |
 
 ### Template operators
 
