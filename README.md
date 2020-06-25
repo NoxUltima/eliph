@@ -47,12 +47,12 @@ typeof f
 
 As in JavaScript, functions, methods, variables and class names can contain Unicode characters, must contain only a single word. They can contain any character, but must not begin or end with the following characters:
 
-|  Characters   |          What they stand for           |
-| :-----------: | :------------------------------------: |
-| `() [] {} <>` |     Parentheses, brackets & braces     |
-|     `. ,`     |          Dot/full stop, comma          |
-|    `+-*/`     |  Arithmetic and assignment operators   |
-|   `&ǀ!?:~^`   | Boolean, logical and bitwise operators |
+| Characters |          What they stand for           |
+| :--------: | :------------------------------------: |
+| `()[]{}<>` |     Parentheses, brackets & braces     |
+|   `. ,`    |          Dot/full stop, comma          |
+|   `+-*/`   |  Arithmetic and assignment operators   |
+| `&ǀ!?:~^`  | Boolean, logical and bitwise operators |
 
 You can declare and assign multiple variables as in Python:
 
@@ -416,21 +416,19 @@ These operators produce booleans.
 | `.= :: .=` | conditional |   `case def`   |          Map operator          |      `var i = 1 .= 'one' :: 2 .= 'two' :: ?. n.toString`      |
 | `:= :: :=` | conditional |   `when def`   |        Switch operator         | `var i = 1<i<=3 := 'one' :: 2<2<=3 := 'two' :: ?. n.toString` |
 
-### Loops
+## Functions
 
-```
-for () {
-    for () {
-        for () {
-        }
-    }
-}
+## Generators
 
-for (a = 0, b, c)
+## Decision-Making
 
-while (true) {
+## Loops and Comprehensions
 
-}
-```
+## Property Access
 
-### Mathematical Operations
+## Classes and Inheritance
+
+## Error-handling
+
+## OOP
+
