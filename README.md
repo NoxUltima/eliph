@@ -370,23 +370,21 @@ Rounding functions are affected by the base/radix which the number is in. For in
 
 These operators produce booleans.
 
-|                           Operator                           |    Type    | Keyword |                Description                 |         Example          |
-| :----------------------------------------------------------: | :--------: | :-----: | :----------------------------------------: | :----------------------: |
-|                             `==`                             | comparison |  `equ`  |        Equal to (value comparison)         |     `3 == '3': true`     |
-|                             `!=`                             | comparison | `nequ`  |      Not equal to (value comparison)       |      `1 != 3: true`      |
-|                            `===`                             | comparison |  `is`   |   Is exactly (value and type comparison)   |     `1 === 3: true`      |
-|                            `!==`                             | comparison | `isnt`  | Is not exactly (value and type comparison) |     `2 !== 3: true`      |
-|                             `<>`                             | comparison | `nequ`  |     Not equal to (numeric comparison)      |      `1 <> 3: true`      |
-|                             `<`                              | comparison |  `lt`   |                 Less than                  |      `1 < 3: true`       |
-|                             `>`                              | comparison |  `gt`   |                Greater than                |      `3 > 1: true`       |
-|                             `<=`                             | comparison |  `lte`  |           Less than or equal to            |      `3 <= 3: true`      |
-|                             `>=`                             | comparison |  `gte`  |          Greater than or equal to          |      `3 <= 3: true`      |
-|                             `&&`                             |   logic    |  `and`  |                Logical and                 | `true && false == false` |
-|                             `ǀǀ`                             |   logic    |  `or`   |                 Logical or                 | `true ǀǀ false == true`  |
-| `/\` | logic | `and` | Logical and |`true /\ false == false` |
-|                             `\/`                             |   logic    |  `or`   |                 Logical or                 | `true \/ false == true`  |
-|                             `!`                              |   logic    |  `not`  |                Logical not                 |     `!true == false`     |
-|                            `-ǀǀ-`                            |   logic    |  `not`  |                Logical not                 |   `-ǀtrueǀ- == false`    |
+|                              Operator                               |    Type    | Keyword |                Description                 |         Example         |
+| :-----------------------------------------------------------------: | :--------: | :-----: | :----------------------------------------: | :---------------------: |
+|                                `==`                                 | comparison |  `equ`  |        Equal to (value comparison)         |    `3 == '3': true`     |
+|                                `!=`                                 | comparison | `nequ`  |      Not equal to (value comparison)       |     `1 != 3: true`      |
+|                                `===`                                | comparison |  `is`   |   Is exactly (value and type comparison)   |     `1 === 3: true`     |
+|                                `!==`                                | comparison | `isnt`  | Is not exactly (value and type comparison) |     `2 !== 3: true`     |
+|                                `<>`                                 | comparison | `nequ`  |     Not equal to (numeric comparison)      |     `1 <> 3: true`      |
+|                                 `<`                                 | comparison |  `lt`   |                 Less than                  |      `1 < 3: true`      |
+|                                 `>`                                 | comparison |  `gt`   |                Greater than                |      `3 > 1: true`      |
+|                                `<=`                                 | comparison |  `lte`  |           Less than or equal to            |     `3 <= 3: true`      |
+|                                `>=`                                 | comparison |  `gte`  |          Greater than or equal to          |     `3 <= 3: true`      |
+| `&&`, `/\` | logic | `and` | Logical and | `true && false == false` |
+|                             `ǀǀ` , `\/`                             |   logic    |  `or`   |                 Logical or                 | `true ǀǀ false == true` |
+|                                 `!`                                 |   logic    |  `not`  |                Logical not                 |    `!true == false`     |
+|                               `-ǀǀ-`                                |   logic    |  `not`  |                Logical not                 |   `-ǀtrueǀ- == false`   |
 
 ### Template operators
 
