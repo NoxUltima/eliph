@@ -1,6 +1,6 @@
 # This is Zenith.
 
-A new language based on JavaScript (JS) and Python, and compiles to JS, expanded and modified with lots of new shorthands and alternative syntaxes inspired by newer programming languages such as Haskell, Elixir, Swift, Scala, Go and Dart.
+A new language based on JavaScript (JS) and Python, and compiles to JS, expanded and modified with lots of new shorthands and alternative syntaxes inspired by newer programming languages, including those which compile to JavaScript, such as LiveScript, Spider, CoffeeScript and ReasonML (developed by Facebook).
 
 ## History of the language
 
