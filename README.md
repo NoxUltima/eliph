@@ -52,7 +52,7 @@ As in JavaScript, functions, methods, variables and class names can contain Unic
 | `() [] {} <>` |     Parentheses, brackets & braces     |
 |     `. ,`     |          Dot/full stop, comma          |
 |    `+-*/`     |  Arithmetic and assignment operators   |
-|   `&|!?:~^`   | Boolean, logical and bitwise operators |
+|   `&ǀ!?:~^`   | Boolean, logical and bitwise operators |
 
 You can declare and assign multiple variables as in Python:
 
