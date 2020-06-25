@@ -8,22 +8,22 @@ The language first started out as a mixture of JS and Python. I used to develop 
 
 However, I found out that many of the functions and features which Python had, such as the `random` and `string` libraries, `range()`, tuples and array comprehensions, did not exist in JS. And since these are completely different languages designed for different goals in mind, so I had to painstakingly figure out how to produce exactly the same code in either language, which I resorted to doing in Stack Overflow.
 
-This lead me to create a new way to produce an entire library to bring Python functions to be used in the JS context. But since I have gotten used to web development and hence JS programming a lot, I wanted to create a new language that would combine the features of both languages, along with ways to improve interoperability with different paradigms such as mobile and game development.
+I wanted to create a new way to produce an entire library to bring Python functions to be used in the JS context. But since I have gotten used to web development and hence JS programming a lot, I wanted to create a new language that would get the best of both worlds, as well as combining features which I had liked from different languages, so that seasoned programmers in these languages won't have a steep learning curve.
 
 ## An informal introduction
 
 ### Sample boilerplate code
 
+Straight outta Python.
+
 ```
-main() { // main function is optional
-    print('Hello world!')
-}
+print('Hello world!')
 > Hello world!
 ```
 
-## Hybrid Typing
+### Hybrid Typing
 
-Zenith is dynamically typed, just like Python and JS, in order to save time typing. Zenith also has the type identifier, which is used for assigning explicit typing standards for certain variables and prevent them from being reassigned a value of a different type.
+Zenith is dynamically typed, just like Python and JS, in order to save time typing. Zenith also has the type identifiers from Java and the C family, which is used for assigning explicit typing standards for certain variables and prevent them from being reassigned a value of a different type.
 
 The common data types in TypeScript, are:
 
@@ -45,6 +45,15 @@ typeof f
 > long
 ```
 
+As in JavaScript, functions, methods, variables and class names can contain Unicode characters, must contain only a single word. They can contain any character, but must not begin or end with the following characters:
+
+|  Characters   |          What they stand for           |
+| :-----------: | :------------------------------------: |
+| `() [] {} <>` |     Parentheses, brackets & braces     |
+|     `. ,`     |          Dot/full stop, comma          |
+|    `+-*/`     |  Arithmetic and assignment operators   |
+|   `&|!?:~^`   | Boolean, logical and bitwise operators |
+
 You can declare and assign multiple variables as in Python:
 
 ```
@@ -60,6 +69,19 @@ And you can swap and reassign the values of the variables in one line like so:
 var width = 20, height = 30
 width, height = height, width
 width, height > 30, 20
+```
+
+### Comments
+
+Comments work the same as in most languages like the C family, Java and JS. No comment on that (pun intended.)
+
+```
+    // This is a single-line comment
+    /* This is a multi-line comment */
+   /**
+    * This is a documentation comment
+    * @param | is cool
+    */
 ```
 
 ## Literals
@@ -388,40 +410,11 @@ These operators produce booleans.
 
 ### Template operators
 
-|  Operator  |    Type     |    Keyword     |            Function            |                                                       Example |
-| :--------: | :---------: | :------------: | :----------------------------: | ------------------------------------------------------------: |
-|   `? :`    | conditional | `if elif else` | Conditional (ternary) operator |                                    `var i = true ? i++ : i--` |
-| `.= :: .=` | conditional |   `case def`   |          Map operator          |           `var i = 1 .= 'one' :: 2 .= 'two' :: ?. n.toString` |
+|  Operator  |    Type     |    Keyword     |            Function            |                            Example                            |
+| :--------: | :---------: | :------------: | :----------------------------: | :-----------------------------------------------------------: |
+|   `? :`    | conditional | `if elif else` | Conditional (ternary) operator |                  `var i = true ? i++ : i--`                   |
+| `.= :: .=` | conditional |   `case def`   |          Map operator          |      `var i = 1 .= 'one' :: 2 .= 'two' :: ?. n.toString`      |
 | `:= :: :=` | conditional |   `when def`   |        Switch operator         | `var i = 1<i<=3 := 'one' :: 2<2<=3 := 'two' :: ?. n.toString` |
-
-### Comments
-
-Comments work the same as in most languages like the C family, Java and JS, however with some notable differences:
-
-```
-    // This is a single-line comment
-    /* This is a multi-line comment */
-   /**
-    * This is a Javadoc comment
-    * @param | is cool
-    */
-```
-
-However other comment types are also permitted:
-
-```
-<!-- HTML comments work too here -->
-|- This is a single-line comment
-|= This is a single-line comment
-||- This is a single-line comment
-||= This is a single-line comment
-|- This is a multi-line comment -|
-|= This is also a multi-line comment =|
-Comments can also be nested within arrows too,
-which are multi-line comments themselves:
-<<- This is cool ->>
-<<= This is also cool =>>
-```
 
 ### Loops
 
