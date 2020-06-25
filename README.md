@@ -32,11 +32,11 @@ There are four ways of declaring constants and variables - in the same way as JS
 - `var` is now the weakest signal available when you define a variable in JavaScript. The variable may or may not be reassigned, and the variable may or may not be used for an entire function, or just for the purpose of a block or loop.
 - A variable without any of the above prefixes are considered global and therefore will be modified by any function or method.
 
-The common data types in TypeScript, are:
+The variable types are from TypeScript, which are:
 
 - `number`, `string`, `boolean`, `enum`, `void`, `null`, `undefined`/`none`, `any`, `never`, `array`, `object` and `tuple`.
 
-and their equivalent categories in Java:
+and subtypes as in Java or C#:
 
 - `char` under `string`,
 - `byte`, `short`, `int`, `long`, `decimal` and `double` and `float` under `number`.
@@ -44,10 +44,10 @@ and their equivalent categories in Java:
 Here's this in action:
 
 ```
-var f: byte = 255
+var f: number = 255
 typeof f
-> byte
-f = (long) f
+> number
+f = (long) f -> casting
 typeof f
 > long
 ```
