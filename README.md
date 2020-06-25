@@ -1,6 +1,6 @@
 # This is Zenith.
 
-A new language based on JavaScript (JS) and Python, and compiles to JS, expanded and modified with lots of new shorthands and alternative syntaxes inspired by newer programming languages, including those which compile to JavaScript, such as LiveScript, Spider, CoffeeScript and ReasonML (developed by Facebook).
+A new language based on JavaScript (JS) and Python, and compiles to JS, expanded and modified with lots of new shorthands and alternative syntaxes inspired by newer programming languages such as Haskell, Elixir, Swift, Scala, Go and Dart.
 
 ## History of the language
 
@@ -126,15 +126,16 @@ For any base larger than 64, digits are either separated by dots or underscores.
 ### Booleans, null, void, undefined and other type aliases
 
 See the correspondence table below.
-|Alias|Compilation value|
-|-|-|
-|`true`, `yes`, `on`|`true`|
-|`false`, `no`, `off`|`true`|
-|`void` (compiles to none)|`undefined`|
-|`undefined` (can be redefined)|`undefined`|
-|`null`, `none`|`null`|
-|`infinity`|`Infinity`|
-|`nan`|`NaN`|
+
+|             Alias              | Compilation value |
+| :----------------------------: | :---------------: |
+|      `true`, `yes`, `on`       |      `true`       |
+|      `false`, `no`, `off`      |      `true`       |
+|   `void` (compiles to none)    |    `undefined`    |
+| `undefined` (can be redefined) |    `undefined`    |
+|         `null`, `none`         |      `null`       |
+|           `infinity`           |    `Infinity`     |
+|             `nan`              |       `NaN`       |
 
 ### Strings
 
@@ -207,41 +208,36 @@ If you want to concatenate string variables or a variable and a string, use `+`:
 SyntaxError
 ```
 
-String interpolation is a way to construct a new string from a mix of constants, variables, literals, and expressions by including their values inside a string literal.
+String interpolation is a way to construct a new string from a mix of constants, variables, literals, and expressions by including their values inside a string literal. All three types of strings, including single and double quoted strings can be interpolated. The syntax for interpolation can be `#{}`, `#[]`, `[]#`, `#[]#` or `${}`.
 
 ```
-var m = 3, message = `${m} times 2.5 is ${m * 2.5}`
+var m = 3, message = "#{m} times 2.5 is #{m * 2.5}"
 '3 times 2.5 is 7.5'
 ```
 
-Characters and strings are not differentiated.
+Characters and strings are not differentiated. Strings and arrays can be indexed as in JS. Operating with strings and arrays are much like Python, including the use of negative indices and string/array slicing or splicing.
 
 ```
 > var word = 'Zenith'
-> word[0]
-'Z'
-> word[5]
-'h'
+> word[0] == word[-6] == 'Z'
+> word[5] == word[-1] == 'h'
 ```
 
-Indices may also be negative numbers. Negative indices start from -1.
+Characters from position 0 (included) to 2 (excluded):
 
 ```
-var word = 'Zenith'
-word[-6] == 'Z'
-word[-1] == 'h'
-```
-
-In addition to indexing, slicing is also supported. While indexing is used to obtain individual characters, slicing allows you to obtain substrings:
-
-```
-> word[0:2] // Characters from position 0 (included) to 2 (excluded)
+> word[0:2]
 'Ze'
-> word[2:5] // Characters from position 2 (included) to 5 (excluded)
+```
+
+Characters from position 2 (included) to 5 (excluded):
+
+```
+> word[2:5]
 'nit'
 ```
 
-Note how the start is always included, and the end always excluded. This makes sure that `s[:i] + s[i:]` is always equal to `s`:
+This is so that `word[:n] + word[n:] == word`
 
 ```
 > word[:2] + word[2:]
@@ -253,29 +249,72 @@ Note how the start is always included, and the end always excluded. This makes s
 Strings cannot be changed - they are immutable. Therefore, assigning to an indexed position in the string results in an error. If you need a different string, you should create a new one:
 
 ```
-> 'Nadir' + word[1:]
+> var nadir = 'Nadir' + word[1:]
+> nadir
 'Nadirenith'
 ```
 
-The built in property `.len`, `.size` or `.length` returns the length of a string, as well as the functions `len()`, `size()` or `length()`:
+The built in property `.len`, `.size` or `.length` returns the length of a string, as well as their equivalent functions `len()`, `size()` or `length()`:
 
 ```
 > 'supercalifragilisticexpialidocious'.length
 34
 ```
 
+### Arrays
+
+Arrays work in a similar fashion in Javascript and as lists in functions.
+
+```
+squares = [1, 4, 9, 16, 25]
+> squares
+[1, 4, 9, 16, 25]
+```
+
+Like strings (and all other built-in sequence types), arrays can be indexed and sliced:
+
+```
+> squares[0] // Indexing returns the item
+1
+> squares[-1]
+25
+> squares[-3:] // Slicing returns a new array
+[9, 16, 25]
+```
+
+Arrays can be dequed, and a variety of methods can be used. When removing value(s) from the array, the method would return the removed value(s). The `add()` method functions like `push()` or `append()` when one argument is passed.
+
+|          Method          | Arguments |                       Description                        |
+| :----------------------: | :-------: | :------------------------------------------------------: |
+|   `push()`,`append()`    |     1     |       appends a new value to the end of the array        |
+|         `pop()`          |     0     |        removes the value at the end of the array         |
+| `unshift()`, `prepend()` |     1     |        prepends a value to the start of the array        |
+|        `shift()`         |     0     |       removes the value at the start of the array        |
+|         `add()`          |   1, 2    |            adds an value at a specified index            |
+|        `delete()`        |     1     |     deletes and returns a value at a specified index     |
+|        `remove()`        |     1     |    deletes and returns the first instance of a value     |
+|      `removeLast()`      |     1     |     deletes and returns the last instance of a value     |
+|      `removeAll()`       |   many    | deletes and returns all instances of a value as an array |
+|         `get()`          |     1     |          returns the value at a specified index          |
+|   `set()`,`replace()`    |     2     |        replaces a value at its index with another        |
+|   `clear()`, `empty()`   |     0     |                     empties an array                     |
+|         `fill()`         |   many    |          overrides an array with the same value          |
+|      `replaceAll()`      |     2     |    replaces all allv vlaues in the array with another    |
+
 ### Operators
 
 Expression syntax is straightforward: the operators `+`, `-`, `*` and `/` work just like in most other languages (for example, Pascal or C); parentheses `(())` can be used for grouping. For example:
 
 ```
-2 + 2 // 4
-50 - 5 * 6 // 20
+2 + 2 -> 4
+50 - 5 * 6 -> 20
+```
 
-// Division will only return a float
-// regardless of the types
-(50 - 5 * 6) / 4 // 5.0
-8 / 5 // 1.6
+Division will only return a float regardless of the operands.
+
+```
+(50 - 5 * 6) / 4 -> 5.0
+8 / 5 -> 1.6
 ```
 
 To do floor division and get an integer result, you can use the `#` operator; to calculate the remainder (modulo) you can use `%`:
@@ -299,6 +338,7 @@ Like JS bitwise operators also exist:
 | = bitwise OR
 ~ = bitwise NOT
 ^ = bitwise XOR
+@ = bitwise XOR
 << = bitwise left shift
 >> = bitwise right shift
 <<< = bitwise unsigned left shift
@@ -307,7 +347,7 @@ Like JS bitwise operators also exist:
 ```
 
 ```
-2357 @ 4567 // 2
+2357 ^ 4567 // 2
 ~4093 // -4094
 ~~1.3 // 1
 ```
@@ -337,71 +377,6 @@ Comparison operators are quite similar to Python, including the use of the `is` 
 >= -> more than or equal to
 
 a < b < c -> equations can be chained like this as well
-```
-
-### Arrays
-
-The language knows number of compound data types, used to group together other values. The most versatile is the array, which can be written as a list of comma-separated values (items) between square brackets. Arrays might contain items of different types, but usually the items all have the same type.
-
-```
-squares = [1, 4, 9, 16, 25]
-> squares
-[1, 4, 9, 16, 25]
-```
-
-Like strings (and all other built-in sequence types), arrays can be indexed and sliced:
-
-```
-> squares[0] // Indexing returns the item
-1
-> squares[-1]
-25
-> squares[-3:] // Slicing returns a new array
-[9, 16, 25]
-```
-
-Arrays can be dequed, and a variety of methods can be used. When removing value(s) from the array, the method would return the removed value(s).
-
-```
-var arr = [1, 2, 3, 4, 5]
-arr.push(6) or arr.append(6) // adds a new value to the end of the array
-> [1, 2, 3, 4, 5, 6]
-arr.pop() // removes the last value from the array
-> [1, 2, 3, 4, 5]
-arr.unshift(0) // adds a new value to the start of the array
-> [0, 1, 2, 3, 4, 5]
-arr.shift() // removes the first value from the array
-> [1, 2, 3, 4, 5]
-
-arr.add('3', 2) // adds an value at a specified index. If the second argument is not passed, the element is added to the end of the array.
-> [1, 2, '3', 3, 4, 5]
-arr.remove('3') // deletes the first instance of a value
-> [1, 2, 3, 4, 5]
-
-var arr = [1, 2, 3, 4, 5]
-arr.get('3') // returns the value specified. Returns undefined if value does not exist.
-> undefined
-arr.index(3) // returns the value specified at its index.
-> 4
-arr.set(2, '2')) // modifies array in place, replacing element with x
-> [1, '2', 3, 4, 5]
-
-arr = [1, 2, 3, 4, 4, 4, 5]
-arr.removeAll(4) // deletes all instances of a value
-> [1, 2, 3, 5]
-
-arr = [1, 2, 3, 4, 4, 5, 4]
-arr.removeLast(4) // deletes the last instance of a value
-> [1, 2, 3, 4, 4, 5]
-
-arr = [1, 2, 3, 4, 5, 6, 7]
-arr.delete(6) // deletes a value based on its index
-> [1, 2, 3, 4, 5, 6]
-
-
-arr.clear() // clears the entire array
-> []
-
 ```
 
 ### Comments
