@@ -263,7 +263,7 @@ The built in property `.len`, `.size` or `.length` returns the length of a strin
 
 ### Arrays
 
-Arrays work in a similar fashion in Javascript and as lists in functions.
+Arrays work in a similar fashion in Javascript and as lists in Python.
 
 ```
 squares = [1, 4, 9, 16, 25]
@@ -294,16 +294,24 @@ Arrays can be dequed, and a variety of methods can be used. When removing value(
 |        `delete()`        |     1     |     deletes and returns a value at a specified index     |
 |        `remove()`        |     1     |    deletes and returns the first instance of a value     |
 |      `removeLast()`      |     1     |     deletes and returns the last instance of a value     |
-|      `removeAll()`       |   many    | deletes and returns all instances of a value as an array |
+|      `removeAll()`       | 1 or more | deletes and returns all instances of a value as an array |
 |    `get()`, `index()`    |     1     |          returns the value at a specified index          |
 |   `set()`,`replace()`    |     2     |        replaces a value at its index with another        |
 |   `clear()`, `empty()`   |     0     |                     empties an array                     |
-|         `fill()`         |   many    |          overrides an array with the same value          |
+|         `fill()`         | 1 or more |        overrides an array with the inside values         |
 |      `replaceAll()`      |     2     |      replaces all values in the array with another       |
 |       `reverse()`        |     0     |               reverses the array in place                |
 |       `shuffle()`        |     0     |               shuffles the array in place                |
 
 Many of the built-in array functions in JavaScript remain unchanged in Zenith.
+
+### Lists
+
+Lists function in the same way as tuples in Python (encased in parentheses `()` instead), and can be sliced and spliced, and hence, they are immutable.
+
+```
+> squares = (1, 4, 9, 16, 25)
+```
 
 ### Operators
 
