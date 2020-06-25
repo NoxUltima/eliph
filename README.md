@@ -1,6 +1,6 @@
 # This is Zenith.
 
-A new language based on JavaScript (JS) and Python, and compiles to JS, expanded and modified with lots of new shorthands and alternative syntaxes inspired by newer programming languages such as Haskell, Elixir, Swift, Scala, Go and Dart, including those which compile to JavaScript, such as CoffeeScript, LiveScript and more.
+A new language based on JavaScript (JS) and Python, and compiles to JS, expanded and modified with lots of new shorthands and alternative syntaxes inspired by newer programming languages, including those which compile to JavaScript, and borrowing a few concepts from languages such as TypeScript, Flow, F# and Haskell.
 
 ## History of the language
 
@@ -24,6 +24,13 @@ print('Hello world!')
 ### Hybrid Typing
 
 Zenith is dynamically typed, just like Python and JS, in order to save time typing. Zenith also has the type identifiers from Java and the C family, which is used for assigning explicit typing standards for certain variables and prevent them from being reassigned a value of a different type.
+
+There are four ways of declaring constants and variables - in the same way as JS:
+
+- `const` is a signal that the identifier won't be reassigned.
+- `let` is a signal that the variable may be reassigned, such as a counter in a loop, or a value swap in an algorithm. It also signals that the variable will be used only in the block it's defined in, which is not always the entire containing function.
+- `var` is now the weakest signal available when you define a variable in JavaScript. The variable may or may not be reassigned, and the variable may or may not be used for an entire function, or just for the purpose of a block or loop.
+- A variable without any of the above prefixes are considered global and therefore will be modified by any function or method.
 
 The common data types in TypeScript, are:
 
