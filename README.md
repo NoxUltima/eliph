@@ -357,7 +357,7 @@ Rounding functions are affected by the base/radix which the number is in. For in
 |  `</>`   | arithmetic |  `nrt`   |                       Nth root                       |        `4 <*> 16 = 2`         |
 |   `::`   | arithmetic |  `abs`   |                    Absolute value                    |          `::-3 = 3`           |
 |   `&`    |  bitwise   |  `land`  |                     Bitwise AND                      |         `5 & 13 = 5`          |
-|   `ǀ`    |  bitwise   |  `lor`   |                      Bitwise OR                      |         `5 | 13 = 13`         |
+|   `ǀ`    |  bitwise   |  `lor`   |                      Bitwise OR                      |         `5 ǀ 13 = 13`         |
 |   `^`    |  bitwise   |  `lxor`  |                     Bitwise XOR                      |         `5 ^ 13 = 8`          |
 |   `~`    |  bitwise   |  `lnot`  |                     Bitwise NOT                      |           `~5 = 6`            |
 |   `<<`   |  bitwise   |  `lsl`   |                      Left shift                      |         `5 << 3 = 40`         |
