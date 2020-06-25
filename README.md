@@ -107,8 +107,9 @@ Underscores and appended letters are ignored. Letters can also be used inside li
 64e3 -> 64000
 ```
 
-There is also a shorthand way of writing numbers (only integers) in bases from 2 to 64. Bases from 10 to 36 use the decimal numerals appended with letters from the English alphabet, and can be written in mixed case, while bases higher than 36 use the Greek alphabet and each digits has to be lowercase:
-Base 64: `0123456789abcdefghijklmnopqrstuvwxyzαβγδεζηθικλμνξπρσςτυφχψωϙϛϝϸ`
+There is also a shorthand way of writing numbers (only integers) in bases from 2 to 64. Bases from 10 to 36 use the decimal numerals appended with letters from the English alphabet, and can be written in mixed case, while bases higher than 36 use the Greek alphabet (with four extra symbols), where each non-numeral digit has to be lowercase.
+
+The base 64 digits are: `0123456789abcdefghijklmnopqrstuvwxyzαβγδεζηθικλμνξπρσςτυφχψωϙϛϝϸ`
 
 ```
 Digit Chart
