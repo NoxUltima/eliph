@@ -313,7 +313,7 @@ Lists function in the same way as tuples in Python (encased in parentheses `()`)
 > squares = (1, 4, 9, 16, 25)
 ```
 
-### Operators
+## Operators
 
 In most other languages like JavaScript, we use the `=` sign to assign a value to a constant or variable. All these signs can be placed right before the equal sign to reassign it to the variable. Each operator described below also has a keyword.
 
@@ -328,41 +328,41 @@ val += 2 // val = val + 2
 
 Rounding functions are affected by the base/radix which the number is in. For instance, the hexadecimal value `0x1.7` is rounded down to `0x1.0`.
 
-| Operator |    Type    | Keyword  |                     Description                      | Example                       |
-| :------: | :--------: | -------- | :--------------------------------------------------: | ----------------------------- |
-|   `+`    | arithmetic | `plus`   |                       Addition                       | `1 + 1 = 2`                   |
-|   `-`    | arithmetic | `minus`  |                     Subtraction                      | `2 - 1 = 1`                   |
-|   `*`    | arithmetic | `times`  |                    Multiplication                    | `3 * 3 = 9`                   |
-|   `/`    | arithmetic | `divide` |                       Division                       | `9 / 5 = 1.8`                 |
-|   `#`    | arithmetic | `fldiv`  |                    Floor division                    | `7 # 5 = 1`                   |
-|   `#:`   | arithmetic | `rndiv`  |              _Division with rounding_\*              | `7 #: 5 = 1, 8 #: 5 = 2`      |
-|   `#!`   | arithmetic | `cldiv`  |                   Ceiling division                   | `7 #! 5 = 2`                  |
-|   `+.`   | arithmetic | `pluf`   |               Floating point addition                | `1 +. 1 = 2.0`                |
-|   `-.`   | arithmetic | `minf`   |              Floating point subtraction              | `2 -. 1 = 1.0`                |
-|   `*.`   | arithmetic | `timf`   |            Floating point multiplication             | `3 *. 3 = 9.0`                |
-|   `%`    | arithmetic | `rem`    | Modulus operator - returns remainder of two operands | `13 % 3 = 1`                  |
-|   `%/`   | arithmetic | `flmod`  |                    Floor modulus                     | `12.5 _|_ 0.3 = 0`            |
-|   `%%`   | arithmetic | `mod`    |                        Modulo                        | `a %% b = (a % b + b) % b`    |
-|   `++`   | arithmetic | `incr`   |                    Increment by 1                    | `a++`                         |
-|   `--`   | arithmetic | `decr`   |                    Decrement by 1                    | `a--`                         |
-|  `+++`   | arithmetic | `incr`   |                    Increment by a                    | `a+++`                        |
-|  `---`   | arithmetic | `decr`   |                    Decrement by a                    | `a---`                        |
-|   `**`   | arithmetic | `pow`    |                    Power function                    | `2 ** 3 = 8, 10 ** -1 = 0.1`  |
-|  `***`   | arithmetic | `exp`    |            Scientific shorthand notation             | `2e4 = 2 *** 4 = 2 * 10 ** 4` |
-|   `~~`   | arithmetic | `flr`    |                    Floor function                    | `~~3.2 = 3`                   |
-|   `=~`   | arithmetic | `rnd`    |                  Rounding function                   | `=~3.4 = 3, =~3.5 = 4`        |
-|   `!~`   | arithmetic | `ceil`   |                   Ceiling function                   | `!~3.4 = 4`                   |
-|   `</`   | arithmetic | `sqrt`   |                    Square root\*                     | `<*4 = 2`                     |
-|   `/>`   | arithmetic | `curt`   |                     Cube root\*                      | `*>8 = 2`                     |
-|  `</>`   | arithmetic | `nrt`    |                       Nth root                       | `4 <*> 16 = 2`                |
-|   `::`   | arithmetic | `abs`    |                    Absolute value                    | `::-3 = 3`                    |
-|   `&`    |  bitwise   | `land`   |                     Bitwise AND                      | `5 & 13 = 5`                  |
-|   `|`    |  bitwise   | `lor`    |                      Bitwise OR                      | `5 | 13 = 13`                 |
-|   `^`    |  bitwise   | `lxor`   |                     Bitwise XOR                      | `5 ^ 13 = 8`                  |
-|   `~`    |  bitwise   | `lnot`   |                     Bitwise NOT                      | `~5 = 6`                      |
-|   `<<`   |  bitwise   | `lsl`    |                      Left shift                      | `5 << 3 = 40`                 |
-|   `>>`   |  bitwise   | `lsr`    |                  Signed right shift                  | `40 >> 2 = 10`                |
-|  `>>>`   |  bitwise   | `asr`    |                 Zerofill right shift                 | `4096 >>> 2 = 256`            |
+| Operator |    Type    | Keyword  |                     Description                      |            Example            |
+| :------: | :--------: | :------: | :--------------------------------------------------: | :---------------------------: |
+|   `+`    | arithmetic |  `plus`  |                       Addition                       |          `1 + 1 = 2`          |
+|   `-`    | arithmetic | `minus`  |                     Subtraction                      |          `2 - 1 = 1`          |
+|   `*`    | arithmetic | `times`  |                    Multiplication                    |          `3 * 3 = 9`          |
+|   `/`    | arithmetic | `divide` |                       Division                       |         `9 / 5 = 1.8`         |
+|   `#`    | arithmetic | `fldiv`  |                    Floor division                    |          `7 # 5 = 1`          |
+|   `#:`   | arithmetic | `rndiv`  |              _Division with rounding_\*              |   `7 #: 5 = 1, 8 #: 5 = 2`    |
+|   `#!`   | arithmetic | `cldiv`  |                   Ceiling division                   |         `7 #! 5 = 2`          |
+|   `+.`   | arithmetic |  `pluf`  |               Floating point addition                |        `1 +. 1 = 2.0`         |
+|   `-.`   | arithmetic |  `minf`  |              Floating point subtraction              |        `2 -. 1 = 1.0`         |
+|   `*.`   | arithmetic |  `timf`  |            Floating point multiplication             |        `3 *. 3 = 9.0`         |
+|   `%`    | arithmetic |  `rem`   | Modulus operator - returns remainder of two operands |         `13 % 3 = 1`          |
+|   `%/`   | arithmetic | `flmod`  |                    Floor modulus                     |      `12.5 _|_ 0.3 = 0`       |
+|   `%%`   | arithmetic |  `mod`   |                        Modulo                        |  `a %% b = (a % b + b) % b`   |
+|   `++`   | arithmetic |  `incr`  |                    Increment by 1                    |             `a++`             |
+|   `--`   | arithmetic |  `decr`  |                    Decrement by 1                    |             `a--`             |
+|  `+++`   | arithmetic |  `incr`  |                    Increment by a                    |            `a+++`             |
+|  `---`   | arithmetic |  `decr`  |                    Decrement by a                    |            `a---`             |
+|   `**`   | arithmetic |  `pow`   |                    Power function                    | `2 ** 3 = 8, 10 ** -1 = 0.1`  |
+|  `***`   | arithmetic |  `exp`   |            Scientific shorthand notation             | `2e4 = 2 *** 4 = 2 * 10 ** 4` |
+|   `~~`   | arithmetic |  `flr`   |                    Floor function                    |          `~~3.2 = 3`          |
+|   `=~`   | arithmetic |  `rnd`   |                  Rounding function                   |    `=~3.4 = 3, =~3.5 = 4`     |
+|   `!~`   | arithmetic |  `ceil`  |                   Ceiling function                   |          `!~3.4 = 4`          |
+|   `</`   | arithmetic |  `sqrt`  |                    Square root\*                     |           `<*4 = 2`           |
+|   `/>`   | arithmetic |  `curt`  |                     Cube root\*                      |           `*>8 = 2`           |
+|  `</>`   | arithmetic |  `nrt`   |                       Nth root                       |        `4 <*> 16 = 2`         |
+|   `::`   | arithmetic |  `abs`   |                    Absolute value                    |          `::-3 = 3`           |
+|   `&`    |  bitwise   |  `land`  |                     Bitwise AND                      |         `5 & 13 = 5`          |
+|   `|`    |  bitwise   |  `lor`   |                      Bitwise OR                      |         `5 | 13 = 13`         |
+|   `^`    |  bitwise   |  `lxor`  |                     Bitwise XOR                      |         `5 ^ 13 = 8`          |
+|   `~`    |  bitwise   |  `lnot`  |                     Bitwise NOT                      |           `~5 = 6`            |
+|   `<<`   |  bitwise   |  `lsl`   |                      Left shift                      |         `5 << 3 = 40`         |
+|   `>>`   |  bitwise   |  `lsr`   |                  Signed right shift                  |        `40 >> 2 = 10`         |
+|  `>>>`   |  bitwise   |  `asr`   |                 Zerofill right shift                 |      `4096 >>> 2 = 256`       |
 
 \*Unary operands. Operators are placed before the operand without space.
 
@@ -370,31 +370,31 @@ Rounding functions are affected by the base/radix which the number is in. For in
 
 These operators produce booleans.
 
-|                       Operator                        |    Type    | Keyword |                Description                 | Example                  |
-| :---------------------------------------------------: | :--------: | ------- | :----------------------------------------: | ------------------------ |
-|                         `==`                          | comparison | `equ`   |        Equal to (value comparison)         | `3 == '3': true`         |
-|                         `!=`                          | comparison | `nequ`  |      Not equal to (value comparison)       | `1 != 3: true`           |
-|                         `===`                         | comparison | `is`    |   Is exactly (value and type comparison)   | `1 === 3: true`          |
-|                         `!==`                         | comparison | `isnt`  | Is not exactly (value and type comparison) | `2 !== 3: true`          |
-|                         `<>`                          | comparison | `nequ`  |     Not equal to (numeric comparison)      | `1 <> 3: true`           |
-|                          `<`                          | comparison | `lt`    |                 Less than                  | `1 < 3: true`            |
-|                          `>`                          | comparison | `gt`    |                Greater than                | `3 > 1: true`            |
-|                         `<=`                          | comparison | `lte`   |           Less than or equal to            | `3 <= 3: true`           |
-|                         `>=`                          | comparison | `gte`   |          Greater than or equal to          | `3 <= 3: true`           |
-|                         `&&`                          |   logic    | `and`   |                Logical and                 | `true && false == false` |
-|                         `||`                          |   logic    | `or`    |                 Logical or                 | `true || false == true`  |
-| `/\`|logic|`and`|Logical and|`true /\ false == false` |
-|                         `\/`                          |   logic    | `or`    |                 Logical or                 | `true \/ false == true`  |
-|                          `!`                          |   logic    | `not`   |                Logical not                 | `!true == false`         |
-|                        `-||-`                         |   logic    | `not`   |                Logical not                 | `-|true|- == false`      |
+|                           Operator                           |    Type    | Keyword |                Description                 |         Example          |
+| :----------------------------------------------------------: | :--------: | :-----: | :----------------------------------------: | :----------------------: |
+|                             `==`                             | comparison |  `equ`  |        Equal to (value comparison)         |     `3 == '3': true`     |
+|                             `!=`                             | comparison | `nequ`  |      Not equal to (value comparison)       |      `1 != 3: true`      |
+|                            `===`                             | comparison |  `is`   |   Is exactly (value and type comparison)   |     `1 === 3: true`      |
+|                            `!==`                             | comparison | `isnt`  | Is not exactly (value and type comparison) |     `2 !== 3: true`      |
+|                             `<>`                             | comparison | `nequ`  |     Not equal to (numeric comparison)      |      `1 <> 3: true`      |
+|                             `<`                              | comparison |  `lt`   |                 Less than                  |      `1 < 3: true`       |
+|                             `>`                              | comparison |  `gt`   |                Greater than                |      `3 > 1: true`       |
+|                             `<=`                             | comparison |  `lte`  |           Less than or equal to            |      `3 <= 3: true`      |
+|                             `>=`                             | comparison |  `gte`  |          Greater than or equal to          |      `3 <= 3: true`      |
+|                             `&&`                             |   logic    |  `and`  |                Logical and                 | `true && false == false` |
+|                             `||`                             |   logic    |  `or`   |                 Logical or                 | `true || false == true`  |
+| `/\` | logic | `and` | Logical and |`true /\ false == false` |
+|                             `\/`                             |   logic    |  `or`   |                 Logical or                 | `true \/ false == true`  |
+|                             `!`                              |   logic    |  `not`  |                Logical not                 |     `!true == false`     |
+|                            `-||-`                            |   logic    |  `not`  |                Logical not                 |   `-|true|- == false`    |
 
-### Other operators and valu esiheiwhiehwihe
+### Template operators
 
-|  Operator  |    Type     | Keyword        |            Function            | Example                                                       |
-| :--------: | :---------: | -------------- | :----------------------------: | ------------------------------------------------------------- |
-|   `? :`    | conditional | `if elif else` | Conditional (ternary) operator | `var i = true ? i++ : i--`                                    |
-| `.= :: .=` | conditional | `case def`     |          Map operator          | `var i = 1 .= 'one' :: 2 .= 'two' :: ?. n.toString`           |
-| `:= :: :=` | conditional | `when def`     |        Switch operator         | `var i = 1<i<=3 := 'one' :: 2<2<=3 := 'two' :: ?. n.toString` |
+|  Operator  |    Type     |    Keyword     |            Function            |                                                       Example |
+| :--------: | :---------: | :------------: | :----------------------------: | ------------------------------------------------------------: |
+|   `? :`    | conditional | `if elif else` | Conditional (ternary) operator |                                    `var i = true ? i++ : i--` |
+| `.= :: .=` | conditional |   `case def`   |          Map operator          |           `var i = 1 .= 'one' :: 2 .= 'two' :: ?. n.toString` |
+| `:= :: :=` | conditional |   `when def`   |        Switch operator         | `var i = 1<i<=3 := 'one' :: 2<2<=3 := 'two' :: ?. n.toString` |
 
 ### Comments
 
