@@ -1,6 +1,6 @@
 # This is Zenith.
 
-A new language based on JavaScript (JS) and Python, and compiles to JS, expanded and modified with lots of new shorthands and alternative syntaxes inspired by newer programming languages such as Haskell, Elixir, Swift, Scala, Go and Dart.
+A new language based on JavaScript (JS) and Python, and compiles to JS, expanded and modified with lots of new shorthands and alternative syntaxes inspired by newer programming languages such as Haskell, Elixir, Swift, Scala, Go and Dart, including those which compile to JavaScript, such as CoffeeScript, LiveScript and more.
 
 ## History of the language
 
@@ -295,11 +295,15 @@ Arrays can be dequed, and a variety of methods can be used. When removing value(
 |        `remove()`        |     1     |    deletes and returns the first instance of a value     |
 |      `removeLast()`      |     1     |     deletes and returns the last instance of a value     |
 |      `removeAll()`       |   many    | deletes and returns all instances of a value as an array |
-|         `get()`          |     1     |          returns the value at a specified index          |
+|    `get()`, `index()`    |     1     |          returns the value at a specified index          |
 |   `set()`,`replace()`    |     2     |        replaces a value at its index with another        |
 |   `clear()`, `empty()`   |     0     |                     empties an array                     |
 |         `fill()`         |   many    |          overrides an array with the same value          |
-|      `replaceAll()`      |     2     |    replaces all allv vlaues in the array with another    |
+|      `replaceAll()`      |     2     |      replaces all values in the array with another       |
+|       `reverse()`        |     0     |               reverses the array in place                |
+|       `shuffle()`        |     0     |               shuffles the array in place                |
+
+Many of the built-in array functions in JavaScript remain unchanged in Zenith.
 
 ### Operators
 
