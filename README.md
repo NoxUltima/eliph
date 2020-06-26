@@ -1,6 +1,6 @@
 # This is Zenith.
 
-A new language based on JavaScript (JS) and Python, and compiles to JS, expanded and modified with lots of new shorthands and alternative syntaxes inspired by newer programming languages, including those which compile to JavaScript, and borrowing a few concepts from languages such as TypeScript, Flow, F# and Haskell.
+A new language extending the features of JavaScript, and compiles to JS, expanded and modified with lots of new shorthands and alternative syntaxes, and borrowing a few concepts from languages such as TypeScript, Python, Java, Flow, F# and Haskell.
 
 ## History of the language
 
@@ -16,7 +16,7 @@ I wanted to create a new way to produce an entire library to bring Python functi
 
 Straight outta Python. Just a simple Hello World program.
 
-```
+```js
 print('Hello world!')
 > Hello world!
 ```
@@ -43,7 +43,7 @@ and subtypes as in Java or C#:
 
 Here's this in action:
 
-```
+```js
 var f: number = 255
 typeof f
 > number
@@ -63,7 +63,7 @@ As in JavaScript, functions, methods, variables and class names can contain Unic
 
 You can declare and assign multiple variables as in Python:
 
-```
+```js
 // Python way
 var width, height = 20, 30
 width * height
@@ -72,23 +72,24 @@ width * height
 
 And you can swap and reassign the values of the variables in one line like so:
 
-```
-var width = 20, height = 30
-width, height = height, width
-width, height > 30, 20
+```js
+var width = 20,
+  height = 30;
+width, (height = height), width;
+width, height > 30, 20;
 ```
 
 ### Comments
 
 Comments work the same as in most languages like the C family, Java and JS. No comment on that (pun intended.)
 
-```
-    // This is a single-line comment
-    /* This is a multi-line comment */
-   /**
-    * This is a documentation comment
-    * @param | is cool
-    */
+```js
+// This is a single-line comment
+/* This is a multi-line comment */
+/**
+ * This is a documentation comment
+ * @param | is cool
+ */
 ```
 
 ## Literals
@@ -97,7 +98,7 @@ Comments work the same as in most languages like the C family, Java and JS. No c
 
 Numbers operate in the same way as in JavaScript, however it also supports duodecimal (base 12).
 
-```
+```js
 var binary = 0b1010
 var octal = 0o12
 var decimal = 10
@@ -107,18 +108,19 @@ var hexadecimal = 0xa
 
 Underscores and appended letters are ignored. Letters can also be used inside literals
 
-```
+```js
 64_000 -> 64
 640km -> 64
 64_000km -> 64000
-64e3 -> 64000
+64e3 -> 64000 // (exponent)
+64n -> 64n // (BigInt)
 ```
 
 There is also a shorthand way of writing numbers (only integers) in bases from 2 to 64. Bases from 10 to 36 use the decimal numerals appended with letters from the English alphabet, and can be written in mixed case, while bases higher than 36 use the Greek alphabet (with four extra symbols), where each non-numeral digit has to be lowercase.
 
 The base 64 digits are: `0123456789abcdefghijklmnopqrstuvwxyzαβγδεζηθικλμνξπρσςτυφχψωϙϛϝϸ`
 
-```
+```js
 Digit Chart
 [
   '0:0',  '1:1',  '2:2',  '3:3',  '4:4',  '5:5',
@@ -135,7 +137,7 @@ Digit Chart
 ]
 ```
 
-```
+```js
 1000001b1 -> 65
 41b16 -> 65
 1tb36 -> 65
@@ -148,9 +150,24 @@ akalib36 -> 17743014
 
 For any base larger than 64, digits are either separated by dots or underscores.
 
-```
+```js
 1_3_43_50_38b64 -> 17743014
 1.3.43.50.38b64 -> 17743014
+```
+
+Numbers can be exponentiated:
+
+```js
+1e5 -> 100000
+1.3e4 -> 13000
+2.3e4 ->
+```
+
+Similar to algebra, a number before a variable multiples that variable.
+
+```js
+3'30' == 3 * '30' == '303030'
+var k = 3; 3k == 3*3 == 9
 ```
 
 ### Booleans, null, void, undefined and other type aliases
@@ -171,15 +188,14 @@ See the correspondence table below.
 
 Zenith can also manipulate strings, which can be expressed in several ways. They can be enclosed in single quotes `'...'` (evaluated by default in the console) or double quotes `"..."`. The backslash `\` is used to escape quotes, other characters and itself.
 
-```
+```js
 // single quotes
-'spam eggs' == "spam eggs"
-// use \' to escape the single quote
-// or use double quotes instead
-'doesn\'t' == "doesn't"
+"spam eggs" == "spam eggs";
+// use \' to escape the single quote or use double quotes instead
+"doesn't" == "doesn't";
 // Why not both?
-'"Yes," they said.' == "\"Yes,\" they said."
-'"Isn\'t," they said.' == "\"Isn't\", they said."
+'"Yes," they said.' == '"Yes," they said.';
+'"Isn\'t," they said.' == '"Isn\'t", they said.';
 ```
 
 This is a list of escape characters.
@@ -203,7 +219,7 @@ This is a list of escape characters.
 
 If you don't want characters prefaced by \ to be interpreted as special characters, you can use raw strings by encasing your string in backticks (``), like this.
 
-```
+```js
 > print(`Hello,
 world!`)
 'Hello,\nworld!'
@@ -213,7 +229,7 @@ world!`)
 
 Two or more strings next to each other are automatically concatenated. Strings can span multiple lines, however are read as one continuous string when there is a backslash at the end of a line.
 
-```
+```js
 > 'This is already boring. \
 Can I take a nap?'
 'This is already boring. Can I take a nap?'
@@ -221,7 +237,7 @@ Can I take a nap?'
 
 Strings can be concatenated with the `+` operator, and repeated with `*`:
 
-```
+```js
 > 'un' * 3 + 'ium'
 'unununium'
 ```
@@ -229,7 +245,7 @@ Strings can be concatenated with the `+` operator, and repeated with `*`:
 You can merge two strings encased in different quotes: `'Hello ' + "world!" == 'Hello world!'`
 If you want to concatenate string variables or a variable and a string, use `+`:
 
-```
+```js
 > var zen = 'Zen'
 > zen + 'ith'
 'Zenith'
@@ -240,14 +256,15 @@ SyntaxError
 
 String interpolation is a way to construct a new string from a mix of constants, variables, literals, and expressions by including their values inside a string literal. All three types of strings, including single and double quoted strings can be interpolated. The syntax for interpolation can be `#{}`, `#[]`, `[]#`, `#[]#` or `${}`.
 
-```
-var m = 3, message = "#{m} times 2.5 is #{m * 2.5}"
-'3 times 2.5 is 7.5'
+```js
+var m = 3,
+  message = "#{m} times 2.5 is #{m * 2.5}";
+("3 times 2.5 is 7.5");
 ```
 
 Characters and strings are not differentiated. Strings and arrays can be indexed as in JS. Operating with strings and arrays are much like Python, including the use of negative indices and string/array slicing or splicing.
 
-```
+```js
 > var word = 'Zenith'
 > word[0] == word[-6] == 'Z'
 > word[5] == word[-1] == 'h'
@@ -255,21 +272,21 @@ Characters and strings are not differentiated. Strings and arrays can be indexed
 
 Characters from position 0 (included) to 2 (excluded):
 
-```
+```js
 > word[0:2]
 'Ze'
 ```
 
 Characters from position 2 (included) to 5 (excluded):
 
-```
+```js
 > word[2:5]
 'nit'
 ```
 
 This is so that `word[:n] + word[n:] == word`
 
-```
+```js
 > word[:2] + word[2:]
 'Zenith'
 > word[:4] + word[4:]
@@ -278,7 +295,7 @@ This is so that `word[:n] + word[n:] == word`
 
 Strings cannot be changed - they are immutable. Therefore, assigning to an indexed position in the string results in an error. If you need a different string, you should create a new one:
 
-```
+```js
 > var nadir = 'Nadir' + word[1:]
 > nadir
 'Nadirenith'
@@ -286,7 +303,7 @@ Strings cannot be changed - they are immutable. Therefore, assigning to an index
 
 The built in property `.len`, `.size` or `.length` returns the length of a string, as well as their equivalent functions `len()`, `size()` or `length()`:
 
-```
+```js
 > 'supercalifragilisticexpialidocious'.length
 34
 ```
@@ -295,15 +312,13 @@ The built in property `.len`, `.size` or `.length` returns the length of a strin
 
 Arrays work in a similar fashion in Javascript and as lists in Python.
 
-```
-squares = [1, 4, 9, 16, 25]
-> squares
-[1, 4, 9, 16, 25]
+```js
+squares = [1, 4, 9, 16, 25] > squares[(1, 4, 9, 16, 25)];
 ```
 
 Like strings (and all other built-in sequence types), arrays can be indexed and sliced:
 
-```
+```js
 > squares[0] // Indexing returns the item
 1
 > squares[-1]
@@ -339,7 +354,7 @@ Many of the built-in array functions in JavaScript remain unchanged in Zenith.
 
 Lists function in the same way as tuples in Python (encased in parentheses `()`), and hence, they are immutable.
 
-```
+```js
 > squares = (1, 4, 9, 16, 25)
 ```
 
@@ -365,13 +380,13 @@ Rounding functions are affected by the base/radix which the number is in. For in
 |   `*`    | arithmetic | `times`  |                    Multiplication                    |          `3 * 3 = 9`          |
 |   `/`    | arithmetic | `divide` |                       Division                       |         `9 / 5 = 1.8`         |
 |   `#`    | arithmetic | `fldiv`  |                    Floor division                    |          `7 # 5 = 1`          |
-|   `#:`   | arithmetic | `rndiv`  |              _Division with rounding_\*              |   `7 #: 5 = 1, 8 #: 5 = 2`    |
-|   `#!`   | arithmetic | `cldiv`  |                   Ceiling division                   |         `7 #! 5 = 2`          |
+|   `/:`   | arithmetic | `rndiv`  |              _Division with rounding_\*              |   `7 #: 5 = 1, 8 /: 5 = 2`    |
+|   `/!`   | arithmetic | `cldiv`  |                   Ceiling division                   |         `7 /! 5 = 2`          |
 |   `+.`   | arithmetic |  `pluf`  |               Floating point addition                |        `1 +. 1 = 2.0`         |
 |   `-.`   | arithmetic |  `minf`  |              Floating point subtraction              |        `2 -. 1 = 1.0`         |
 |   `*.`   | arithmetic |  `timf`  |            Floating point multiplication             |        `3 *. 3 = 9.0`         |
 |   `%`    | arithmetic |  `rem`   | Modulus operator - returns remainder of two operands |         `13 % 3 = 1`          |
-|   `%/`   | arithmetic | `flmod`  |                    Floor modulus                     |      `12.5 _|_ 0.3 = 0`       |
+|   `%/`   | arithmetic | `flmod`  |                    Floor modulus                     |       `12.5 %/ 0.3 = 0`       |
 |   `%%`   | arithmetic |  `mod`   |                        Modulo                        |  `a %% b = (a % b + b) % b`   |
 |   `++`   | arithmetic |  `incr`  |                    Increment by 1                    |             `a++`             |
 |   `--`   | arithmetic |  `decr`  |                    Decrement by 1                    |             `a--`             |
@@ -384,11 +399,12 @@ Rounding functions are affected by the base/radix which the number is in. For in
 |   `!~`   | arithmetic |  `ceil`  |                   Ceiling function                   |          `!~3.4 = 4`          |
 |   `</`   | arithmetic |  `sqrt`  |                    Square root\*                     |           `<*4 = 2`           |
 |   `/>`   | arithmetic |  `curt`  |                     Cube root\*                      |           `*>8 = 2`           |
-|  `</>`   | arithmetic |  `nrt`   |                       Nth root                       |        `4 <*> 16 = 2`         |
+|  `</>`   | arithmetic |  `nrt`   |                       Nth root                       |        `4 </> 16 = 2`         |
 |   `::`   | arithmetic |  `abs`   |                    Absolute value                    |          `::-3 = 3`           |
 |   `&`    |  bitwise   |  `land`  |                     Bitwise AND                      |         `5 & 13 = 5`          |
 |   `ǀ`    |  bitwise   |  `lor`   |                      Bitwise OR                      |         `5 ǀ 13 = 13`         |
 |   `^`    |  bitwise   |  `lxor`  |                     Bitwise XOR                      |         `5 ^ 13 = 8`          |
+|   `@`    |  bitwise   | `lxnor`  |                     Bitwise XOR                      |         `5 ^ 13 = 8`          |
 |   `~`    |  bitwise   |  `lnot`  |                     Bitwise NOT                      |           `~5 = 6`            |
 |   `<<`   |  bitwise   |  `lsl`   |                      Left shift                      |         `5 << 3 = 40`         |
 |   `>>`   |  bitwise   |  `lsr`   |                  Signed right shift                  |        `40 >> 2 = 10`         |
@@ -415,6 +431,8 @@ These operators produce booleans.
 |                             `ǀǀ` , `\/`                             |   logic    |  `or`   |                 Logical or                 | `true ǀǀ false == true` |
 |                                 `!`                                 |   logic    |  `not`  |                Logical not                 |    `!true == false`     |
 |                               `-ǀǀ-`                                |   logic    |  `not`  |                Logical not                 |   `-ǀtrueǀ- == false`   |
+|                                `^^`                                 |   logic    |  `xor`  |            Logical exclusive or            |   `-ǀtrueǀ- == false`   |
+|                                `@@`                                 |   logic    | `xnor`  |           Logical exclusive nor            |   `-ǀtrueǀ- == false`   |
 
 ### Template operators
 
