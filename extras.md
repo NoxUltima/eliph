@@ -15,7 +15,6 @@ res
 
 ```
 deez
-
 ```
 
 which compiles to
@@ -177,7 +176,7 @@ function convertBase(
 The above function can be written as:
 
 ```js
-fn convertBase(str, fromBase, toBase,
+function convertBase(str, fromBase, toBase,
     chars = "0123456789abcdefghijklmnopqrstuvwxyz"
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ+/") {
 
