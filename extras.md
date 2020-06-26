@@ -3,17 +3,25 @@ Ham / Spider / Khepri
 Switch functions - testing for both values or expressions
 
 ```js
+var dis = 'whoa'
 switch (dis) {
   if dis.length == 5: res = 'this'
   if 0, 1, 2, 3, 4: res = 'deez'
   if dis # 3 == dis.length ^^ !Math.randint(0, dis.length): res = 'deez nuts'
   else: res = 'dis'
 }
+res
+```
+
+```
+deez
+
 ```
 
 which compiles to
 
 ```js
+var dis = "whoa";
 var dis;
 var a = Math.floor(dis / 3) == dis.length;
 b = !~~(Math.random() * dis.length);
@@ -21,6 +29,11 @@ if (dis == 5) res = "this";
 else if (dis % 1 == 0 && 0 <= dis && 5 > dis) res = "deez";
 else if (!a ^ !b) res = "deez nuts";
 else res = "dis";
+console.log(res);
+```
+
+```
+deez
 ```
 
 | Bitwise | Logical | Boolean  |
