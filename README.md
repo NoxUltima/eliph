@@ -212,7 +212,7 @@ This is a list of escape characters.
 - Backslash: `\\`
 - Unicode characters:`\4-digit codepoint` or `\{5/6-digit codepoint}`, such as `\ud83d`, or `\u{1f680}`
 
-```
+```js
 > 'hell\u{6f}'
 'hello'
 ```
@@ -416,23 +416,23 @@ Rounding functions are affected by the base/radix which the number is in. For in
 
 These operators produce booleans.
 
-|                              Operator                               |    Type    | Keyword |                Description                 |         Example         |
-| :-----------------------------------------------------------------: | :--------: | :-----: | :----------------------------------------: | :---------------------: |
-|                                `==`                                 | comparison |  `equ`  |        Equal to (value comparison)         |    `3 == '3': true`     |
-|                                `!=`                                 | comparison | `nequ`  |      Not equal to (value comparison)       |     `1 != 3: true`      |
-|                                `===`                                | comparison |  `is`   |   Is exactly (value and type comparison)   |     `1 === 3: true`     |
-|                                `!==`                                | comparison | `isnt`  | Is not exactly (value and type comparison) |     `2 !== 3: true`     |
-|                                `<>`                                 | comparison | `nequ`  |     Not equal to (numeric comparison)      |     `1 <> 3: true`      |
-|                                 `<`                                 | comparison |  `lt`   |                 Less than                  |      `1 < 3: true`      |
-|                                 `>`                                 | comparison |  `gt`   |                Greater than                |      `3 > 1: true`      |
-|                                `<=`                                 | comparison |  `lte`  |           Less than or equal to            |     `3 <= 3: true`      |
-|                                `>=`                                 | comparison |  `gte`  |          Greater than or equal to          |     `3 <= 3: true`      |
-| `&&`, `/\` | logic | `and` | Logical and | `true && false == false` |
-|                             `ǀǀ` , `\/`                             |   logic    |  `or`   |                 Logical or                 | `true ǀǀ false == true` |
-|                                 `!`                                 |   logic    |  `not`  |                Logical not                 |    `!true == false`     |
-|                               `-ǀǀ-`                                |   logic    |  `not`  |                Logical not                 |   `-ǀtrueǀ- == false`   |
-|                                `^^`                                 |   logic    |  `xor`  |            Logical exclusive or            |   `-ǀtrueǀ- == false`   |
-|                                `@@`                                 |   logic    | `xnor`  |           Logical exclusive nor            |   `-ǀtrueǀ- == false`   |
+|                               Operator                               |    Type    | Keyword |                Description                 |         Example         |
+| :------------------------------------------------------------------: | :--------: | :-----: | :----------------------------------------: | :---------------------: |
+|                                 `==`                                 | comparison |  `equ`  |        Equal to (value comparison)         |    `3 == '3': true`     |
+|                                 `!=`                                 | comparison | `nequ`  |      Not equal to (value comparison)       |     `1 != 3: true`      |
+|                                `===`                                 | comparison |  `is`   |   Is exactly (value and type comparison)   |     `1 === 3: true`     |
+|                                `!==`                                 | comparison | `isnt`  | Is not exactly (value and type comparison) |     `2 !== 3: true`     |
+|                                 `<>`                                 | comparison | `nequ`  |     Not equal to (numeric comparison)      |     `1 <> 3: true`      |
+|                                 `<`                                  | comparison |  `lt`   |                 Less than                  |      `1 < 3: true`      |
+|                                 `>`                                  | comparison |  `gt`   |                Greater than                |      `3 > 1: true`      |
+|                                 `<=`                                 | comparison |  `lte`  |           Less than or equal to            |     `3 <= 3: true`      |
+|                                 `>=`                                 | comparison |  `gte`  |          Greater than or equal to          |     `3 <= 3: true`      |
+| `&&` `/\` | boolean | `and` | Logical and | `true && false == false` |
+|                             `ǀǀ` , `\/`                              |  boolean   |  `or`   |                 Logical or                 | `true ǀǀ false == true` |
+|                                 `!`                                  |  boolean   |  `not`  |                Logical not                 |    `!true == false`     |
+|                                `-ǀǀ-`                                |  boolean   |  `not`  |                Logical not                 |   `-ǀtrueǀ- == false`   |
+|                                 `^^`                                 |  boolean   |  `xor`  |            Logical exclusive or            |   `-ǀtrueǀ- == false`   |
+|                                 `@@`                                 |  boolean   | `xnor`  |           Logical exclusive nor            |   `-ǀtrueǀ- == false`   |
 
 ### Template operators
 
