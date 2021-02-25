@@ -53,7 +53,7 @@ As for semicolons, you don't _actually_ need to use them unless you want to fit 
 
 As for function calls, they do require parentheses but there are also other ways you can write them.
 
-```coffee
+```dart
 print(sys.inspect(e)) // This is okay
 print (sys.inspect e) // This is also fine
 print sys.inspect e   // Nice
@@ -61,7 +61,7 @@ print sys.inspect e   // Nice
 
 You can also chain methods without parentheses by spacing them out. Note the function syntax on the right.
 
-```coffee
+```dart
 [1, 2, 3, 4, 5].slice 10 * 3 .filter { $ % 3 == 0 }
 [1, 2, 3, 4, 5].slice(10 * 3).filter((i) => i % 3 == 0)
 ```
@@ -70,7 +70,7 @@ This tutorial introduces various features of the Zenith language through example
 
 Zenith has a lot of keywords, most of which you are familiar with. Let's go through them in a bit of detail here:
 
-```coffee
+```dart
 // Control flow
 var let const declare define infix
 if unless then elif elun else
@@ -130,7 +130,7 @@ part sealed trans vol unsafe
 
 There are really only two types of comments: `// line comments` and `/* block comments */`. Both can be nested. You can also use the familiar `/** JSDoc comment syntax */` (which is basically just a block comment with an extra asterisk) if you like as well.
 
-```coffee
+```dart
 /* hooray for nested comments */
 /**
  * @param hooray for nested comments
@@ -143,7 +143,7 @@ Constants and variables must be declared before they're used. You declare consta
 
 You can declare `let` and `var` variables with a value. They can be seen and referenced by code that comes after them.
 
-```coffee
+```dart
 let i;
 var j;
 for const i in [0::len array] {}
@@ -153,7 +153,7 @@ By default, all variables when declared with the `=` assignment operator are aut
 
 Constants are always initialized with `:=`.
 
-```coffee
+```dart
 i = 3;  // let i = 3
 j .= 4; // var j = 4
 k := 5; // const k = 5
@@ -161,7 +161,7 @@ k := 5; // const k = 5
 
 You can declare non-local variables with `var` using `.=`, and you are required to use `.=` all the time whenever you modify the same variable in upper scopes, such as outside functions and class methods.
 
-```coffee
+```dart
 x .= 10 // declared as `var x`
 do { x = 5 } // 10 => creates a new variable called x
 do { x .= 2 } // 2 => modifies `var x`
@@ -171,7 +171,7 @@ Once you've declared a constant or variable of a certain type, you can't declare
 
 You can change the value of an existing variable to another value, as long as it is of the same type (though you can reuse a variable name when you initialize it to be `any`. In this example, the value of friendlyWelcome is changed from "Hello!" to "Bonjour!":
 
-```coffee
+```dart
 friendlyWelcome = "Hello!"
 friendlyWelcome = "Bonjour!"
 // friendlyWelcome is now "Bonjour!"
@@ -179,7 +179,7 @@ friendlyWelcome = "Bonjour!"
 
 Unlike a variable, the value of a constant can’t be changed after it’s set. Attempting to do so is reported as an error when your code is compiled:
 
-```coffee
+```dart
 languageName := "Zenith "
 languageName = "Nadir"
 // This is a compile-time error: languageName cannot be changed.
@@ -187,7 +187,7 @@ languageName = "Nadir"
 
 Constant and variable names can contain almost any character, including Unicode characters:
 
-```coffee
+```dart
 π = 3.14159
 你好 = "你好世界"
 🐶🐮 = "dogcow"
@@ -201,7 +201,7 @@ Within expressions, you can change and assign variables directly. This is becaus
 
 The expression `i += 2` is shorthand for `i = i + 2`. Effectively, the addition and the assignment are combined into one operator that performs both tasks at the same time.
 
-```coffee
+```dart
 // In this example, both i and j are declared with the value 3
 i = j := 3; i += 2 // i == 5
 j // j == 3
@@ -213,20 +213,20 @@ For programs to be useful, we need to be able to work with some of the simplest 
 
 This declaration is named `count`, was declared with `let`, is of type `int`, and has a value of `42`. Its type was inferred, we did not explicitly write down that it was an `int`.
 
-```coffee
+```dart
 count = 42;
 ```
 
 Types can be explicitly added with an annotation, that goes right before the variable name.
 
-```coffee
+```dart
 let int i;
 var int j;
 ```
 
 Because `count` has a type the compiler knows what we are and are not allowed to do with its value:
 
-```coffee
+```dart
 // Allowed: addition
 nextCount = count + 1
 
@@ -240,21 +240,21 @@ Sometimes we want to convert a type of a value into something we already know. C
 
 One is the `as`-syntax:
 
-```coffee
+```dart
 unknown someValue = "this is a string";
 int strLength = len (someValue as str);
 ```
 
 Another is the constructor function syntax:
 
-```coffee
+```dart
 unknown someValue = "this is a string";
 int strLength = len str(someValue);
 ```
 
 The other version is the "angle-bracket" syntax:
 
-```coffee
+```dart
 unknown someValue = "this is a string";
 int strLength = len <str>someValue;
 ```
@@ -265,7 +265,7 @@ The two samples are equivalent. Using one over the other is mostly a choice of p
 
 A boolean is either one of two values, `true` and `false`, and has the type `bool`. `true` can have the aliases `yes` and `on` while `false` can have the aliases `no` and `off`.
 
-```coffee
+```dart
 bool isDone := false;
 ```
 
@@ -274,7 +274,7 @@ The regular boolean operations have been preserved:
 - logical operators `!`, `&&`, `||`, and their infix aliases `not`, `and`, `or`;
 - comparison operators `<`, `>`, `<=`, `>=`;
 
-```coffee
+```dart
 !true // false
 true && false // false
 true || false // true
@@ -282,11 +282,11 @@ true || false // true
 
 We do provide a few more, such as the `^^` or `xor` logical operator, which returns `true` as long as both operands are distinct. It functions roughly same way as `!==`. <small>Note any operators that doesn't have a JavaScript counterpart automatically compile to private functions.</small>
 
-```coffee
+```dart
 xor = (a, b) => !a !== !b && (a || b);
 ```
 
-```coffee
+```dart
 false ^^ true  // true
 false ^^ false // false
 1 ^^ 0         // 1
@@ -303,7 +303,7 @@ As in JavaScript, all numbers are either floating point values or (big) integers
 
 The integer numbers (e.g. `2`, `4`, `20`) have type `int`, the ones with a fractional part or with a dot `.` (e.g. `5.0`, `1.6`) have type `float`. `int`s also can end in `n`, of which explicitly tell the compiler it is a `bigint`.
 
-```coffee
+```dart
 dec := 6.;
 hex := 0xf00d;
 binary := 0b1010;
@@ -312,7 +312,7 @@ dctal := 0o744;
 
 The basic operations `+`, `-`, `*` and `/` work the same way as in JS, and you can use parentheses `()` in grouping your expressions:
 
-```coffee
+```dart
 2 + 2 // 4
 50 - 5 * 6 // 20
 (50 - 5 * 6) / 4 // 5.0
@@ -321,11 +321,11 @@ The basic operations `+`, `-`, `*` and `/` work the same way as in JS, and you c
 
 Regular division with `/` will evaluate to a `float`, but floor division with `~/` will return `int`. Operators with mixed type operands convert the evaluated result to `float`:
 
-```coffee
+```dart
 4 * 3.75 - 1;
 ```
 
-```coffee
+```dart
 17 / 3; // 5.666666666666667
 17 ~/ 3; // 5
 17 % 3; // 2
@@ -334,7 +334,7 @@ Regular division with `/` will evaluate to a `float`, but floor division with `~
 
 Bitwise operations such as `&`, `|` and `^` (and their inverses `~&`, `~|`, `~^`), unary `~` and bitwise shift operators `<<`, `>>` and `>>>` will evaluate into `int`.
 
-```coffee
+```dart
 5 & 1; // 1
 5 | 1; // 5
 5 ^ 1; // 4
@@ -346,14 +346,14 @@ Bitwise operations such as `&`, `|` and `^` (and their inverses `~&`, `~|`, `~^`
 
 `%%` provides dividend-dependent modulo:
 
-```coffee
+```dart
 -7 % 5 == -2; // The remainder of 7 / 5
 -7 %% 5 == 3; // n %% 5 is always between 0 and 4
 ```
 
 Radix literals can be created using prefixes `0x`, `0o`, `0b`. Literals can be broken up using the `_` character which will be ignored:
 
-```coffee
+```dart
 decimal = 11256099;
 hexadecimal = 0xABC123;
 octal = 0o52740443;
@@ -363,7 +363,7 @@ billion = 1_000_000_000;
 
 The minimum/maximum operators `<?` and `>?`, which return the smaller or larger of the two operands.
 
-```coffee
+```dart
 3 <? 10; // 3
 3 >? 10; // 10
 ```
@@ -374,7 +374,7 @@ PHP's "spaceship" operator `<=>`, returns either `1`, `0` or `-1` depending on w
 leg = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
 ```
 
-```coffee
+```dart
 3 <=> 1; // 1
 1 <=> 3; // -1
 2 <=> 2; // 0
@@ -390,7 +390,7 @@ Besides the very common `int` and `float`, there are three more types `frac`, `d
 
 `num` is a superset of `int`, `float`, `frac`, `deci`, and `comp`, and for expressions with mixed-type operands, any type lower in the hierarchy is always coerced to a higher superset type.
 
-```coffee
+```dart
 i = 1; // int
 i += 1.; // float
 i += 1f; // frac
@@ -400,7 +400,7 @@ i += (1,0)j; // comp
 
 Bases 2 to 64 can be used, as long as they use these digits and are surrounded in string literals and suffixed with the base: `0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$&`.
 
-```coffee
+```dart
 i = '105'6; // 41
 ```
 
@@ -409,14 +409,14 @@ Note:
 - All `_` and leading `0`s are ignored
 - Any numeric literal not ending in `f`, `j`, `m` or `n` will throw an error.
 
-```coffee
+```dart
 040; // 40
 04k; // ERROR: Literal shound end in digits or either of f, j, m or n
 ```
 
 You can type-cast with the use of constructor functions, similar to how `Number()`, `String()` and `Boolean()` usually work.
 
-```coffee
+```dart
 int rounded = int(round(1.3f)); // 1
 ```
 
@@ -424,7 +424,7 @@ int rounded = int(round(1.3f)); // 1
 
 As in other languages, we use the type `str` (not `string`) to refer to these textual datatypes. Just like JavaScript, TypeScript also uses double quotes (`"`) or single quotes (`'`) to surround string data.
 
-```coffee
+```dart
 str color = 'blue';
 color = 'red';
 ```
@@ -438,7 +438,7 @@ Template strings, of the form `""`, which can span multiple lines and have embed
 | `\`-escaping (except `#`)   | Yes | No  |
 | Proper Unicode handling     | No  | Yes |
 
-```coffee
+```dart
 str fullName = "Bob Bobbington";
 int age = 37;
 str sentence = "Hello, my name is #fullName.
@@ -447,7 +447,7 @@ I'll be #{age + 1} years old next month.";
 
 Characters, of type `char`, enclosed in ` `` `, are really just strings of length 1. They don't do anything, really, except they are compatible with `int` operations and can be concatenated to form strings. So, strings basically are arrays of characters.
 
-```coffee
+```dart
 char a = `a`;
 ```
 
@@ -455,7 +455,7 @@ Strings can be replaced with either a substring or through pattern matching, whe
 
 Strings can be split into tuples of strings or characters with `/`, use casting into `char[]()` or `as char[]` if you want to convert the split result into individual characters. Spreading `[...string]` converts the string into an array of `char`s.
 
-```coffee
+```dart
 str s = 'Hello';
 
 s = 'Hello' - `l`; // 'Heo'
@@ -471,7 +471,7 @@ char[] c = [...s]
 
 Use `%` to join strings back, where the right operand is the delimiter. This operation will convert all non-strings (including `char`s) into strings.
 
-```coffee
+```dart
 strArr = ['H', 'e', `l`, 'l', 'o']
 strArr = strArr % '' //  'Hello'
 ```
@@ -480,7 +480,7 @@ strArr = strArr % '' //  'Hello'
 
 For array types, you can annotate in one of two ways: the type of the element followed by `[]` to denote an array of that element type. Note arrays work the same way as in JavaScript and are **mutable** in the sense that they can be modified directly by invoking methods such as `push`, `pop`, `shift`, `unshift` and `splice` on it.
 
-```coffee
+```dart
 int[] myList = [1, 2, 3];
 myList[1] = 300
 myList[1, 3] = [300, 400]; // 300, 400
@@ -488,20 +488,20 @@ myList[1, 3] = [300, 400]; // 300, 400
 
 Same thing for tuples; the type followed by `()`. However, they are **immutable** and each operation you perform on it would return a new tuple.
 
-```coffee
+```dart
 int() myTuple = (1, 2, 3);
 myTuple[1] = 2 // ERROR: tuple elements cannot be assigned directly.
 ```
 
 Use the unary `len` operator to retrieve the length of a(n) string/array/tuple:
 
-```coffee
+```dart
 arrLen = len [1, 2, 3, 4, 5] // 5
 ```
 
 Much like JavaScript objects and maps, arrays and tuples do have keys (their **numeric** index) and values (which are the values you see on the screen), You can use `in` to test for value presence, and `of` to test for key presence.
 
-```coffee
+```dart
 '3' in '12345' // true
 3 of '12345' // true
 '3' of '12345' // false
@@ -530,7 +530,7 @@ Slicing and splicing allow you to retrieve and override elements in tuples and a
 
 \* if `c + d > 0 && a > b || c + d < 0 && a < b`, then `c = -c` and `d = -d`.
 
-```coffee
+```dart
 str c = 'hello'; // Slicing
 s = c[1]; // e
 s = c[1,2]; // el (specific indices)
@@ -552,7 +552,7 @@ $a = a * 2 + [4]; // [1, 2, 3, 4, 1, 2, 3, 4, 5]
 
 Array or tuple types allow you to express a fixed number of elements whose types are known, but need not be the same. For example, you may want to represent a value as a pair of a `str` and `int`.
 
-```coffee
+```dart
 let [str, int] x;
 
 // Initialize it
@@ -581,7 +581,7 @@ x = [10, "hello"];
 
 To opt-out of type checking when working with existing JS libraries, we label these values with the `any` type:
 
-```coffee
+```dart
 def (str key) => any getValue;
 // OK, return value of 'getValue' is not checked
 str $str = getValue("myString");
@@ -589,7 +589,7 @@ str $str = getValue("myString");
 
 The `any` will continue to propagate through your objects:
 
-```coffee
+```dart
 any looselyTyped = {};
 let d = looselyTyped.a.b.c.d;
 //  ^ = let d: any
@@ -601,7 +601,7 @@ After all, remember that all the convenience of `any` comes at the cost of losin
 
 We may need to describe the type of variables that we do not know when we are writing an application. In these cases, we want to provide a type that tells the compiler and future readers that this variable could be anything, so we give it the `unknown` type.
 
-```coffee
+```dart
 unknown notSure = 4;
 notSure = "maybe a string instead";
 
@@ -611,14 +611,14 @@ notSure = false;
 
 Also note `def` here is the equivalent of `declare` in TypeScript.
 
-```coffee
+```dart
 def unknown maybe;
 // 'maybe' could be a string, object, boolean, undefined, or other types
 int anInt := maybe;
 // ERROR: Type 'unknown' is not assignable to type 'number'.
 ```
 
-```coffee
+```dart
 if (typeof maybe == 'bool') {
   // Zenith knows that maybe is a boolean now
   bool aBoolean := maybe;
@@ -628,7 +628,7 @@ if (typeof maybe == 'bool') {
 }
 ```
 
-```coffee
+```dart
 if (typeof maybe == 'string') {
   // Zenith knows that maybe is a string
   bool aBoolean := maybe;
@@ -640,7 +640,7 @@ if (typeof maybe == 'string') {
 
 Unlike `unknown`, variables of type `any` allow you to access arbitrary properties, even ones that don’t exist. These properties include functions and Zenith will not check their existence or type:
 
-```coffee
+```dart
 any looselyTyped := 4;
 looselyTyped.ifItExists(); // OK, ifItExists might exist at runtime
 looselyTyped.toFixed(); // OK, toFixed exists (but the compiler doesn't check)
@@ -653,7 +653,7 @@ strictlyTyped.toFixed(); // ERROR: Object is of type 'unknown'.
 
 `void` is a little like the opposite of `any`: the absence of having any type at all. `void == null | undef`.
 
-```coffee
+```dart
 void warnUser() {
   print "This is my warning message";
 }
@@ -661,14 +661,14 @@ void warnUser() {
 
 Declaring variables of type `void` is not useful because you can only assign `null` or `undef` to them:
 
-```coffee
+```dart
 void unusable = undef;
 unusable = null;
 ```
 
 In TypeScript, both `undef` and `null` actually have their **own** types, but they’re not extremely useful on their own. They are considered literal types
 
-```coffee
+```dart
 // Not much else we can assign to these variables!
 undef u = undef;
 null n = null;
@@ -680,7 +680,7 @@ null n = null;
 
 With object type, APIs like Object.create can be better represented. For example:
 
-```coffee
+```dart
 def func create(other | null) void;
 
 // OK
@@ -704,7 +704,7 @@ The `never` type is a subtype of, and assignable to, every type; however, no typ
 
 Some examples of functions returning `never`:
 
-```coffee
+```dart
 // Function returning `never` must not have a reachable end point
 error (message) never {
   throw Error(message);
@@ -724,14 +724,14 @@ fail() {
 
 Primitive constructors `Int`, `Float`, `String`, `Char`, `Boolean`, `Symbol`, or `Other` are the same as the lowercase versions recommended above. They almost never should be used. This is not Java.
 
-```coffee
+```dart
 String reverse(String s) => (s / 1).rev() % '';
 reverse("hello world");
 ```
 
 Instead, use the lowercase types.
 
-```coffee
+```dart
 str reverse(str s) => s[#:>0];
 reverse("hello world");
 ```
@@ -742,7 +742,7 @@ Type annotations can appear almost anywhere. They are not often necessary due to
 
 `int` and `str` are annotations used throughout these examples.
 
-```coffee
+```dart
 int $5 := 5;
 $9 = (int $5) + (int $4 = 4);
 add = (int x, int y) int => x + y;
@@ -753,14 +753,14 @@ drawCircle = (int radius) str => "hi";
 
 Aliases can be defined for types. This is helpful to attach meaning to simple types and when working with complex types that become long to write down.
 
-```coffee
+```dart
 type seconds = int;
 type timeInterval = (seconds, seconds);
 ```
 
 Using the alias `seconds` it is clear how the sleep function works. If int were used it might not be obvious:
 
-```coffee
+```dart
 sleep = (timeInterval seconds) => { ... }
 ```
 
@@ -772,20 +772,20 @@ Types can accept type parameters, which are similar to generics in other languag
 
 Parameters are prefixed with a single `#` when defining the type:
 
-```coffee
+```dart
 type arr<#item> = ...
 ```
 
 When using this type as an annotation the parameter can be filled in with a concrete type:
 
-```coffee
+```dart
 arr<int> x = [1, 2, 3];
 arr<str> y = ["one", "two", "three"];
 ```
 
 Types can have multiple parameters and be nested:
 
-```coffee
+```dart
 type pair<a, b> = (a, b);
 
 pair(int, str) x = (1, "one");
@@ -803,13 +803,13 @@ As you model more types you find yourself looking for tools which let you compos
 
 A union type describes a value that can be one of several types. We use the vertical bar (`|`) to separate each type, so `int | str | bool` is the type of a value that can be an `int`, a `str` or a `bool`. As you have already heard,
 
-```coffee
+```dart
 type void = null | undef
 ```
 
 If we have a value that is a union type, we can only access members that are common to all types in the union.
 
-```coffee
+```dart
 interface Bird = { void fly(); void layEggs(); }
 interface Fish = { void swim(); void layEggs(); }
 def func getSmallPet() Fish | Bird;
@@ -822,7 +822,7 @@ pet.swim(); // will throw
 
 Intersection types are closely related to union types, but they are used very differently. An intersection type combines multiple types into one. For example, `Person & Serializable & Loggable` is a type which is all of `Person` and `Serializable` and `Loggable`.
 
-```coffee
+```dart
 interface ErrorHandling {
   bool success;
   { message: str } error?;
@@ -850,7 +850,7 @@ When you declare a variable with `.=` or `=`, you are telling the compiler that 
 
 The process of going from an infinite number of potential cases to a smaller, finite number of potential case is called narrowing.
 
-```coffee
+```dart
 // We're making a guarantee that this variable
 // helloWorld will never change, by using const.
 
@@ -865,7 +865,7 @@ hiWorld .= "Hi World";
 
 In practice string literal types combine nicely with unions, type guards, and type aliases. You can use these features together to get enum-like behavior with strings.
 
-```coffee
+```dart
 type Position = 'before' | 'after';
 ```
 
@@ -881,7 +881,7 @@ Same thing for characters.
 
 Numeric literal types act the same as the string literals above. A common case for their use is for describing config values:
 
-```coffee
+```dart
 interface MapConfig {
   float lat, lng;
   (8 | 16 | 32) tileSize
@@ -894,7 +894,7 @@ setupMap({ lng: -73.935242, lat: 40.73061, tileSize: 16 });
 
 TypeScript also has boolean literal types. You might use these to constrain object values whose properties are interrelated.
 
-```coffee
+```dart
 interface ValidationSuccess {
   true isValid;
   null reason;
@@ -912,13 +912,13 @@ type ValidationResult = ValidationSuccess | ValidationFailure;
 
 Sometimes you have no choice but to list down all the possible literals a type may have. Enter conditional types, which allow you to explicitly specify which values are valid, without you having to exhaustively write down every single possible value.
 
-```coffee
+```dart
 type Dodecahedron = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
 ```
 
 Specify optional types, variables and then a conditional value or boolean function after the `where` keyword. (`it` is a placeholder for a function with a single argument.)
 
-```coffee
+```dart
 // Both are the same
 type Dodecahedron = int where 0 < it <= 12
 type Dodecahedron = int i where 0 < i <= 12
@@ -940,37 +940,37 @@ The curly braces around the statements are only there to group the statements to
 
 A typical statement looks like this:
 
-```coffee
+```dart
 if (y <= 15) { x = 10; print x; }
 ```
 
 You can remove the parentheses if you so wish:
 
-```coffee
+```dart
 if y <= 15 { x = 10; print x; }
 ```
 
 If there's only one statement then _that's_ the only time you enclose your expression (or statements) inside parentheses.
 
-```coffee
+```dart
 if (y <= 15) print y;
 ```
 
 Similarly, use `then`:
 
-```coffee
+```dart
 if y <= 15 then print y;
 ```
 
 Otherwise, you can put your control flow statements (this only works for `if/unless`, `for`, `while` and `until` statements), like Perl:
 
-```coffee
+```dart
 print if y <= 15;
 ```
 
 In Zenith, **everything is an expression**, which means that they can be assigned to variables and returned from functions:
 
-```coffee
+```dart
 res = 3 if true else 0;
 
 res = if 2 & 3 ^^ 3 + 2 != 4 {
@@ -1009,12 +1009,12 @@ As with functions and other block expressions, multi-line conditionals are delim
 
 You can chain multiple `elif` (`else if`) clauses if you wish, or leave a dangling `else` which won't be executed.
 
-```coffee
+```dart
 if (temp <= 15)
   print("It's very cold. Consider wearing a scarf.");
 ```
 
-```coffee
+```dart
 temp = 28
 if (temp <= 15)
   print("It's very cold. Consider wearing a scarf.");
@@ -1022,7 +1022,7 @@ else
   print("It's not that cold. Wear a t-shirt.");
 ```
 
-```coffee
+```dart
 temp = 28
 if (temp <= 15)
   print("It's very cold. Consider wearing a scarf.");
@@ -1030,7 +1030,7 @@ elif (temp >= 30)
   print("It's really warm. Don't forget to wear sunscreen.");
 ```
 
-```coffee
+```dart
 temp = 28
 if (temp <= 15)
   print("It's very cold. Consider wearing a scarf.");
@@ -1039,7 +1039,7 @@ elif (temp >= 30)
 else // don't do anything else
 ```
 
-```coffee
+```dart
 temp = 28
 if (temp <= 15)
   print("It's very cold. Consider wearing a scarf.");
@@ -1053,7 +1053,7 @@ else
 
 There are a handful of ways to write if statements. Note that there is no ternary operator `a ? b : c` in Zenith, as a regular `if` statement would suffice.
 
-```coffee
+```dart
 if condition { runA(); } else { runB(); }
 x = if (condition) a else b;
 x = a if condition else b; // Also possible, similar to Python
@@ -1061,7 +1061,7 @@ x = a if condition else b; // Also possible, similar to Python
 
 There’s also a handy postfix form, with the `if` or `unless` at the end.
 
-```coffee
+```dart
 x = a if condition;
 ```
 
@@ -1073,7 +1073,7 @@ Most of the loops you write are comprehensions over arrays, objects, and ranges.
 
 Comprehensions should be able to handle most places where you otherwise would use a loop, `each`/`forEach`, `map`, or `select`/`filter`, for example:
 
-```coffee
+```dart
 shortNames = (for (name in list when len name < 5) name)
 ```
 
@@ -1087,7 +1087,7 @@ for (let i = 1; i <= 10; i++) {}
 
 Whereas in Zenith, you can write it out like this:
 
-```coffee
+```dart
 for i in [1::10] {}
 ```
 
@@ -1134,7 +1134,7 @@ for (let index of [
 
 ...can be simplified into a `for-in` range loop, as shown below. You use the `for-in` loop to iterate over a sequence, such as items in an array, ranges of numbers, or characters in a string.
 
-```coffee
+```dart
 for i in [1,2,::50:1:2:3:4] {
   // actual code goes here
 }
@@ -1142,7 +1142,7 @@ for i in [1,2,::50:1:2:3:4] {
 
 This example uses a `for-in` loop to iterate over the items in an array. The second element refers to each item's indices.
 
-```coffee
+```dart
 names = ["Anna", "Alex", "Brian", "Jack"];
 
 for name in names {
@@ -1158,7 +1158,7 @@ for name, index in names {
 
 You use the `for-of` loop to iterate over an object or map. The keys are assigned to a variable named `child`, and the values are assigned to `age`.
 
-```coffee
+```dart
 yearsOld = { Max: 10, Ida: 9, Tim: 11 };
 
 for child of yearsOld {
@@ -1176,7 +1176,7 @@ If you would like to iterate over just the keys that are defined on the object i
 
 To iterate values over a generator function, use `for-from`.
 
-```coffee
+```dart
 genfn fibonacci(): int {
   (a, b) = (0, 1);
   loop {
@@ -1205,7 +1205,7 @@ For readability, `until condition` is `while !condition`, `repeat {} until condi
 - `until` and `repeat-until` are like `while`, except the loop runs until the condition is `true`.
 - `loop` runs its body forever **unless** there is a `break` statement somewhere.
 
-```coffee
+```dart
 while i < 10 {
   text += "The number is " + i;
   print text;
@@ -1213,7 +1213,7 @@ while i < 10 {
 }
 ```
 
-```coffee
+```dart
 repeat {
   text += "The number is " + i;
   print text;
@@ -1221,7 +1221,7 @@ repeat {
 } while i < 10;
 ```
 
-```coffee
+```dart
 until i == 10 {
   text += "The number is " + i;
   print text;
@@ -1229,7 +1229,7 @@ until i == 10 {
 }
 ```
 
-```coffee
+```dart
 repeat {
   text += "The number is " + i;
   print text;
@@ -1237,7 +1237,7 @@ repeat {
 } until i == 10;
 ```
 
-```coffee
+```dart
 loop {
   text += "The number is " + i;
   print text;
@@ -1252,7 +1252,7 @@ Pattern matching provides a way to conditionally execute code when the shape of 
 
 These two are valid:
 
-```coffee
+```dart
 switch someValueToConsider {
   case value1 ->
     // respond to value 1
@@ -1263,7 +1263,7 @@ switch someValueToConsider {
 }
 ```
 
-```coffee
+```dart
 switch someValueToConsider {
   | value1 ->
     // respond to value1
@@ -1280,7 +1280,7 @@ The switch finds the first pattern that matches the input, and then executes the
 
 Like the body of an `if` statement, each case is a separate branch of code execution. The `switch` statement determines which branch should be selected.
 
-```coffee
+```dart
 char z = `z`;
 switch someCharacter {
   | `a` -> print "The first letter of the alphabet";
@@ -1295,7 +1295,7 @@ In contrast with `switch` statements in C, JS, Java and others, switch statement
 
 The body of each case must contain at least one executable statement. It isn't valid to write the following code, because the first case is empty:
 
-```coffee
+```dart
 char a = `a`;
 switch a {
   | "a" -> // Invalid, the case has an empty body
@@ -1310,7 +1310,7 @@ In contrast with switch statements in C-like languages, `switch` statements in Z
 
 To make a switch with a single case that matches both "a" and "A", combine the two values into a compound case, separating the values with commas.
 
-```coffee
+```dart
 char a = `a`;
 switch a {
   | "a", "e", "i", "o", "u" ->
@@ -1327,7 +1327,7 @@ Values in switch cases can be checked for their inclusion in an interval. This e
 
 In every case statement following the vertical bar, there can be half-expressions, in which the value to compare is the first operand to the expression. In this case, `in [12:<100]` when used inside a switch expression, is evaluated to `approx in [12:<100]`.
 
-```coffee
+```dart
 approx = 62;
 things = "moons orbiting Saturn";
 str count;
@@ -1351,7 +1351,7 @@ The example below takes an `(x, y)` point, expressed as a simple tuple of type `
 
 Unlike C, Swift allows multiple switch cases to consider the same value or values. In fact, the point `(0, 0)` could match all four of the cases in this example. However, if multiple matches are possible, the **first matching case is always used**. The point `(0, 0)` would match case `(0, 0)` first, ignoring all other matching cases.
 
-```coffee
+```dart
 point = (1, 1);
 switch point {
   | (0, 0) ->
@@ -1372,7 +1372,7 @@ A case clause can have local variables, which are visible only inside the scope 
 
 After the temporary constants are declared, they can be used within the case's code block. This switch statement doesn't have a default case, as the case `let (x, y)`, declares a tuple of two placeholder constants that can match any value.
 
-```coffee
+```dart
 point = (1, 1);
 switch point {
   | (let x, 0) -
@@ -1387,7 +1387,7 @@ switch point {
 
 A switch case can use a `where` clause to check for additional conditions.
 
-```coffee
+```dart
 point = (-1, 1);
 switch point {
   | let (x, y) when x == y ->
@@ -1402,7 +1402,7 @@ switch point {
 
 Compound cases can also include value bindings. All of the patterns of a compound case have to include the same set of value bindings, and each binding has to get a value of the same type from all of the patterns in the compound case.
 
-```coffee
+```dart
 stillAnotherPoint = (9, 0)
 switch stillAnotherPoint {
   | (let distance, 0), (0, let distance) ->
@@ -1426,7 +1426,7 @@ Control transfer statements change the order in which your code is executed, by 
 
 The `continue` statement tells a loop to stop what it's doing and start again at the beginning of the next iteration through the loop.
 
-```coffee
+```dart
 text = "", i;
 for i in [1::5] {
   if (i === 3) continue;
@@ -1438,7 +1438,7 @@ The `break` statement ends execution of an entire control flow statement immedia
 
 When used inside a loop statement, `break` ends the loop's execution immediately and transfers control to the code after the loop's closing brace. No further code from the current iteration of the loop is executed, and no further iterations of the loop are started.
 
-```coffee
+```dart
 text = "", i;
 for i in [1::5] {
   if (i === 3) break;
@@ -1452,7 +1452,7 @@ When used inside a `switch` statement, break causes the `switch` statement to en
 
 If you need C-style fallthrough behavior, you can opt in to this behavior on a case-by-case basis with the `fallthru` keyword.
 
-```coffee
+```dart
 integer := 5;
 description = "The number #integer is";
 switch integer {
@@ -1469,7 +1469,7 @@ print description;
 
 To execute a labelled statement, use `goto`, which is very similar to function calls without arguments. The following command runs for both `CLOSED` and `NOW_CLOSED`.
 
-```coffee
+```dart
 var command = 'CLOSED';
 switch (command) {
   case 'CLOSED' -> {
@@ -1486,7 +1486,7 @@ You can nest statements inside other control flow statements to create complex c
 
 Therefore, it's sometimes useful to be explicit about which statement you want a `break` or `continue` statement to terminate, or a for-loop to execute. To achieve these aims, you can mark a statement, such as a `do`-block, with a statement label.
 
-```coffee
+```dart
 i = 0;
 label runThis: do {
   i .+= 1;
@@ -1496,7 +1496,7 @@ goto runThis;
 print i; // 1
 ```
 
-```coffee
+```dart
 finalSquare = 25;
 board = [0 for _ in [0::finalSquare]];
 board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02;
