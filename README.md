@@ -141,6 +141,20 @@ There are really only two types of comments: `// line comments` and `/* block co
 
 Constants and variables must be declared before they're used. You declare constants with the `const` keyword and variables with the `let` keyword. You can also declare non-local variables with the `var` keyword. The value of a constant can't be changed once it's set, whereas a variable can be set to a different value in the future.
 
+Identifier names can begin with a letter, underscore `_` or **any** Unicode character that is not punctuation or symbol\*. All other characters, in addition to that, can have digits and `$`. This is slightly different than JavaScript, in which `$` was a valid identifier. The first `$` is ignored, use `$$` instead.
+
+If you need to give a constant or variable the same name as a reserved Zenith keyword, surround the keyword with quotes _or_ prefix a `$` when using it as a name. However, avoid using keywords as names unless you have absolutely no choice.
+
+\*<small>This means, whitespace characters, mathematical symbols, arrows, private-use Unicode scalar values, or line- and box-drawing characters. Nor can they begin with a number, although numbers may be included elsewhere within the name.</small>
+
+`$` is a topic placeholder identifier that you will see in many code examples---for instance Scala uses `_`.
+
+```res
+π = 3.14159
+你好 = "你好世界"
+🐶🐮 = "dogcow"
+```
+
 You can declare `let` and `var` variables with a value. They can be seen and referenced by code that comes after them.
 
 ```res
@@ -149,9 +163,7 @@ var j;
 for const i in [0::len array] {}
 ```
 
-By default, all variables when declared with the `=` assignment operator are automatically assigned a `let` declaration.
-
-Constants are always initialized with `:=`.
+By default, all variables when declared with the `=` assignment operator are automatically assigned a `let` declaration. Constants are always initialized with `:=`.
 
 ```res
 i = 3;  // let i = 3
@@ -206,18 +218,6 @@ You can destructure from tuples, arrays, objects and maps, like in Swift, Reason
 
 {| 'x': x, 'y': y, 'z': z |} = {| 'x': 0, 'y': 0, 'z': 0 |};
 ```
-
-Constant and variable names can contain almost any character, including Unicode characters:
-
-```res
-π = 3.14159
-你好 = "你好世界"
-🐶🐮 = "dogcow"
-```
-
-Constant and variable names can't contain whitespace characters, mathematical symbols, arrows, private-use Unicode scalar values, or line- and box-drawing characters. Nor can they begin with a number, although numbers may be included elsewhere within the name.
-
-> Note: If you need to give a constant or variable the same name as a reserved Zenith keyword, surround the keyword with a string literal and prefix a `$` when using it as a name. However, avoid using keywords as names unless you have absolutely no choice.
 
 Within expressions, you can change and assign variables directly. This is because a value assigned will return its value backward.
 
@@ -606,10 +606,10 @@ So a range expression `[1,2,0::50:1:2:3:4]` is compiled to this monstrosity in J
 
 Each individual index must be assigned a literal value, and for subranges a tuple of values.
 
-| Operator         | Meaning                                                                                            |
-| ---------------- | -------------------------------------------------------------------------------------------------- |
-| `a = val`        | Assign `val` to index `a`                                                                          |
-| `a::b:c=<1,2,3>` | _Cycle-assign_ to every index evaluated by the range expression, the values `1, 2, 3`, in order of appearance, overriding any previous overridden values. |
+| Operator         | Meaning                                                                                                                                                            |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `a = val`        | Assign `val` to index `a`                                                                                                                                          |
+| `a::b:c=<1,2,3>` | _Cycle-assign_ to every index evaluated by the range expression `a::b:c`, the values `1, 2, 3`, in order of appearance, overriding any previous overridden values. |
 
 ```res
 str c = 'hello'; // Slicing
@@ -1580,4 +1580,3 @@ print "Game over!";
 ## Types and Object-Oriented Programming
 
 \#TODO
-
