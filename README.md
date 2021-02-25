@@ -1205,6 +1205,8 @@ For readability, `until condition` is `while !condition`, `repeat {} until condi
 - `until` and `repeat-until` are like `while`, except the loop runs until the condition is `true`.
 - `loop` runs its body forever **unless** there is a `break` statement somewhere.
 
+These loops are equivalent (and compile into the same output):
+
 ```res
 while i < 10 {
   text += "The number is " + i;
@@ -1214,19 +1216,21 @@ while i < 10 {
 ```
 
 ```res
-repeat {
-  text += "The number is " + i;
-  print text;
-  i++;
-} while i < 10;
-```
-
-```res
 until i == 10 {
   text += "The number is " + i;
   print text;
   i++;
 }
+```
+
+and these are equivalent too:
+
+```res
+repeat {
+  text += "The number is " + i;
+  print text;
+  i++;
+} while i < 10;
 ```
 
 ```res
