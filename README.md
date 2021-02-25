@@ -780,7 +780,7 @@ arr<str> y = ["one", "two", "three"];
 Types can have multiple parameters and be nested:
 
 ```ts
-type pair<#a, #b> = (#a, #b);
+type pair<a, b> = (a, b);
 
 pair(int, str) x = (1, "one");
 pair(str, int[]) y = ("123", [1, 2, 3]);
