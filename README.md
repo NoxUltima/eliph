@@ -1118,8 +1118,7 @@ for (let index of [
     for (let i = min; i <= max; i += sum) {
       let idx = i;
       for (let j of patt) {
-        idx += j;
-        arr.push(idx);
+        arr.push((idx += j));
       }
     }
     // Operator ::, :<, :>, >:, <:, ><, <>
