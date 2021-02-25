@@ -533,7 +533,9 @@ Much like JavaScript objects and maps, arrays and tuples do have keys (their **n
 '3' of (1, 2, 3, 4, 5) // false
 ```
 
-Strings, arrays and tuples can be indexed, concatenated, repeated, sliced and spliced, much the same way as you do with Python. Indices work `%%` the length of the array and are 0-indexed, so given a string/tuple/array `seq` of length `5`, `... seq[5] == seq[0] == seq[-4] == seq[-9] ...`.
+Strings, arrays and tuples can be indexed, concatenated, repeated, sliced and spliced, much the same way as you do with Python.
+
+Indices are 0-indexed and can accept integer values, but modulo `%%` the length of the array. So given a string/tuple/array `seq` of length `5`, `... seq[5] == seq[0] == seq[-4] == seq[-9] ...`.
 
 Array or tuple types allow you to express a fixed number of elements whose types are known, but need not be the same. For example, you may want to represent a value as a pair of a `str` and `int`.
 
@@ -549,6 +551,8 @@ x = [10, "hello"];
 ```
 
 ### Ranges
+
+It may seem confusing at first, but...
 
 We use the **range literal** syntax, for example, `[1,2,3]` or `[1:100:1]`. Range syntax is short, sweet and very powerful. Ranges can evaluate to tuples or arrays containing numeric values, depending on whether they are enclosed in parentheses or brackets.
 
@@ -566,7 +570,14 @@ A range literal can either contain individual numeric elements separated by comm
 | `a::b:c`         | ... inclusive, stepping by `c`  |
 | `a::b:c:d`       | ... stepping by `c`, then `d`\* |
 
-\* if the range counts **out of bounds**, it will coerce that to count in the right direction. that is, given `c + d > 0 && a > b || c + d < 0 && a < b`, then all numbers following `a` and `b` will be negated: `c` would be `-c` and `d` `-d`.
+In `[a::b:c:d]`:
+
+- Each iteration alternates between adding `c`and`d`to`a`, until reaching and hitting `b`.
+- Algebraically, this is equivalent to `[a, a + c, a + c + d, a + 2c + d, a + 2c + 2d, a + 3c + 2d, a + 3c + 3d ... b]`
+
+Some things to note:
+
+- If the range counts **out of bounds**, it will coerce that to count in the right direction. `c + d > 0 && a > b || c + d < 0 && a < b`, then all numbers following `a` and `b` will be negated: `c` would be `-c` and `d` `-d`.
 
 So a range expression `[1,2,0::50:1:2:3:4]` is compiled to this monstrosity in JavaScript:
 
@@ -591,7 +602,14 @@ So a range expression `[1,2,0::50:1:2:3:4]` is compiled to this monstrosity in J
 ];
 ```
 
-**Slicing and splicing** allow you to retrieve and override elements in tuples and arrays, or individual `char`s in strings. The topic placeholder `$`, is used as an alias for the length of an array or string.
+**Slicing and splicing** allow you to retrieve and override elements in tuples and arrays, or individual `char`s in strings, using the same notation above but this time enclosed in square brackets `[]` immediately after the literal or variable name. The topic placeholder `$`, is used as an alias for the length of the array or string it refers to.
+
+Each individual index must be assigned a literal value, and for subranges a tuple of values.
+
+| Operator         | Meaning                                                                                            |
+| ---------------- | -------------------------------------------------------------------------------------------------- |
+| `a = val`        | Assign `val` to index `a`                                                                          |
+| `a::b:c=<1,2,3>` | _Cycle-assign_ to every index evaluated by the range expression, the values `1, 2, 3`, in order of appearance, overriding any previous overridden values. |
 
 ```res
 str c = 'hello'; // Slicing
@@ -1562,3 +1580,4 @@ print "Game over!";
 ## Types and Object-Oriented Programming
 
 \#TODO
+
