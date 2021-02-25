@@ -43,20 +43,22 @@ ReScript maps one source file to one JavaScript output file. This eases the inte
 
 ## An Informal Introduction
 
-Zenith provides its own versions of all JavaScript and TypeScript types, including `int` and `float` as JavaScript `number` and `bigint`, `bool` for `boolean` and `str` as `string`.
+> This tutorial introduces various features of the Zenith language through examples, beginning with simple expressions, statements and data types, through functions and modules, and finally touching upon advanced concepts like errors and user-defined classes.
 
-In addition to familiar types, Zenith introduces advanced types not found in JavaScript, such as tuples. Tuples enable you to create and pass around groupings of values. You can use a tuple to return multiple values from a function as a single compound value.
+Zenith provides its own versions of all JavaScript and TypeScript types, including `int` and `float` as JavaScript `number` and `bigint`, `bool` for `boolean` and `str` as `string` (and `char` as an extension of `string`).
 
-First, the basics. Like many programming languages from Swift to Scala to Rust to TypeScript, Zenith uses significant use of curly braces to delimit blocks of code. So it looks more like JavaScript.
+In addition to familiar types, Zenith introduces advanced types not found in JavaScript, such as tuples, maps, sets, arbitrary precision numbers and algebraic data types.
 
-As for semicolons, you don't _actually_ need to use them unless you want to fit multiple expressions onto a single line. Commas are also entirely optional in compound data types, when each property is listed on its own line. The only compulsory thing you need is the outer brackets or braces.
+First, the basics. Like many programming languages such as Swift, Scala, Rust and Reason, Zenith uses significant use of **curly braces** `{}` to delimit blocks of code, rather than indentation. What has been eliminated (although not entirely) are the parentheses `()` that go after control flow statements such as `if`, `for` and `while`, but most importantly, commas and semicolons.
 
-As for function calls, they do require parentheses but there are also other ways you can write them.
+You don't _actually_ need to use semicolons unless you want to fit multiple expressions onto a single line. Commas are also entirely optional in compound data types, when each property is listed on its own line. The only compulsory thing you need is the outer brackets or braces.
+
+Function calls require parentheses, as in many other programming languages.
 
 ```res
 print(sys.inspect(e)) // This is okay
-print (sys.inspect e) // This is also fine
-print sys.inspect e   // Nice
+print (sys.inspect e) // This will throw a SyntaxError
+print sys.inspect e   // This will also throw a SyntaxError
 ```
 
 You can also chain methods without parentheses by spacing them out. Note the function syntax on the right.
@@ -65,8 +67,6 @@ You can also chain methods without parentheses by spacing them out. Note the fun
 [1, 2, 3, 4, 5].slice 10 * 3 .filter { $ % 3 == 0 }
 [1, 2, 3, 4, 5].slice(10 * 3).filter((i) => i % 3 == 0)
 ```
-
-This tutorial introduces various features of the Zenith language through examples, beginning with simple expressions, statements and data types, through functions and modules, and finally touching upon advanced concepts like errors and user-defined classes.
 
 Zenith has a lot of keywords, most of which you are familiar with. Let's go through them in a bit of detail here:
 
@@ -169,7 +169,7 @@ do { x .= 2 } // 2 => modifies `var x`
 
 Once you've declared a constant or variable of a certain type, you can't declare it again with the same name, or change it to store values of a different type. Nor can you change a constant into a variable or vice versa.
 
-You can change the value of an existing variable to another value, as long as it is of the same type (though you can reuse a variable name when you initialize it to be `any`. In this example, the value of friendlyWelcome is changed from "Hello!" to "Bonjour!":
+You can change the value of an existing variable to another value, as long as it is of the same type (though you can reuse a variable name when you initialize it to be `any`). In this example, the value of friendlyWelcome is changed from "Hello!" to "Bonjour!":
 
 ```res
 friendlyWelcome = "Hello!"
@@ -180,9 +180,31 @@ friendlyWelcome = "Bonjour!"
 Unlike a variable, the value of a constant can’t be changed after it’s set. Attempting to do so is reported as an error when your code is compiled:
 
 ```res
-languageName := "Zenith "
+languageName := "Zenith"
 languageName = "Nadir"
-// This is a compile-time error: languageName cannot be changed.
+// Error: languageName cannot be changed.
+```
+
+You can declare multiple constants or multiple variables on a single line, separated by commas:
+
+```res
+x = 0.0, y := 0.0, z .= 0.0;
+```
+
+or put even more simply this if you want to initialize the same value for different variable names.
+
+```res
+x = y := z .= 0.0;
+```
+
+You can destructure from tuples, arrays, objects and maps, like in Swift, Reason or JavaScript:
+
+```res
+(x, y, , z) = (0, 0, 1, 0);
+[x, y, , z] = [0, 0, 1, 0];
+{x, y, z} = {x: 0, y: 0, z: 0, a: 1};
+
+{| 'x': x, 'y': y, 'z': z |} = {| 'x': 0, 'y': 0, 'z': 0 |};
 ```
 
 Constant and variable names can contain almost any character, including Unicode characters:
@@ -259,7 +281,7 @@ unknown someValue = "this is a string";
 int strLength = len <str>someValue;
 ```
 
-The two samples are equivalent. Using one over the other is mostly a choice of preference; however, when using JSX, only `as`-style and constructor assertions are allowed.
+The two samples are equivalent. Using one over the other is mostly a choice of preference; however, when using JSX, do not **ever** use angle brackets.
 
 ### Boolean
 
@@ -280,7 +302,7 @@ true && false // false
 true || false // true
 ```
 
-We do provide a few more, such as the `^^` or `xor` logical operator, which returns `true` as long as both operands are distinct. It functions roughly same way as `!==`. <small>Note any operators that doesn't have a JavaScript counterpart automatically compile to private functions.</small>
+We do provide a few more, such as the `^^` or `xor` logical operator, which returns `true` as long as both operands are distinct. It functions roughly the same way as `!==`. <small>Note any operators that doesn't have a JavaScript counterpart automatically compile to private functions.</small>
 
 ```res
 xor = (a, b) => !a !== !b && (a || b);
@@ -307,7 +329,7 @@ The integer numbers (e.g. `2`, `4`, `20`) have type `int`, the ones with a fract
 dec := 6.;
 hex := 0xf00d;
 binary := 0b1010;
-dctal := 0o744;
+octal := 0o744;
 ```
 
 The basic operations `+`, `-`, `*` and `/` work the same way as in JS, and you can use parentheses `()` in grouping your expressions:
@@ -513,11 +535,27 @@ Much like JavaScript objects and maps, arrays and tuples do have keys (their **n
 
 Strings, arrays and tuples can be indexed, concatenated, repeated, sliced and spliced, much the same way as you do with Python. Indices work `%%` the length of the array and are 0-indexed, so given a string/tuple/array `seq` of length `5`, `... seq[5] == seq[0] == seq[-4] == seq[-9] ...`.
 
-Slicing and splicing allow you to retrieve and override elements in tuples and arrays, or individual `char`s in strings. Take note of the slicing syntax:
+Array or tuple types allow you to express a fixed number of elements whose types are known, but need not be the same. For example, you may want to represent a value as a pair of a `str` and `int`.
+
+```res
+let [str, int] x;
+
+// Initialize it
+x = ["hello", 10]; // OK
+
+// Initialize it incorrectly
+x = [10, "hello"];
+// ERROR: type [int, str] is not assignable to type [str, int]
+```
+
+### Ranges
+
+We use the **range literal** syntax, for example, `[1,2,3]` or `[1:100:1]`. Range syntax is short, sweet and very powerful. Ranges can evaluate to tuples or arrays containing numeric values, depending on whether they are enclosed in parentheses or brackets.
+
+A range literal can either contain individual numeric elements separated by commas, or subranges of the form `start::end:step`, implicitly adding `0` wherever needed if there is no number separatid by any of these two symbols.
 
 | Operator         | Meaning                         |
 | ---------------- | ------------------------------- |
-| `$`              | length of array                 |
 | `a,b`            | `a` and `b` only                |
 | `,b,`            | implicit `0`: `0,b,0`           |
 | `a,b:c`          | `a`, then from `b` to `c`       |
@@ -528,7 +566,32 @@ Slicing and splicing allow you to retrieve and override elements in tuples and a
 | `a::b:c`         | ... inclusive, stepping by `c`  |
 | `a::b:c:d`       | ... stepping by `c`, then `d`\* |
 
-\* if `c + d > 0 && a > b || c + d < 0 && a < b`, then `c = -c` and `d = -d`.
+\* if the range counts **out of bounds**, it will coerce that to count in the right direction. that is, given `c + d > 0 && a > b || c + d < 0 && a < b`, then all numbers following `a` and `b` will be negated: `c` would be `-c` and `d` `-d`.
+
+So a range expression `[1,2,0::50:1:2:3:4]` is compiled to this monstrosity in JavaScript:
+
+```js
+[
+  1, // Individual elements
+  2,
+  ...(() => {
+    // Start, end and pattern
+    const [min, max, patt] = [0, 50, [1, 2, 3, 4]];
+    let sum = patt.reduce((a, b) => a + b, 0),
+      arr = [min];
+    for (let i = min; i <= max; i += sum) {
+      let idx = i;
+      for (let j of patt) {
+        arr.push((idx += j));
+      }
+    }
+    // Exclude start or end
+    return arr.filter(idx => min <= idx && idx <= max);
+  })()
+];
+```
+
+**Slicing and splicing** allow you to retrieve and override elements in tuples and arrays, or individual `char`s in strings. The topic placeholder `$`, is used as an alias for the length of an array or string.
 
 ```res
 str c = 'hello'; // Slicing
@@ -548,19 +611,6 @@ any[] a = [1, 2] + [3, 4]; // Concatenation
 print(x, z); // 1, [3, 4]
 $a = [...a, ...a, 4]; // [1, 2, 3, 4, 1, 2, 3, 4, 5]
 $a = a * 2 + [4]; // [1, 2, 3, 4, 1, 2, 3, 4, 5]
-```
-
-Array or tuple types allow you to express a fixed number of elements whose types are known, but need not be the same. For example, you may want to represent a value as a pair of a `str` and `int`.
-
-```res
-let [str, int] x;
-
-// Initialize it
-x = ["hello", 10]; // OK
-
-// Initialize it incorrectly
-x = [10, "hello"];
-// ERROR: type [int, str] is not assignable to type [str, int]
 ```
 
 ### Objects
@@ -1091,47 +1141,6 @@ Whereas in Zenith, you can write it out like this:
 for i in [1::10] {}
 ```
 
-Note we've just used the range literal (the one used for array and string slicing), which compile to regular arrays of numeric values in JavaScript. Here, `$` is not allowed since there's no sequence to iterate over but we are creating a new array instead.
-
-From the previous chapter we learnt about the slicing and splicing syntax. Range syntax is short, sweet and very powerful.
-
-| Operator         | Meaning                         |
-| ---------------- | ------------------------------- |
-| `a,b`            | `a` and `b` only                |
-| `,b,`            | implicit `0`: `0,b,0`           |
-| `a,b:c`          | `a`, then from `b` to `c`       |
-| `a::b`           | from `a` to `b`, inclusive      |
-| `a:>b` or `a:<b` | ... excluding `b`               |
-| `a<:b` or `a>:b` | ... excluding `a`               |
-| `a<>b` or `a><b` | ... exclusive                   |
-| `a::b:c`         | ... inclusive, stepping by `c`  |
-| `a::b:c:d`       | ... stepping by `c`, then `d`\* |
-
-So something as complex as this...
-
-```js
-for (let index of [
-  1, // Individual elements
-  2,
-  ...(() => {
-    // Start, end and pattern
-    const [min, max, patt] = [0, 50, [1, 2, 3, 4]];
-    let sum = patt.reduce((a, b) => a + b, 0),
-      arr = [min];
-    for (let i = min; i <= max; i += sum) {
-      let idx = i;
-      for (let j of patt) {
-        arr.push((idx += j));
-      }
-    }
-    // Exclude start or end
-    return arr.filter(i => min <= idx && idx <= max);
-  })()
-]) {
-  // actual code goes here
-}
-```
-
 ...can be simplified into a `for-in` range loop, as shown below. You use the `for-in` loop to iterate over a sequence, such as items in an array, ranges of numbers, or characters in a string.
 
 ```res
@@ -1379,7 +1388,7 @@ After the temporary constants are declared, they can be used within the case's c
 ```res
 point = (1, 1);
 switch point {
-  | (let x, 0) -
+  | (let x, 0) ->
     print "on the x-axis with an x value of #x";
   | (0, let y) ->
     print "on the y-axis with a y value of #y";
@@ -1482,8 +1491,7 @@ switch integer {
     description += " a prime number, and also";
     fallthru;
   };
-  | ->
-    description += " an integer.";
+  | -> description += " an integer.";
 }
 print description;
 // Prints "The number 5 is a prime number, and also an integer."
@@ -1519,12 +1527,8 @@ print i; // 1
 ```
 
 ```res
-finalSquare = 25;
 board = [0 for _ in [0::finalSquare]];
-board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02;
-board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08;
-square = 0;
-diceRoll = 0;
+square = 0; diceRoll = 0; finalSquare = 25;
 
 label snakesAndLadders:
 while square != finalSquare {
