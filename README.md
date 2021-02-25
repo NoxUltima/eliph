@@ -407,11 +407,11 @@ i = '105'6; // 41
 Note:
 
 - All `_` and leading `0`s are ignored
-- Any numeric literal not ending in `f`, `j`, `m` or `n` will throw an error.
+- Any numeric literal not ending in `f`, `j`, `m` or `n` (or more than two letters) will throw an error.
 
 ```res
 040; // 40
-04k; // ERROR: Literal shound end in digits or either of f, j, m or n
+004k; // ERROR: Literal shound end in digits or either of f, j, m or n
 ```
 
 You can type-cast with the use of constructor functions, similar to how `Number()`, `String()` and `Boolean()` usually work.
@@ -422,7 +422,7 @@ int rounded = int(round(1.3f)); // 1
 
 ### Strings
 
-As in other languages, we use the type `str` (not `string`) to refer to these textual datatypes. Just like JavaScript, TypeScript also uses double quotes (`"`) or single quotes (`'`) to surround string data.
+As in other languages, we use the type `str` (not `string`) to refer to these textual datatypes. Just like JavaScript, Zenith also uses double quotes (`"`) or single quotes (`'`) to surround string data.
 
 ```res
 str color = 'blue';
@@ -609,7 +609,7 @@ notSure = "maybe a string instead";
 notSure = false;
 ```
 
-Also note `def` here is the equivalent of `declare` in TypeScript.
+Also note `def` in Zenith is the equivalent of `declare` in TypeScript (commonly used in TS declaration files ending in `.d.ts`.)
 
 ```res
 def unknown maybe;
@@ -1124,7 +1124,7 @@ for (let index of [
         arr.push((idx += j));
       }
     }
-    // Operator ::, :<, :>, >:, <:, ><, <>
+    // Exclude start or end
     return arr.filter(i => min <= idx && idx <= max);
   })()
 ]) {
