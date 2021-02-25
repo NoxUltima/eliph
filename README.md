@@ -1413,9 +1413,27 @@ switch stillAnotherPoint {
 // Prints "On an axis, 9 from the origin"
 ```
 
-### Control Transfer
+Declaring `switch {}` without a parameter will implicitly invoke a default value `switch true {}`:
 
-Control transfer statements change the order in which your code is executed, by transferring control from one piece of code to another. There are six control transfer statements:
+```res
+x = 1
+switch {
+  | x == 1 -> print 1;
+  | x in [2, 3] -> print [2, 3];
+  | -> print 4;
+}
+```
+
+Switch can also match against primitive values, but this this is highly disrecommended.
+
+```res
+switch 2 + 3 {
+  | 5 -> print "2 + 3 = 5";
+  | -> { print ''; break; };
+}
+```
+
+**Control transfer statements** change the order in which your code is executed, by transferring control from one piece of code to another. There are six control transfer statements in Zenith:
 
 - `continue`
 - `break`
@@ -1429,7 +1447,7 @@ The `continue` statement tells a loop to stop what it's doing and start again at
 ```res
 text = "", i;
 for i in [1::5] {
-  if (i === 3) continue;
+  if (i == 3) continue;
   text += "The number is " + i + "\n";
 }
 ```
@@ -1441,7 +1459,7 @@ When used inside a loop statement, `break` ends the loop's execution immediately
 ```res
 text = "", i;
 for i in [1::5] {
-  if (i === 3) break;
+  if (i == 3) break;
   text += "The number is " + i + "\n";
 }
 ```
@@ -1523,23 +1541,13 @@ print "Game over!";
 
 ### Error Handling
 
-## Functions and Generator Functions
-
 \#TODO
 
-## Property Access
+## Functions
 
 \#TODO
 
 ## Classes and Inheritance
-
-\#TODO
-
-## Error-handling
-
-\#TODO
-
-## OOP
 
 \#TODO
 
