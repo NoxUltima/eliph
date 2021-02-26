@@ -43,7 +43,7 @@ This all could be summed up in a few different points:
 
 **Dependency-free**. Eliph aims to provide a suite of built-in classes, methods and functions that provide more than what JS can, so there is no need for you to compose your own functions on the fly. At the same time, Eliph should include in and of itself a **standard library** (inspired by languages like Python, Ruby and Go) since the JS ecosystem is littered with dependencies. Shipping the final product inevitably drags in a huge amount of code, most of which the project doesn't actually use.
 
-- Eliph can be used directly on Node.JS and even has its own standalone library with no dependencies, `@eliph/stdlib`, similar to other compile-to-JS languages.
+- Eliph can be used **directly on Node.JS** and runs standalone with no dependencies, `@eliph/stdlib` like other standard libraries.
 - The Eliph standard library can be used directly on any Node.JS application, even alongside other to-JS languages like TypeScript and CoffeeScript.
 
 **One-to-one mapping**. Unreadable boilerplate JS code generated from other compiled-to-JS languages makes it so that it could be, practically speaking, hard to debug, hard to learn from and hard to integrate with existing handwritten JS. Whereas for Eliph, the compiled output is automatically mapped to one source file, while the code structure is preserved. This is especially important while learning, where users might want to understand how the code's compiled, and to audit for bugs. Eliph does a number of things to remove unnecessary boilerplate code from the compiled output.
@@ -53,4 +53,85 @@ This all could be summed up in a few different points:
 
 ---
 
-<style>p,a,ol,ul,blockquote{text-align:justify;}</style>
+# Table of Contents
+
+1. A Formal Introduction
+2. The Basics
+   1. Your First Program
+   2. Code Structure
+   3. Comments
+   4. Keywords
+   5. Embedding Raw Code
+3. Variables
+   1. `var`, `let`, `const`
+   2. Shorthands
+4. Constants and literals
+   1. Basic data types
+   2. `null` and `undef`
+   3. Booleans `bool` and their operations
+   4. Numbers
+      1. Integers `int` and floating points `float`
+      2. Arithmetic and bitwise operations
+      3. Fractions `frac`
+      4. Decimals `deci`
+      5. Complex Numbers `comp`
+   5. Strings `str` and characters `char`
+      1. String Operations
+      2. Templates
+      3. Basic and Extended Slicing
+      4. Regular Expressions
+   6. Ranges, Sequences and Comprehensions
+      1. Literals `[a<:b:c,d]`
+      2. Array and Object Comprehensions
+   7. Data Structures
+      1. Tuples `()` and Arrays `[]`
+      2. Objects `{}` and Maps `{| |}`
+      3. Lists `(| |)` and Sets `[| |]`
+      4. Destructuring assignment
+5. Control Flow
+   1. The `do` block, closures and `pass`
+   2. Decision Making
+      1. `if-else`
+      2. `guard`
+   3. Loops
+      1. Range, `for-in`, `for-of` and `for-from`
+      2. `break` and `continue`
+      3. `while` and `until`; `repeat-while` and `repeat-until`
+      4. Infinite `loop`
+   4. Switch
+      1. Conditional `switch`
+      2. Multiple cases and half-expressions
+      3. `break` and `fallthru`
+      4. Pattern matching
+   5. Error handling
+      1. `try-catch-finally`
+      2. Multiple `catch` statements
+   6. `label` and `goto`
+6. Functions
+   1. `func` declaration
+   2. Recursion
+   3. Generators
+   4. First-class functions
+   5. Composition
+   6. Piping
+   7. Currying
+7. Types
+   1. `any`, `void`, `unknown`, `other` and `never`
+   2. Aliases
+   3. Specific values
+   4. Unions and intersection types
+   5. Interfaces
+   6. Enumerations `enum`
+      1. Default
+      2. Ranged Values
+      3. Non-Numeric Values
+8. Classes
+   1. Constructors and Instances
+   2. Attributes and Methods
+   3. Inheritance and Polymorphism
+   4. Access Modifiers
+9. Modules
+   1. Imports and Exports
+   2. The `dotfiles` and `url` System
+   3. Using NPM Packages
+   4. Namespaces and Packages
