@@ -122,17 +122,18 @@ This all could be summed up in a few different points:
    3. Specific values
    4. Unions and intersection types
    5. Interfaces
-   6. Enumerations `enum`
+   6. `enum`
       1. Default
       2. Ranged Values
       3. Non-Numeric Values
 8. Classes
-   1. Constructors and Instances
-   2. Attributes and Methods
-   3. Inheritance and Polymorphism
-   4. Access Modifiers
+   1. Constructors and instances
+   2. Methods and attributes
+   3. Inheritance and mixins
+   4. Access modifiers
 9. Modules
-   1. Imports and Exports
-   2. The `dotfiles` and `url` System
-   3. Using NPM Packages
-   4. Namespaces and Packages
+   1. Import and export
+   2. The `dotfiles`
+   3. Using NPM modules
+   4. Namespaces
+10. Standard Library
