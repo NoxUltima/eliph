@@ -1539,7 +1539,3 @@ print "Game over!";
 ## Advanced Types
 
 \#TODO
-
----
-
-<style>p,a,ol,ul,blockquote{text-align:justify;}</style>
