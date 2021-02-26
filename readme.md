@@ -87,7 +87,8 @@ This all could be summed up in a few different points:
       1. Tuples `()` and Arrays `[]`
       2. Objects `{}` and Maps `{| |}`
       3. Lists `(| |)` and Sets `[| |]`
-      4. Destructuring assignment
+      4. Weak Sets `#[]` and Maps `#{}`
+      5. Destructuring assignment
 5. Control Flow
    1. The `do` block, closures and `pass`
    2. Decision Making
