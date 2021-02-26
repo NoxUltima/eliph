@@ -2,65 +2,72 @@
 
 This language is but a **concept**. The compiler and everything else will be released soon (perhaps a few years from now). I just need time to work on it, and get my studies settled.
 
-# Nova
+# Eliph
 
-**Nova** is how (I think) JavaScript should be like. The golden rule is, if it looks like JavaScript, it should work _with_ and _like_ JavaScript, and compiles to short, sweet and readable JavaScript code. So it should be seen as an attempt to expose and extend the good parts of JavaScript in a simple way, powered by the increasingly rampant JavaScript ecosystem and its many packages and modules.
+**Eliph** is how (I think) JavaScript should be like. The golden rule is, if it looks like JavaScript, it should work _with_ and _like_ JavaScript, and compiles to short, sweet and readable JavaScript code. So it should be seen as an attempt to expose and extend the good parts of JavaScript in a simple way, powered by the increasingly rampant JavaScript ecosystem and its many packages and modules.
 
-Nova is a new programming language designed to combat JavaScript's:
+The language borrows and blends elements and concepts from different programming languages&mdash;reactive, object-oriented and functional programming. Alright, let's begin. It is a completely new programming language by itself, so you can write more sophisticated code with tons of syntactic sugar and powerful features and a large standard library.
 
-- inexplicable runtime semantics and cost
-- unexpected runtime errors
-- disorganized syntactic features
-- complete lack of a robust and sturdy type system
-- lack of a "standard library" (that is, its own modules which one can import)
-- hard interoperability with existing JS code
+Eliph is inspired by JavaScript, TypeScript, Ruby, Python, F#, Nim, Haskell, LiveScript, CoffeeScript, PHP, Rust, Go, Swift, Kotlin, C++, C#, Objective-C, Java, Go, Dart, Haxe, Perl, ReScript/Reason, and Mint.
 
-It is a completely new programming language by itself, so you can write more sophisticated code with tons of syntactic sugar and powerful advanced features. The language borrows and blends elements and concepts from different programming languages&mdash;reactive, object-oriented and functional programming. Alright, let's begin.
+## History of Eliph
 
-Nova is inspired by JavaScript, TypeScript, Ruby, Python, F#, Nim, Haskell, LiveScript, CoffeeScript, PHP, Rust, Go, Swift, Kotlin, C++, C#, Objective-C, Java, Go, Dart, Haxe, Perl, ReScript/Reason, and Mint.
+Eliph first began as a side gig in early 2020 when I developed algorithms and programs in Python and JavaScript during my free time, but using the former twice as much. However in order to use my Python command line programs in my web development projects I wanted to rewrite my codes in JS, but having to go over to Stack Overflow and manually searching for the exact functions in my code which uses highly specialised Python functions and libraries unavailable and difficult to find in JS.
+
+Also the functions which JavaScript offers are often too difficult to understand and may often require some further explanation to comprehend, after looking at the documentation. As I grew deeply obsessed with programming in JS due to the idea that one can design and develop everything they imagine using only one language, this lead me to pursue a goal of creating a new language that blends the simplicity and ease of Python with the malleability of JavaScript, along with syntaxes and operations inspired by different programming languages.
+
+## Why Eliph?
+
+This all could be summed up in a few different points:
+
+[coffeescript]: https://coffeescript.org/
+[wtfjs]: https://github.com/denysdovhan/wtfjs
+[stdlib]: https://stdlib.io/
+[npm packages]: https://medium.com/@thomasfuchs/what-if-we-had-a-great-standard-library-in-javascript-52692342ee3f
+
+**Eliph is _lagom_**. Preserving JavaScript-like syntax is a clear must, mainly for people who come from languages like C, Java or even JS would be able to learn quickly. However, some of the more unnecessary things that really become a big hassle for developers like me, such as verbosity, word length and excessive use of punctuation, have been removed.
+
+- **Shortened keyword names**: `function -> func`, `instanceof -> instof`, `extends -> from / of`, `implements -> with`
+- **Unnecessary punctuation have been removed**, such as semicolons `;`, commas `,`, and parentheses `()` in statements like `if ()` and `for ()` are removed.
+- **Everything is an expression**, and can be assigned to variables and returned from functions, which includes control flow statements like `if`, `for` and `try`.
+- **Optional declarations** with `var`, `let` or `const` are only allowed when initializing a variable without a value or one in a loop.
+- **Implicit returns**: the last statement is automatically returned from a `do`-block (closure) or a function, unless otherwise specified with `return`.
+
+**Static and robust types**. JavaScript, because of its complete lack of types, resulting in its [peculiar runtime behaviour](https://github.com/denysdovhan/wtfjs), which can lead to unexpected and sometimes annoying side effects. TypeScript aimed to provide better tooling for JavaScript, by adding static typing to the JavaScript language, but inherits all of its problems, and has a much slower build process than modern JavaScript since it always has to be "compiled" by type-checking, hence significantly adding a lot more to the build time.
+
+- Types in Eliph are **automatically inferred.** You don't need to explicitly assign a type to a variable. If you want to disable type checking for a variable whenever you're working with a third-party JavaScript library, you can through
+- You can annotate **anywhere** within your code, even within expressions, so you can assure yourself and also other people who will be maintaining your code, that you know what you're doing.
+- **A type should not change into another.** In JavaScript, your variable's type might change when the code runs, hence causing a wide range of side-effects. This is an anti-feature; it makes the code much harder to understand when reading or debugging.
+- **Types are erased after compilation** and don't exist at runtime. You don't need type info during runtime; so any type errors are automatically reported at compile time so you can catch the bugs earlier.
+- **A type system that is sometimes incorrect can be dangerous** due to expectation mismatches. Most type systems make a guess at the type of a value and show you a type in your editor that's sometimes incorrect.
+
+**Dependency-free**. Eliph aims to provide a suite of built-in classes, methods and functions that provide more than what JS can, so there is no need for you to compose your own functions on the fly. At the same time, Eliph should include in and of itself a **standard library** (inspired by languages like Python, Ruby and Go) since the JS ecosystem is littered with dependencies. Shipping the final product inevitably drags in a huge amount of code, most of which the project doesn't actually use.
+
+- Eliph can be used directly on Node.JS and even has its own standalone library with no dependencies, `@eliph/stdlib`, similar to other compile-to-JS languages.
+- The Eliph standard library can be used directly on any Node.JS application, even alongside other to-JS languages like TypeScript and CoffeeScript.
+
+**One-to-one mapping**. Unreadable boilerplate JS code generated from other compiled-to-JS languages makes it so that it could be, practically speaking, hard to debug, hard to learn from and hard to integrate with existing handwritten JS. Whereas for Eliph, the compiled output is automatically mapped to one source file, while the code structure is preserved. This is especially important while learning, where users might want to understand how the code's compiled, and to audit for bugs. Eliph does a number of things to remove unnecessary boilerplate code from the compiled output.
+
+- Syntactic sugar, `stdlib` modules and built-in functions such as range literals, fractions and s(p)licing, whenever mentioned in Eliph code, are automatically generated as import statements from `@eliph` in the final output, and map cleanly to regular JavaScript functions.
+- Variables and constants are temporary. They are declared `let` by default the moment they first appear. Those with **illegal identifier names**, or the values which are passed onto the `del` statement, are put in a "header" object that exists only on the current scope.
 
 ---
 
-## Differences from TypeScript
-
-TypeScript should be respected very much given that it's a positive force in the JavaScript ecosystem. Nova shares some of the same goals as TypeScript. While TypeScript seeks to cover the entire JavaScript feature set and more, Nova is **not** a superset of JavaScript nor TypeScript, but rather its own programming language that descends from JavaScript.
-
-- Is deliberately curated to be a simple subset most folks will have an easier time to use.
-- Has no pitfalls, aka the type system is "sound" (the types will always be correct). Or if you're willing to stop type-checking a variable, when using a third-party library, you can simply use `any`.
-- Doesn't need type annotations. Annotate as much or as little as you'd like. The types are inferred by the language.
-
-### Readable Output & Great Interop
-
-Unreadable JavaScript code generated from other compiled-to-JS languages makes it so that it could be, practically speaking:
-
-- Hard to debug (cryptic stack trace, mangled variable names)
-- Hard to learn from (non-straightforward mapping of concepts from one language to another)
-- Hard to profile for performance (unclear what runtime performance cost there is)
-- Hard to integrate with existing hand-written JS code
-
-Nova's JS output is very readable. This is especially important while learning, where users might want to understand how the code's compiled, and to audit for bugs.
-
-This characteristic, combined with a fully-featured JS interop system, allows ReScript code to be inserted into an existing JavaScript codebase almost unnoticed.
-
-## Preservation of Code Structure
-
-ReScript maps one source file to one JavaScript output file. This eases the integration of existing tools such as bundlers and test runners. You can even start writing a single file without much change your build setup. Each file's code structure is approximately preserved, too.
-
 ## An Informal Introduction
 
-> This tutorial introduces various features of the Nova language through examples, beginning with simple expressions, statements and data types, through functions and modules, and finally touching upon advanced concepts like errors and user-defined classes.
+> This tutorial introduces various features of the Eliph language through examples, beginning with simple expressions, statements and data types, through functions and modules, and finally touching upon advanced concepts like errors and user-defined classes.
 
-Nova provides its own versions of all JavaScript and TypeScript types, including `int` and `float` as JavaScript `number` and `bigint`, `bool` for `boolean` and `str` as `string` (and `char` as an extension of `string`).
+Eliph provides its own versions of all JavaScript and TypeScript types, including `int` and `float` as JavaScript `number` and `bigint`, `bool` for `boolean` and `str` as `string` (and `char` as an extension of `string`).
 
-In addition to familiar types, Nova introduces advanced types not found in JavaScript, such as tuples, maps, sets, arbitrary precision numbers and algebraic data types.
+In addition to familiar types, Eliph introduces advanced types not found in JavaScript, such as tuples, maps, sets, arbitrary precision numbers and algebraic data types.
 
-First, the basics. Like many programming languages such as Swift, Scala, Rust and Reason, Nova uses significant use of **curly braces** `{}` to delimit blocks of code, rather than indentation. What has been eliminated (although not entirely) are the parentheses `()` that go after control flow statements such as `if`, `for` and `while`, but most importantly, commas and semicolons.
+First, the basics. Like many programming languages such as Swift, Scala, Rust and Reason, Eliph uses significant use of **curly braces** `{}` to delimit blocks of code, rather than indentation. What has been eliminated (although not entirely) are the parentheses `()` that go after control flow statements such as `if`, `for` and `while`, but most importantly, commas and semicolons.
 
 You don't _actually_ need to use semicolons unless you want to fit multiple expressions onto a single line. Commas are also entirely optional in compound data types, when each property is listed on its own line. The only compulsory thing you need is the outer brackets or braces.
 
 Function calls require parentheses, as in many other programming languages.
 
-```coffee
+```res
 print(sys.inspect(e)) // This is okay
 print (sys.inspect e) // This will throw a SyntaxError
 print sys.inspect e   // This will also throw a SyntaxError
@@ -68,14 +75,14 @@ print sys.inspect e   // This will also throw a SyntaxError
 
 You can also chain methods without parentheses by spacing them out. Note the function syntax on the right.
 
-```coffee
+```res
 [1, 2, 3, 4, 5].slice 10 * 3 .filter { $ % 3 == 0 }
 [1, 2, 3, 4, 5].slice(10 * 3).filter((i) => i % 3 == 0)
 ```
 
-Nova has a lot of keywords, most of which you are familiar with. Let's go through them in a bit of detail here:
+Eliph has a lot of keywords, most of which you are familiar with. Let's go through them in a bit of detail here:
 
-```coffee
+```res
 // Control flow
 var let const declare define infix
 if unless then elif elun else
@@ -135,7 +142,7 @@ part sealed trans vol unsafe
 
 There are really only two types of comments: `// line comments` and `/* block comments */`. Both can be nested. You can also use the familiar `/** JSDoc comment syntax */` (which is basically just a block comment with an extra asterisk) if you like as well.
 
-```coffee
+```res
 /* hooray for nested comments */
 /**
  * @param hooray for nested comments
@@ -148,13 +155,13 @@ Constants and variables must be declared before they're used. You declare consta
 
 Identifier names can begin with a letter, underscore `_` or **any** Unicode character that is not punctuation or symbol\*. All other characters, in addition to that, can have digits and `$`. This is slightly different than JavaScript, in which `$` was a valid identifier. The first `$` is ignored, use `$$` instead.
 
-If you need to give a constant or variable the same name as a reserved Nova keyword, surround the keyword with quotes _or_ prefix a `$` when using it as a name. However, avoid using keywords as names unless you have absolutely no choice.
+If you need to give a constant or variable the same name as a reserved Eliph keyword, surround the keyword with quotes _or_ prefix a `$` when using it as a name. However, avoid using keywords as names unless you have absolutely no choice.
 
 \*<small>This means, whitespace characters, mathematical symbols, arrows, private-use Unicode scalar values, or line- and box-drawing characters. Nor can they begin with a number, although numbers may be included elsewhere within the name.</small>
 
 `$` is a topic placeholder identifier that you will see in many code examples---for instance Scala uses `_`.
 
-```coffee
+```res
 π = 3.14159
 你好 = "你好世界"
 🐶🐮 = "dogcow"
@@ -162,7 +169,7 @@ If you need to give a constant or variable the same name as a reserved Nova keyw
 
 You can declare `let` and `var` variables with a value. They can be seen and referenced by code that comes after them.
 
-```coffee
+```res
 let i;
 var j;
 for const i in [0::len array] {}
@@ -170,7 +177,7 @@ for const i in [0::len array] {}
 
 By default, all variables when declared with the `=` assignment operator are automatically assigned a `let` declaration, the first time they appear. Constants are always initialized with `:=`.
 
-```coffee
+```res
 i = 3;  // let i = 3
 j .= 4; // var j = 4
 k := 5; // const k = 5
@@ -178,7 +185,7 @@ k := 5; // const k = 5
 
 You can declare non-local variables with `var` using `.=`, and you are required to use `.=` all the time whenever you modify the same variable in upper scopes, such as outside functions.
 
-```coffee
+```res
 x .= 10 // declared as `var x`
 do { x = 5 } // 10 => creates a new variable called x
 do { x .= 2 } // 2 => modifies `var x`
@@ -188,7 +195,7 @@ Once you've declared a constant or variable of a certain type, you can't declare
 
 You can change the value of an existing variable to another value, as long as it is of the same type (though you can reuse a variable name when you initialize it to be `any`). In this example, the value of friendlyWelcome is changed from "Hello!" to "Bonjour!":
 
-```coffee
+```res
 friendlyWelcome = "Hello!"
 friendlyWelcome = "Bonjour!"
 // friendlyWelcome is now "Bonjour!"
@@ -196,27 +203,27 @@ friendlyWelcome = "Bonjour!"
 
 Unlike a variable, the value of a constant can’t be changed after it’s set. Attempting to do so is reported as an error when your code is executed:
 
-```coffee
-languageName := "Nova"
+```res
+languageName := "Eliph"
 languageName = "Nadir"
 // Error: languageName cannot be changed.
 ```
 
 You can declare multiple constants or multiple variables on a single line, separated by commas:
 
-```coffee
+```res
 x = 0.0, y := 0.0, z .= 0.0;
 ```
 
 or put even more simply this if you want to initialize the same value for different variable names.
 
-```coffee
+```res
 x = y := z .= 0.0;
 ```
 
 You can destructure from tuples, arrays, objects and maps, like in Swift, Reason or JavaScript:
 
-```coffee
+```res
 (x, y, , z) = (0, 0, 1, 0);
 [x, y, , z] = [0, 0, 1, 0];
 {x, y, z} = {x: 0, y: 0, z: 0, a: 1};
@@ -228,7 +235,7 @@ Within expressions, you can change and assign variables directly. This is becaus
 
 The expression `i += 2` is shorthand for `i = i + 2`. Effectively, the addition and the assignment are combined into one operator that performs both tasks at the same time.
 
-```coffee
+```res
 // In this example, both i and j are declared with the value 3
 i = j := 3; i += 2 // i == 5
 j // j == 3
@@ -236,24 +243,24 @@ j // j == 3
 
 ## Data Types
 
-For programs to be useful, we need to be able to work with some of the simplest units of data: numbers, strings, structures, boolean values, and the like. In Nova, we support the same types as you would expect in JavaScript, plus a few more thrown in to help things along.
+For programs to be useful, we need to be able to work with some of the simplest units of data: numbers, strings, structures, boolean values, and the like. In Eliph, we support the same types as you would expect in JavaScript, plus a few more thrown in to help things along.
 
 This declaration is named `count`, was declared with `let`, is of type `int`, and has a value of `42`. Its type was inferred, we did not explicitly write down that it was an `int`.
 
-```coffee
+```res
 count = 42;
 ```
 
 Types can be explicitly added with an annotation, that goes right before the variable name.
 
-```coffee
+```res
 let int i;
 var int j;
 ```
 
 Because `count` has a type the compiler knows what we are and are not allowed to do with its value:
 
-```coffee
+```res
 // Allowed: addition
 nextCount = count + 1
 
@@ -263,25 +270,25 @@ x = count.map => 3
 
 ### Casting
 
-Sometimes we want to convert a type of a value into something we already know. Casting performs no special checking or restructuring of data. It has no runtime impact and is used purely by the compiler. Nova assumes that you have performed any special checks you need. Type casting has three forms.
+Sometimes we want to convert a type of a value into something we already know. Casting performs no special checking or restructuring of data. It has no runtime impact and is used purely by the compiler. Eliph assumes that you have performed any special checks you need. Type casting has three forms.
 
 One is the `as`-syntax:
 
-```coffee
+```res
 unknown someValue = "this is a string";
 int strLength = len (someValue as str);
 ```
 
 Another is the constructor function syntax:
 
-```coffee
+```res
 unknown someValue = "this is a string";
 int strLength = len str(someValue);
 ```
 
 The other version is the "angle-bracket" syntax:
 
-```coffee
+```res
 unknown someValue = "this is a string";
 int strLength = len <str>someValue;
 ```
@@ -292,7 +299,7 @@ The two samples are equivalent. Using one over the other is mostly a choice of p
 
 A boolean is either one of two values, `true` and `false`, and has the type `bool`. `true` can have the aliases `yes` and `on` while `false` can have the aliases `no` and `off`.
 
-```coffee
+```res
 bool isDone := false;
 ```
 
@@ -301,7 +308,7 @@ The regular boolean operations have been preserved:
 - logical operators `!`, `&&`, `||`, and their infix aliases `not`, `and`, `or`;
 - comparison operators `<`, `>`, `<=`, `>=`;
 
-```coffee
+```res
 !true // false
 true && false // false
 true || false // true
@@ -309,11 +316,11 @@ true || false // true
 
 We do provide a few more, such as the `^^` or `xor` logical operator, which returns `true` as long as both operands are distinct. It functions roughly the same way as `!==`. <small>Note any operators that doesn't have a JavaScript counterpart automatically compile to private functions.</small>
 
-```coffee
+```res
 xor = (a, b) => !a !== !b && (a || b);
 ```
 
-```coffee
+```res
 false ^^ true  // true
 false ^^ false // false
 1 ^^ 0         // 1
@@ -322,7 +329,7 @@ false ^^ false // false
 
 `&&`, `||` and `^^`, and their infix forms `and`, `or` and `xor`, have their own inverses: `!&`/`nand`, `!|`/`nor` and `!^`/`xnor`.
 
-`==` and `!=` in Nova compile to `===` and `!==` in JavaScript. If you really want to use JavaScript's `==` and `!=`, use the _fuzzy equality_ operators `=~` and `!~` instead.
+`==` and `!=` in Eliph compile to `===` and `!==` in JavaScript. If you really want to use JavaScript's `==` and `!=`, use the _fuzzy equality_ operators `=~` and `!~` instead.
 
 ### Numbers
 
@@ -330,7 +337,7 @@ As in JavaScript, all numbers are either floating point values or (big) integers
 
 The integer numbers (e.g. `2`, `4`, `20`) have type `int`, the ones with a fractional part or with a dot `.` (e.g. `5.0`, `1.6`) have type `float`. `int`s also can end in `n`, of which explicitly tell the compiler it is a `bigint`.
 
-```coffee
+```res
 dec := 6.;
 hex := 0xf00d;
 binary := 0b1010;
@@ -339,7 +346,7 @@ octal := 0o744;
 
 The basic operations `+`, `-`, `*` and `/` work the same way as in JS, and you can use parentheses `()` in grouping your expressions:
 
-```coffee
+```res
 2 + 2 // 4
 50 - 5 * 6 // 20
 (50 - 5 * 6) / 4 // 5.0
@@ -348,11 +355,11 @@ The basic operations `+`, `-`, `*` and `/` work the same way as in JS, and you c
 
 Regular division with `/` will evaluate to a `float`, but floor division with `~/` will return `int`. Operators with mixed type operands convert the evaluated result to `float`:
 
-```coffee
+```res
 4 * 3.75 - 1;
 ```
 
-```coffee
+```res
 17 / 3; // 5.666666666666667
 17 ~/ 3; // 5
 17 % 3; // 2
@@ -361,7 +368,7 @@ Regular division with `/` will evaluate to a `float`, but floor division with `~
 
 Bitwise operations such as `&`, `|` and `^` (and their inverses `~&`, `~|`, `~^`), unary `~` and bitwise shift operators `<<`, `>>` and `>>>` will evaluate into `int`.
 
-```coffee
+```res
 5 & 1; // 1
 5 | 1; // 5
 5 ^ 1; // 4
@@ -373,14 +380,14 @@ Bitwise operations such as `&`, `|` and `^` (and their inverses `~&`, `~|`, `~^`
 
 `%%` provides dividend-dependent modulo:
 
-```coffee
+```res
 -7 % 5 == -2; // The remainder of 7 / 5
 -7 %% 5 == 3; // n %% 5 is always between 0 and 4
 ```
 
 Radix literals can be created using prefixes `0x`, `0o`, `0b`. Literals can be broken up using the `_` character which will be ignored:
 
-```coffee
+```res
 decimal = 11256099;
 hexadecimal = 0xABC123;
 octal = 0o52740443;
@@ -390,7 +397,7 @@ billion = 1_000_000_000;
 
 The minimum/maximum operators `<?` and `>?`, which return the smaller or larger of the two operands.
 
-```coffee
+```res
 3 <? 10; // 3
 3 >? 10; // 10
 ```
@@ -401,7 +408,7 @@ PHP's "spaceship" operator `<=>`, returns either `1`, `0` or `-1` depending on w
 leg = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
 ```
 
-```coffee
+```res
 3 <=> 1; // 1
 1 <=> 3; // -1
 2 <=> 2; // 0
@@ -417,7 +424,7 @@ Besides the very common `int` and `float`, there are three more types `frac`, `d
 
 `num` is a superset of `int`, `float`, `frac`, `deci`, and `comp`, and for expressions with mixed-type operands, any type lower in the hierarchy is always coerced to a higher superset type.
 
-```coffee
+```res
 i = 1; // int
 i += 1.; // float
 i += 1f; // frac
@@ -427,7 +434,7 @@ i += (1,0)j; // comp
 
 Bases 2 to 64 can be used, as long as they use these digits and are surrounded in string literals and suffixed with the base: `0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$&`.
 
-```coffee
+```res
 i = '105'6; // 41
 ```
 
@@ -436,22 +443,22 @@ Note:
 - All `_` and leading `0`s are ignored
 - Any numeric literal not ending in `f`, `j`, `m` or `n` (or more than two letters) will throw an error.
 
-```coffee
+```res
 040; // 40
 004k; // ERROR: Literal shound end in digits or either of f, j, m or n
 ```
 
 You can type-cast with the use of constructor functions, similar to how `Number()`, `String()` and `Boolean()` usually work.
 
-```coffee
+```res
 int rounded = int(round(1.3f)); // 1
 ```
 
 ### Strings
 
-As in other languages, we use the type `str` (not `string`) to refer to these textual datatypes. Just like JavaScript, Nova also uses double quotes (`"`) or single quotes (`'`) to surround string data.
+As in other languages, we use the type `str` (not `string`) to refer to these textual datatypes. Just like JavaScript, Eliph also uses double quotes (`"`) or single quotes (`'`) to surround string data.
 
-```coffee
+```res
 str color = 'blue';
 color = 'red';
 ```
@@ -465,7 +472,7 @@ Template strings, of the form `""`, which can span multiple lines and have embed
 | `\`-escaping (except `#`)   | Yes | No  |
 | Proper Unicode handling     | No  | Yes |
 
-```coffee
+```res
 str fullName = "Bob Bobbington";
 int age = 37;
 str sentence = "Hello, my name is #fullName.
@@ -474,7 +481,7 @@ I'll be #{age + 1} years old next month.";
 
 Characters, of type `char`, enclosed in ` `` `, are really just strings of length 1. They don't do anything, really, except they are compatible with `int` operations and can be concatenated to form strings. So, strings basically are arrays of characters.
 
-```coffee
+```res
 char a = `a`;
 ```
 
@@ -482,7 +489,7 @@ Strings can be replaced with either a substring or through pattern matching, whe
 
 Strings can be split into tuples of strings or characters with `/`, use casting into `char[]()` or `as char[]` if you want to convert the split result into individual characters. Spreading `[...string]` converts the string into an array of `char`s.
 
-```coffee
+```res
 str s = 'Hello';
 
 s = 'Hello' - `l`; // 'Heo'
@@ -498,7 +505,7 @@ char[] c = [...s]
 
 Use `%` to join strings back, where the right operand is the delimiter. This operation will convert all non-strings (including `char`s) into strings.
 
-```coffee
+```res
 strArr = ['H', 'e', `l`, 'l', 'o']
 strArr = strArr % '' //  'Hello'
 ```
@@ -507,7 +514,7 @@ strArr = strArr % '' //  'Hello'
 
 For array types, you can annotate in one of two ways: the type of the element followed by `[]` to denote an array of that element type. Note arrays work the same way as in JavaScript and are **mutable** in the sense that they can be modified directly by invoking methods such as `push`, `pop`, `shift`, `unshift` and `splice` on it.
 
-```coffee
+```res
 int[] myList = [1, 2, 3];
 myList[1] = 300
 myList[1, 3] = [300, 400]; // 300, 400
@@ -515,20 +522,20 @@ myList[1, 3] = [300, 400]; // 300, 400
 
 Same thing for tuples; the type followed by `()`. However, they are **immutable** and each operation you perform on it would return a new tuple.
 
-```coffee
+```res
 int() myTuple = (1, 2, 3);
 myTuple[1] = 2 // ERROR: tuple elements cannot be assigned directly.
 ```
 
 Use the unary `len` operator to retrieve the length of a(n) string/array/tuple:
 
-```coffee
+```res
 arrLen = len [1, 2, 3, 4, 5] // 5
 ```
 
 Much like JavaScript objects and maps, arrays and tuples do have keys (their **numeric** index) and values (which are the values you see on the screen), You can use `in` to test for value presence, and `of` to test for key presence.
 
-```coffee
+```res
 '3' in '12345' // true
 3 of '12345' // true
 '3' of '12345' // false
@@ -544,7 +551,7 @@ Indices are 0-indexed and can accept integer values, but modulo `%%` the length 
 
 Array or tuple types allow you to express a fixed number of elements whose types are known, but need not be the same. For example, you may want to represent a value as a pair of a `str` and `int`.
 
-```coffee
+```res
 let [str, int] x;
 
 // Initialize it
@@ -616,7 +623,7 @@ Each individual index must be assigned a literal value, and for subranges a tupl
 | `a = val`        | Assign `val` to index `a`                                                                                                                                          |
 | `a::b:c=<1,2,3>` | _Cycle-assign_ to every index evaluated by the range expression `a::b:c`, the values `1, 2, 3`, in order of appearance, overriding any previous overridden values. |
 
-```coffee
+```res
 str c = 'hello'; // Slicing
 s = c[1]; // e
 s = c[1,2]; // el (specific indices)
@@ -654,7 +661,7 @@ $a = a * 2 + [4]; // [1, 2, 3, 4, 1, 2, 3, 4, 5]
 
 To opt-out of type checking when working with existing JS libraries, we label these values with the `any` type:
 
-```coffee
+```res
 def (str key) => any getValue;
 // OK, return value of 'getValue' is not checked
 str $str = getValue("myString");
@@ -662,7 +669,7 @@ str $str = getValue("myString");
 
 The `any` will continue to propagate through your objects:
 
-```coffee
+```res
 any looselyTyped = {};
 let d = looselyTyped.a.b.c.d;
 //  ^ = let d: any
@@ -674,7 +681,7 @@ After all, remember that all the convenience of `any` comes at the cost of losin
 
 We may need to describe the type of variables that we do not know when we are writing an application. In these cases, we want to provide a type that tells the compiler and future readers that this variable could be anything, so we give it the `unknown` type.
 
-```coffee
+```res
 unknown notSure = 4;
 notSure = "maybe a string instead";
 
@@ -682,18 +689,18 @@ notSure = "maybe a string instead";
 notSure = false;
 ```
 
-Also note `def` in Nova is the equivalent of `declare` in TypeScript (commonly used in TS declaration files ending in `.d.ts`.)
+Also note `def` in Eliph is the equivalent of `declare` in TypeScript (commonly used in TS declaration files ending in `.d.ts`.)
 
-```coffee
+```res
 def unknown maybe;
 // 'maybe' could be a string, object, boolean, undefined, or other types
 int anInt := maybe;
 // ERROR: Type 'unknown' is not assignable to type 'number'.
 ```
 
-```coffee
+```res
 if (typeof maybe == 'bool') {
-  // Nova knows that maybe is a boolean now
+  // Eliph knows that maybe is a boolean now
   bool aBoolean := maybe;
   // So, it cannot be a string
   str aString := maybe;
@@ -701,9 +708,9 @@ if (typeof maybe == 'bool') {
 }
 ```
 
-```coffee
+```res
 if (typeof maybe == 'string') {
-  // Nova knows that maybe is a string
+  // Eliph knows that maybe is a string
   bool aBoolean := maybe;
   // So, it cannot be a boolean
   str aString := maybe;
@@ -711,9 +718,9 @@ if (typeof maybe == 'string') {
 }
 ```
 
-Unlike `unknown`, variables of type `any` allow you to access arbitrary properties, even ones that don’t exist. These properties include functions and Nova will not check their existence or type:
+Unlike `unknown`, variables of type `any` allow you to access arbitrary properties, even ones that don’t exist. These properties include functions and Eliph will not check their existence or type:
 
-```coffee
+```res
 any looselyTyped := 4;
 looselyTyped.ifItExists(); // OK, ifItExists might exist at runtime
 looselyTyped.toFixed(); // OK, toFixed exists (but the compiler doesn't check)
@@ -726,7 +733,7 @@ strictlyTyped.toFixed(); // ERROR: Object is of type 'unknown'.
 
 `void` is a little like the opposite of `any`: the absence of having any type at all. `void == null | undef`.
 
-```coffee
+```res
 void warnUser() {
   print "This is my warning message";
 }
@@ -734,14 +741,14 @@ void warnUser() {
 
 Declaring variables of type `void` is not useful because you can only assign `null` or `undef` to them:
 
-```coffee
+```res
 void unusable = undef;
 unusable = null;
 ```
 
 In TypeScript, both `undef` and `null` actually have their **own** types, but they’re not extremely useful on their own. They are considered literal types
 
-```coffee
+```res
 // Not much else we can assign to these variables!
 undef u = undef;
 null n = null;
@@ -753,7 +760,7 @@ null n = null;
 
 With object type, APIs like Object.create can be better represented. For example:
 
-```coffee
+```res
 def func create(other | null) void;
 
 // OK
@@ -777,7 +784,7 @@ The `never` type is a subtype of, and assignable to, every type; however, no typ
 
 Some examples of functions returning `never`:
 
-```coffee
+```res
 // Function returning `never` must not have a reachable end point
 error (message) never {
   throw Error(message);
@@ -797,14 +804,14 @@ fail() {
 
 Primitive constructors `Int`, `Float`, `String`, `Char`, `Boolean`, `Symbol`, or `Other` are the same as the lowercase versions recommended above. They almost never should be used. This is not Java.
 
-```coffee
+```res
 String reverse(String s) => (s / 1).rev() % '';
 reverse("hello world");
 ```
 
 Instead, use the lowercase types.
 
-```coffee
+```res
 str reverse(str s) => s[#:>0];
 reverse("hello world");
 ```
@@ -815,7 +822,7 @@ Type annotations can appear almost anywhere. They are not often necessary due to
 
 `int` and `str` are annotations used throughout these examples.
 
-```coffee
+```res
 int $5 := 5;
 $9 = (int $5) + (int $4 = 4);
 add = (int x, int y) int => x + y;
@@ -826,14 +833,14 @@ drawCircle = (int radius) str => "hi";
 
 Aliases can be defined for types. This is helpful to attach meaning to simple types and when working with complex types that become long to write down.
 
-```coffee
+```res
 type seconds = int;
 type timeInterval = (seconds, seconds);
 ```
 
 Using the alias `seconds` it is clear how the sleep function works. If int were used it might not be obvious:
 
-```coffee
+```res
 sleep = (timeInterval seconds) => { ... }
 ```
 
@@ -845,20 +852,20 @@ Types can accept type parameters, which are similar to generics in other languag
 
 Parameters are prefixed with a single `#` when defining the type:
 
-```coffee
+```res
 type arr<#item> = ...
 ```
 
 When using this type as an annotation the parameter can be filled in with a concrete type:
 
-```coffee
+```res
 arr<int> x = [1, 2, 3];
 arr<str> y = ["one", "two", "three"];
 ```
 
 Types can have multiple parameters and be nested:
 
-```coffee
+```res
 type pair<a, b> = (a, b);
 
 pair(int, str) x = (1, "one");
@@ -876,13 +883,13 @@ As you model more types you find yourself looking for tools which let you compos
 
 A union type describes a value that can be one of several types. We use the vertical bar (`|`) to separate each type, so `int | str | bool` is the type of a value that can be an `int`, a `str` or a `bool`. As you have already heard,
 
-```coffee
+```res
 type void = null | undef
 ```
 
 If we have a value that is a union type, we can only access members that are common to all types in the union.
 
-```coffee
+```res
 interface Bird = { void fly(); void layEggs(); }
 interface Fish = { void swim(); void layEggs(); }
 def func getSmallPet() Fish | Bird;
@@ -895,7 +902,7 @@ pet.swim(); // will throw
 
 Intersection types are closely related to union types, but they are used very differently. An intersection type combines multiple types into one. For example, `Person & Serializable & Loggable` is a type which is all of `Person` and `Serializable` and `Loggable`.
 
-```coffee
+```res
 interface ErrorHandling {
   bool success;
   { message: str } error?;
@@ -923,7 +930,7 @@ When you declare a variable with `.=` or `=`, you are telling the compiler that 
 
 The process of going from an infinite number of potential cases to a smaller, finite number of potential case is called narrowing.
 
-```coffee
+```res
 // We're making a guarantee that this variable
 // helloWorld will never change, by using const.
 
@@ -938,7 +945,7 @@ hiWorld .= "Hi World";
 
 In practice string literal types combine nicely with unions, type guards, and type aliases. You can use these features together to get enum-like behavior with strings.
 
-```coffee
+```res
 type Position = 'before' | 'after';
 ```
 
@@ -954,7 +961,7 @@ Same thing for characters.
 
 Numeric literal types act the same as the string literals above. A common case for their use is for describing config values:
 
-```coffee
+```res
 interface MapConfig {
   float lat, lng;
   (8 | 16 | 32) tileSize
@@ -967,7 +974,7 @@ setupMap({ lng: -73.935242, lat: 40.73061, tileSize: 16 });
 
 TypeScript also has boolean literal types. You might use these to constrain object values whose properties are interrelated.
 
-```coffee
+```res
 interface ValidationSuccess {
   true isValid;
   null reason;
@@ -985,13 +992,13 @@ type ValidationResult = ValidationSuccess | ValidationFailure;
 
 Sometimes you have no choice but to list down all the possible literals a type may have. Enter conditional types, which allow you to explicitly specify which values are valid, without you having to exhaustively write down every single possible value.
 
-```coffee
+```res
 type Dodecahedron = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
 ```
 
 Specify optional types, variables and then a conditional value or boolean function after the `where` keyword. (`it` is a placeholder for a function with a single argument.)
 
-```coffee
+```res
 // Both are the same
 type Dodecahedron = int where 0 < it <= 12
 type Dodecahedron = int i where 0 < i <= 12
@@ -1013,37 +1020,37 @@ The curly braces around the statements are only there to group the statements to
 
 A typical statement looks like this:
 
-```coffee
+```res
 if (y <= 15) { x = 10; print x; }
 ```
 
 You can remove the parentheses if you so wish:
 
-```coffee
+```res
 if y <= 15 { x = 10; print x; }
 ```
 
 If there's only one statement then _that's_ the only time you enclose your expression (or statements) inside parentheses.
 
-```coffee
+```res
 if (y <= 15) print y;
 ```
 
 Similarly, use `then`:
 
-```coffee
+```res
 if y <= 15 then print y;
 ```
 
 Otherwise, you can put your control flow statements (this only works for `if/unless`, `for`, `while` and `until` statements), like Perl:
 
-```coffee
+```res
 print if y <= 15;
 ```
 
-In Nova, **everything is an expression**, which means that they can be assigned to variables and returned from functions:
+In Eliph, **everything is an expression**, which means that they can be assigned to variables and returned from functions:
 
-```coffee
+```res
 res = 3 if true else 0;
 
 res = if 2 & 3 ^^ 3 + 2 != 4 {
@@ -1076,18 +1083,18 @@ res = do {
 
 As with functions and other block expressions, multi-line conditionals are delimited by curly braces.
 
-`if` statements are compiled either into JavaScript expressions, using the ternary operator when possible, and closure wrapping otherwise. There is no explicit ternary statement in Nova — you simply use a regular `if` statement on a single line.
+`if` statements are compiled either into JavaScript expressions, using the ternary operator when possible, and closure wrapping otherwise. There is no explicit ternary statement in Eliph — you simply use a regular `if` statement on a single line.
 
 `if` and `else` work the same way as in many other languages, like Java. At its simplest form, it consists of a single `if` statement with a single statement immediately following it or multiple statements enclosed in curly braces.
 
 You can chain multiple `elif` (`else if`) clauses if you wish, or leave a dangling `else` which won't be executed.
 
-```coffee
+```res
 if (temp <= 15)
   print("It's very cold. Consider wearing a scarf.");
 ```
 
-```coffee
+```res
 temp = 28
 if (temp <= 15)
   print("It's very cold. Consider wearing a scarf.");
@@ -1095,7 +1102,7 @@ else
   print("It's not that cold. Wear a t-shirt.");
 ```
 
-```coffee
+```res
 temp = 28
 if (temp <= 15)
   print("It's very cold. Consider wearing a scarf.");
@@ -1103,7 +1110,7 @@ elif (temp >= 30)
   print("It's really warm. Don't forget to wear sunscreen.");
 ```
 
-```coffee
+```res
 temp = 28
 if (temp <= 15)
   print("It's very cold. Consider wearing a scarf.");
@@ -1112,7 +1119,7 @@ elif (temp >= 30)
 else // don't do anything else
 ```
 
-```coffee
+```res
 temp = 28
 if (temp <= 15)
   print("It's very cold. Consider wearing a scarf.");
@@ -1124,9 +1131,9 @@ else
 
 `unless` can be used in place of `if`, and refers to `if not`. Likewise, `elun` (`else unless`) can be used in place of `elif`, and refers to `else if not`.
 
-There are a handful of ways to write if statements. Note that there is no ternary operator `a ? b : c` in Nova, as a regular `if` statement would suffice.
+There are a handful of ways to write if statements. Note that there is no ternary operator `a ? b : c` in Eliph, as a regular `if` statement would suffice.
 
-```coffee
+```res
 if condition { runA(); } else { runB(); }
 x = if (condition) a else b;
 x = a if condition else b; // Also possible, similar to Python
@@ -1134,7 +1141,7 @@ x = a if condition else b; // Also possible, similar to Python
 
 There’s also a handy postfix form, with the `if` or `unless` at the end.
 
-```coffee
+```res
 x = a if condition;
 ```
 
@@ -1146,7 +1153,7 @@ Most of the loops you write are comprehensions over arrays, objects, and ranges.
 
 Comprehensions should be able to handle most places where you otherwise would use a loop, `each`/`forEach`, `map`, or `select`/`filter`, for example:
 
-```coffee
+```res
 shortNames = (for (name in list when len name < 5) name)
 ```
 
@@ -1158,15 +1165,15 @@ Typically, you would write down a `for`-loop like this in JavaScript, which is v
 for (let i = 1; i <= 10; i++) {}
 ```
 
-Whereas in Nova, you can write it out like this:
+Whereas in Eliph, you can write it out like this:
 
-```coffee
+```res
 for i in [1::10] {}
 ```
 
 ...can be simplified into a `for-in` range loop, as shown below. You use the `for-in` loop to iterate over a sequence, such as items in an array, ranges of numbers, or characters in a string.
 
-```coffee
+```res
 for i in [1,2,::50:1:2:3:4] {
   // actual code goes here
 }
@@ -1174,7 +1181,7 @@ for i in [1,2,::50:1:2:3:4] {
 
 This example uses a `for-in` loop to iterate over the items in an array. The second element refers to each item's indices.
 
-```coffee
+```res
 names = ["Anna", "Alex", "Brian", "Jack"];
 
 for name in names {
@@ -1190,7 +1197,7 @@ for name, index in names {
 
 You use the `for-of` loop to iterate over an object or map. The keys are assigned to a variable named `child`, and the values are assigned to `age`.
 
-```coffee
+```res
 yearsOld = { Max: 10, Ida: 9, Tim: 11 };
 
 for child of yearsOld {
@@ -1208,7 +1215,7 @@ If you would like to iterate over just the keys that are defined on the object i
 
 To iterate values over a generator function, use `for-from`.
 
-```coffee
+```res
 genfn fibonacci(): int {
   (a, b) = (0, 1);
   loop {
@@ -1239,7 +1246,7 @@ For readability, `until condition` is `while !condition`, `repeat {} until condi
 
 These loops are equivalent (and compile into the same output):
 
-```coffee
+```res
 while i < 10 {
   text += "The number is " + i;
   print text;
@@ -1247,7 +1254,7 @@ while i < 10 {
 }
 ```
 
-```coffee
+```res
 until i == 10 {
   text += "The number is " + i;
   print text;
@@ -1257,7 +1264,7 @@ until i == 10 {
 
 and these are equivalent too:
 
-```coffee
+```res
 repeat {
   text += "The number is " + i;
   print text;
@@ -1265,7 +1272,7 @@ repeat {
 } while i < 10;
 ```
 
-```coffee
+```res
 repeat {
   text += "The number is " + i;
   print text;
@@ -1273,7 +1280,7 @@ repeat {
 } until i == 10;
 ```
 
-```coffee
+```res
 loop {
   text += "The number is " + i;
   print text;
@@ -1288,7 +1295,7 @@ Pattern matching provides a way to conditionally execute code when the shape of 
 
 These two are valid:
 
-```coffee
+```res
 switch someValueToConsider {
   case value1 ->
     // respond to value 1
@@ -1299,7 +1306,7 @@ switch someValueToConsider {
 }
 ```
 
-```coffee
+```res
 switch someValueToConsider {
   | value1 ->
     // respond to value1
@@ -1316,7 +1323,7 @@ The switch finds the first pattern that matches the input, and then executes the
 
 Like the body of an `if` statement, each case is a separate branch of code execution. The `switch` statement determines which branch should be selected.
 
-```coffee
+```res
 char z = `z`;
 switch someCharacter {
   | `a` -> print "The first letter of the alphabet";
@@ -1327,11 +1334,11 @@ switch someCharacter {
 
 Because the `switch` must have a case for **every possible character**, this `switch` statement uses a "default" case to match all characters other than 'a' and 'z'. This provision ensures that the `switch` statement is exhaustive.
 
-In contrast with `switch` statements in C, JS, Java and others, switch statements in Nova don't fall through the bottom of each case and into the next one by default. Instead, the entire `switch` statement finishes its execution as soon as the first matching case is completed, without requiring an explicit `break` statement.
+In contrast with `switch` statements in C, JS, Java and others, switch statements in Eliph don't fall through the bottom of each case and into the next one by default. Instead, the entire `switch` statement finishes its execution as soon as the first matching case is completed, without requiring an explicit `break` statement.
 
 The body of each case must contain at least one executable statement. It isn't valid to write the following code, because the first case is empty:
 
-```coffee
+```res
 char a = `a`;
 switch a {
   | "a" -> // Invalid, the case has an empty body
@@ -1342,11 +1349,11 @@ switch a {
 }
 ```
 
-In contrast with switch statements in C-like languages, `switch` statements in Nova don't fall through the bottom of each case and into the next one by default. Instead, the entire statement finishes its execution as soon as the first matching case is completed, without requiring an explicit `break` statement.
+In contrast with switch statements in C-like languages, `switch` statements in Eliph don't fall through the bottom of each case and into the next one by default. Instead, the entire statement finishes its execution as soon as the first matching case is completed, without requiring an explicit `break` statement.
 
 To make a switch with a single case that matches both "a" and "A", combine the two values into a compound case, separating the values with commas.
 
-```coffee
+```res
 char a = `a`;
 switch a {
   | "a", "e", "i", "o", "u" ->
@@ -1363,7 +1370,7 @@ Values in switch cases can be checked for their inclusion in an interval. This e
 
 In every case statement following the vertical bar, there can be half-expressions, in which the value to compare is the first operand to the expression. In this case, `in [12:<100]` when used inside a switch expression, is evaluated to `approx in [12:<100]`.
 
-```coffee
+```res
 approx = 62;
 things = "moons orbiting Saturn";
 str count;
@@ -1387,7 +1394,7 @@ The example below takes an `(x, y)` point, expressed as a simple tuple of type `
 
 Unlike C, Swift allows multiple switch cases to consider the same value or values. In fact, the point `(0, 0)` could match all four of the cases in this example. However, if multiple matches are possible, the **first matching case is always used**. The point `(0, 0)` would match case `(0, 0)` first, ignoring all other matching cases.
 
-```coffee
+```res
 point = (1, 1);
 switch point {
   | (0, 0) ->
@@ -1408,7 +1415,7 @@ A case clause can have local variables, which are visible only inside the scope 
 
 After the temporary constants are declared, they can be used within the case's code block. This switch statement doesn't have a default case, as the case `let (x, y)`, declares a tuple of two placeholder constants that can match any value.
 
-```coffee
+```res
 point = (1, 1);
 switch point {
   | (let x, 0) ->
@@ -1423,7 +1430,7 @@ switch point {
 
 A switch case can use a `where` clause to check for additional conditions.
 
-```coffee
+```res
 point = (-1, 1);
 switch point {
   | let (x, y) when x == y ->
@@ -1438,7 +1445,7 @@ switch point {
 
 Compound cases can also include value bindings. All of the patterns of a compound case have to include the same set of value bindings, and each binding has to get a value of the same type from all of the patterns in the compound case.
 
-```coffee
+```res
 stillAnotherPoint = (9, 0)
 switch stillAnotherPoint {
   | (let distance, 0), (0, let distance) ->
@@ -1451,7 +1458,7 @@ switch stillAnotherPoint {
 
 Declaring `switch {}` without a parameter will implicitly invoke a default value `switch true {}`:
 
-```coffee
+```res
 x = 1
 switch {
   | x == 1 -> print 1;
@@ -1462,14 +1469,14 @@ switch {
 
 Switch can also match against primitive values, but this this is highly disrecommended.
 
-```coffee
+```res
 switch 2 + 3 {
   | 5 -> print "2 + 3 = 5";
   | -> { print ''; break; };
 }
 ```
 
-**Control transfer statements** change the order in which your code is executed, by transferring control from one piece of code to another. There are six control transfer statements in Nova:
+**Control transfer statements** change the order in which your code is executed, by transferring control from one piece of code to another. There are six control transfer statements in Eliph:
 
 - `continue`
 - `break`
@@ -1480,7 +1487,7 @@ switch 2 + 3 {
 
 The `continue` statement tells a loop to stop what it's doing and start again at the beginning of the next iteration through the loop.
 
-```coffee
+```res
 text = "", i;
 for i in [1::5] {
   if (i == 3) continue;
@@ -1492,7 +1499,7 @@ The `break` statement ends execution of an entire control flow statement immedia
 
 When used inside a loop statement, `break` ends the loop's execution immediately and transfers control to the code after the loop's closing brace. No further code from the current iteration of the loop is executed, and no further iterations of the loop are started.
 
-```coffee
+```res
 text = "", i;
 for i in [1::5] {
   if (i == 3) break;
@@ -1506,7 +1513,7 @@ When used inside a `switch` statement, break causes the `switch` statement to en
 
 If you need C-style fallthrough behavior, you can opt in to this behavior on a case-by-case basis with the `fallthru` keyword.
 
-```coffee
+```res
 integer := 5;
 description = "The number #integer is";
 switch integer {
@@ -1522,7 +1529,7 @@ print description;
 
 To execute a labelled statement, use `goto`, which is very similar to function calls without arguments. The following command runs for both `CLOSED` and `NOW_CLOSED`.
 
-```coffee
+```res
 var command = 'CLOSED';
 switch (command) {
   case 'CLOSED' -> {
@@ -1539,7 +1546,7 @@ You can nest statements inside other control flow statements to create complex c
 
 Therefore, it's sometimes useful to be explicit about which statement you want a `break` or `continue` statement to terminate, or a for-loop to execute. To achieve these aims, you can mark a statement, such as a `do`-block, with a statement label.
 
-```coffee
+```res
 i = 0;
 label runThis: do {
   i .+= 1;
@@ -1549,7 +1556,7 @@ goto runThis;
 print i; // 1
 ```
 
-```coffee
+```res
 board = [0 for _ in [0::finalSquare]];
 square = 0; diceRoll = 0; finalSquare = 25;
 
@@ -1585,3 +1592,7 @@ print "Game over!";
 ## Types and Object-Oriented Programming
 
 \#TODO
+
+---
+
+<style>p,a,ol,ul,blockquote{text-align:justify;}</style>
