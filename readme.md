@@ -235,4 +235,4 @@ Standard Library
     4.  `symbol` — Constants used with Eliph parse trees
     5.  `token` — Constants used with Eliph parse trees
     6.  `keyword` — Testing for Eliph keywords
-    7.  `tokenize` — Tokenizer for Eliph source
+    7.  `tokenize` — Tokenizer for Eliph source code
