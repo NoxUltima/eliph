@@ -525,7 +525,19 @@ if y <= 15 then print y;
 print if y <= 15;
 ```
 
-In Eliph, **everything is an expression**, which means that they can be assigned to variables and returned from functions:
+In Eliph, **everything is an expression**, which means that they can be assigned to variables and returned from functions.
+
+It's common to insert a closure wrapper in order to ensure that all variables are closed over, and all the generated functions don't share the final values. The `do` keyword, immediately invokes a passed function, forwarding any arguments.
+
+```res
+res = do factorial(n) int {
+  if n < 0 then -1
+  else if n == 0 then 1
+  else n * factorial(n - 1);
+}
+```
+
+When control flow statements are used as expressions, the value of the last statement of all bodies (enclosed in curly braces) is implicitly returned, unless explicitly specified with `return`. More on functions in the next section.
 
 ```res
 res = 3 if true else 0;
@@ -538,22 +550,37 @@ res = if 2 & 3 ^^ 3 + 2 != 4 {
 
 x = 2
 res = switch {
-  | x == 3, x == 4 -> 3;
-  | x in [4, 5, 6] -> 4;
-  | x % 2 == 0 -> 2;
-  | -> 0;
+  case x == 3, x == 4 -> 3;
+  case x in [4, 5, 6] -> 4;
+  case x % 2 == 0 -> 2;
+  else -> 0;
 };
 
 y = 'string'
-res = try { parseInt(i) }
-catch { error 'unknown error' }
-finally { 4 };
-
-res = do {
-  print 1 + 2 + 3;
-  print 40;
+res = try {
+  parseInt(i);
+} catch {
+  error 'unknown';
+} finally {
   4;
 };
+```
+
+You can mark a statement, such as a `do`-block, with a statement marked with `label`. Use `goto` followed by the labeled keyword. This is similar to calling functions without arguments. You can `goto` outside `labels` from inside other scopes, but you cannot do so the other way around.
+
+```res
+i = 0;
+func goTo() void {
+  label runThis: do for j in [1::100] {
+    i .+= j; return;
+  }
+  print i; // 0
+  goto runThis; // will modify the i variable 100 times
+  print i; // 5050
+  return;
+}
+goTo();
+goto runThis; // Throws an error
 ```
 
 ### If-Else
@@ -584,6 +611,25 @@ x = a if condition else b; // Python postfix if statement
 ```res
 // Implicit statement, make sure that there is an else
 x = a if condition;
+```
+
+A `guard` statement is similar to an `if-else` statement without an `if` body.
+
+```res
+func greet({[str x]: str} person) {
+  guard let name = person.name else return;
+  print "Hello \(name)!";
+  guard let location = person.location else {
+    print "I hope the weather is nice near you.";
+    return;
+  }
+  print "I hope the weather is nice in \(location)."
+}
+
+greet(person: {name: "John"});
+// Prints "Hello John!" "I hope the weather is nice near you."
+greet(person: {name: "Jane", location: "Cupertino"});
+// Prints "Hello Jane!" "I hope the weather is nice in Cupertino."
 ```
 
 ### Loops
@@ -793,6 +839,34 @@ print "There are #count #things.";
 // Prints "There are dozens of moons orbiting Saturn."
 ```
 
+A case can have temporary variables. After they are declared, they can be used within the case's code block. All of the patterns of a compound case have to include **the same set of value bindings**.
+
+```res
+point = (9, 0)
+switch point {
+  case (dist, 0), (0, dist) ->
+    print "On an axis, #dist from the origin"
+  else ->
+    print "Not on an axis"
+}
+// Prints "On an axis, 9 from the origin"
+```
+
+A case can use a `where` clause to check for additional conditions.
+
+```res
+point = (-1, 1);
+switch point {
+  case (x, y) where x == y ->
+    print "(#x, #y) is on the line x == y";
+  case (x, y) where x == -y ->
+    print "(#x, #y) is on the line x == -y";
+  case (x, y) ->
+    print "(#x, #y) is just some arbitrary point";
+}
+// Prints "(1, -1) is on the line x == -y"
+```
+
 You can use data structures to test multiple values, such as arrays, tuples, records, maps and objects in the same switch statement, where each mentioned value you put in the structure is destructured and tested.
 
 Alternatively, leave the space blank `()` or insert a wildcard placeholder `$`, to match any possible value.
@@ -812,19 +886,6 @@ switch point {
     print "#point is outside of the box";
 }
 // Prints "(1, 1) is inside the box"
-```
-
-A case clause can have temporary variables. After they are declared, they can be used within the case's code block. All of the patterns of a compound case have to include **the same set of value bindings**.
-
-```res
-point = (9, 0)
-switch point {
-  case (dist, 0), (0, dist) ->
-    print "On an axis, #dist from the origin"
-  else ->
-    print "Not on an axis"
-}
-// Prints "On an axis, 9 from the origin"
 ```
 
 **Control transfer statements** change the order in which your code is executed, by transferring control from one piece of code to another. There are six control transfer statements in Eliph:
@@ -874,16 +935,20 @@ for i in [1::5] {
 In switch statements, if you really need C-style fallthrough, can opt in to this behavior on a case-by-case basis with the `fallthru` keyword.
 
 ```res
+func isPrime(int n) bool { !('1' * n).match(/^1?$|^(11+?)\1+$/) }
+```
+
+```res
 integer := 5;
-desc = "The number #integer is";
+description = "The number #integer is";
 switch integer {
   case isPrime($) -> {
-    desc += " a prime number, and also";
+    description += " a prime number, and also";
     fall;
   };
-  else -> desc += " an integer.";
+  else -> description += " an integer.";
 }
-print desc;
+print description;
 // Prints "The number 5 is a prime number, and also an integer."
 ```
 
@@ -903,21 +968,6 @@ print desc;
 // Prints "The number 5 is a prime number, and also an integer."
 ```
 
-You can mark a statement, such as a `do`-block, with a statement marked with `label`. Use `goto` followed by the labeled keyword. This is similar to calling functions without arguments.
+### Error Handling
 
-You cannot call a labelled block of code with `goto` outside of its scope, like you cannot access variables from outside of its scope. Doing so will throw an error.
-
-```res
-i = 0;
-func goTo() void {
-  label runThis: for j in [1::100] {
-    i .+= j
-  }
-  print i; // 0
-  goto runThis; // will modify the i variable 100 times
-  print i; // 5050
-  return;
-}
-goTo();
-goto runThis; // Throws an error
-```
+Marked as #TODO
