@@ -164,7 +164,7 @@ Standard Library
     3. `fraction` - rational numbers
     4. `complex` - complex numbers
     5. `algebra` - algebra and polynomials
-    6. `random`, `chance` - PRNG and advanced random generation
+    6. `random`, `seed`, `chance` - PRNG and advanced (seeded) random generation
     7. `radix` - formatting and converting numbers between locales and bases
     8. `units` - unit conversion
     9. `stats` - statistics functions
@@ -189,44 +189,46 @@ Standard Library
 7.  File System and I/O
     1. `glob` - Unix style pathname pattern expansion
     2. `pathlib` — Object-oriented filesystem paths
-    3. `path` — Common pathname manipulations
+    3. `os` and `path` — Common pathname manipulations
     4. `schedule` - Task scheduler
-8.  Web Templating and Design
-    1.  `url` - URL utilities and manipulation
-    2.  `html` - templating utilities
-    3.  `color` - color manipulation
-9.  Data Serialization
-    1.  `json`, `yaml`, `toml` - data serialization for JSON, YAML and TOML config files
-    2.  `csv` - CSV file reading and writing
-    3.  `html` - HTML manipulation, templating and functions
-    4.  `convert` - templating language conversion
-10. Data Generation
+8.  Data Serialization, Web Templating and Design
+    1. `json`, `yaml`, `toml` - data serialization for JSON, YAML and TOML config files
+    2. `url` - URL utilities and manipulation
+    3. `html` - templating utilities
+    4. `color` - color manipulation
+    5. `csv` - CSV file reading and writing
+    6. `css` - CSS functions and conversions
+    7. `html` - HTML manipulation, templating and functions
+    8. `convert` - templating language conversion
+9.  Data Generation
     1.  `datagen` - data generation library
-11. Security and Cryptography
+10. Security and Cryptography
     1. `crypto` - cryptography and security algorithm and tools
     2. `passhash` - password hashing algorithms
-12. Internationalization and Localization
+11. Internationalization and Localization
     1. `i18n` - tools for i18n, with built-in plurals
-13. APIs and web services (inspired by Axios)
+12. APIs and web services (inspired by Axios)
     1.  `api` - tools for interacting with web APIs
     2.  `rest` - building web APIs
-14. Machine Learning (inspired by scikit-learn)
-    1. `mine` - web mining
-    2. `ml.classify` - classification algorithms
-    3. `ml.regress` - regression algorithms
-    4. `ml.cluster` - clustering algorithms
-    5. `ml.reduce` - dimensionality reduction algorithms
-    6. `ml.select` - validating and comparing parameters and models
-    7. `ml.process` - feature extraction and normalization
-15. Natural Language Processing
-    1.  `lang` - Textual processing and analysis
-    2.  `lang.data` - Datasets and corpora for NLP
-    3.  `lang.topic` - Gensim-inspired topic modeling
-16. Code Analysis (inspired by Flow and TypeScript)
+13. Machine Learning (inspired by scikit-learn)
+    1. `mine` - a web scraping module for JS
+    2. `ml.classify` - classification
+    3. `ml.regress` - regression
+    4. `ml.cluster` - clustering
+    5. `ml.reduce` - dimensionality reduction
+    6. `ml.select` - validating/comparing parameters
+    7. `ml.process` - extraction and normalization
+14. Natural Language Processing
+    1.  `lang` - textual processing and analysis
+    2.  `lang.data` - datasets and corpora for NLP
+    3.  `lang.model` - NLP framework and pipeline
+    4.  `lang.gen` - natural language generation modules
+    5.  `lang.topic` - Gensim-inspired topic modeling
+15. Code Analysis (inspired by Flow and TypeScript)
     1.  `typecheck` - static runtime type checking
     2.  `assert` - testing and debugging tools
     3.  `format` - code formatter and prettifier
-17. the Eliph Programming Language
+16. the Eliph Programming Language
     1.  `parser` — Access Eliph parse trees
     2.  `ast` — Abstract Syntax Trees
     3.  `symtable` — Access to the compiler's symbol tables
