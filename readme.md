@@ -234,4 +234,3 @@ Standard Library
     5.  `token` — Constants used with Eliph parse trees
     6.  `keyword` — Testing for Eliph keywords
     7.  `tokenize` — Tokenizer for Eliph source
-    8.  `tabnanny` — Detection of ambiguous indentation
