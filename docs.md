@@ -1,4 +1,4 @@
-# An Informal Introduction
+# A Formal Introduction
 
 > This reference is structured so that it can be read from top to bottom, if you like. Later sections use ideas and syntax previously introduced. Familiarity with JavaScript is assumed.
 
@@ -403,15 +403,28 @@ strArr = ['H', 'e', `l`, 'l', 'o'];
 strArr = strArr * ''; //  'Hello'
 ```
 
-Strings can be indexed, and can accept any integer value, but modulo `%%` the length of the string. So given a string `s` of length `5`, `... s[5] == s[0] == s[-4] == s[-9] ...`.
-
 Use the `len` operator to retrieve the length of a string:
 
 ```res
 strLen = len 'hello' // 5
 ```
 
-Use commas to retrieve individual indices of strings, and combinations of `<>` and `:` to extract ranges of strings from arrays. More on #Ranges.
+Strings are **modulo and zero-indexed**. Basically, indices can go on forever, but this does **not** mean the string has infinite length.
+
+When accessing **integer** indices in a string (or other sequential data structure such as arrays and tuples), they always are accessed modulo `%%` the length of the string.
+
+- `0` is the first index, `1` is the second, and so on
+- Indices can count backward: `-1` is the last, `-2` is second last and so on
+
+So given a string `s` of length `5`,
+
+| False index | -7  | -6  | -5  | -4  | -3  | -2  | -1  | 0   | 1   | 2   | 3   | 4   | 5   | 6   | 7   |
+| ----------- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| True index  | 3   | 4   | 0   | 1   | 2   | 3   | 4   | 0   | 1   | 2   | 3   | 4   | 0   | 1   | 2   |
+
+or to put it more simply, `... s[5] == s[0] == s[-4] == s[-9] ...`.
+
+Use commas to retrieve individual indices of strings, and combinations of `<>` and `:` to extract ranges of substrings from strings. More on #Ranges. This means, you can repeat substrings multiple times until a certain length.
 
 Much like JavaScript objects and maps, arrays and tuples do have keys (their **numeric** index) and values (which are the values you see on the screen), You can use `in` or its inverse `!in` to test whether a substring or character is in a string.
 
@@ -423,11 +436,18 @@ Much like JavaScript objects and maps, arrays and tuples do have keys (their **n
 `3` !in '12345' // false
 ```
 
-`of` returns `true` if and only if the number passed in is between 0 and 1 less than the length of the string.
+`of` returns `true` if and only if the number passed in is a **non-negative integer** and between 0 and the last index (1 less than the length of the string).
 
 ```res
 3 of '12345' // true
 -1 of '12345' // false
+```
+
+Similarly, the `index()` function, similar to `indexOf()` in JavaScript, will always return a **non-negative integer** between 0 and the last index.
+
+```res
+str = '12345'
+str.index(4) // 5
 ```
 
 ### Regular Expressions
@@ -435,6 +455,15 @@ Much like JavaScript objects and maps, arrays and tuples do have keys (their **n
 Marked as #TODO
 
 ### Tuples and Arrays
+
+Tuples are used to store multiple items in a single variable. A tuple is a collection which is ordered and unchangeable. Tuples are written inside parentheses and the elements are separated by either commas or new lines.
+
+```res
+thistuple = (1, 2, 3);
+print thistuple;
+```
+
+Like strings, tuples can be indexed, modulo its length.
 
 ```res
 a = [1, 2] + [3, 4]; // Concatenation
@@ -530,14 +559,18 @@ In Eliph, **everything is an expression**, which means that they can be assigned
 It's common to insert a closure wrapper in order to ensure that all variables are closed over, and all the generated functions don't share the final values. The `do` keyword, immediately invokes a passed function, forwarding any arguments.
 
 ```res
-res = do factorial(n) int {
-  if n < 0 then -1
+res = do 36; // 36
+res = do { 36; }; // 36
+res = do (~a = 6; ~b = 6) { a * b; }; // 36
+
+res = do factorial(n = 3) int {
+  if n < 0 then nan
   else if n == 0 then 1
   else n * factorial(n - 1);
-}
+} // 6
 ```
 
-When control flow statements are used as expressions, the value of the last statement of all bodies (enclosed in curly braces) is implicitly returned, unless explicitly specified with `return`. More on functions in the next section.
+When control flow statements are used as expressions, the value of the last statement of all executed bodies (enclosed in curly braces) is implicitly returned, unless explicitly specified with `return`. More on functions in the next section.
 
 ```res
 res = 3 if true else 0;
