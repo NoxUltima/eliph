@@ -121,7 +121,8 @@ Eliph's standard library is very extensive, offering a wide range of facilities 
     1. `crypto` — cryptography and security algorithm and tools
     2. `passhash` — password hashing algorithms
 11. Internationalization and Localization
-    1. `i18n` — tools for i18n, with built-in plurals
+    1. `gettext` — Multilingual i18n services
+    2. `locale` — i18n services + numbers, plurals and currencies
 12. APIs and web services (inspired by Axios)
     1.  `api` — tools for interacting with web APIs
     2.  `rest` — building web APIs
