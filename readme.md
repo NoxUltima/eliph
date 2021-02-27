@@ -35,7 +35,7 @@ This all could be summed up in a few different points:
 
 **Static and robust types**. JavaScript, because of its complete lack of types, resulting in its [peculiar runtime behaviour](https://github.com/denysdovhan/wtfjs), which can lead to unexpected and sometimes annoying side effects. TypeScript aimed to provide better tooling for JavaScript, by adding static typing to the JavaScript language, but inherits all of its problems, and has a much slower build process than modern JavaScript since it always has to be "compiled" by type-checking, hence significantly adding a lot more to the build time.
 
-- Types in Eliph are **automatically inferred.** You don't need to explicitly assign a type to a variable. If you want to disable type checking for a variable whenever you're working with a third-party JavaScript library, you can through
+- Types in Eliph are **automatically inferred.** You don't need to explicitly assign a type to a variable. If you want to disable type checking for a variable whenever you're working with a third-party JavaScript library, you can use the `any` type.
 - You can annotate **anywhere** within your code, even within expressions, so you can assure yourself and also other people who will be maintaining your code, that you know what you're doing.
 - **A type should not change into another.** In JavaScript, your variable's type might change when the code runs, hence causing a wide range of side-effects. This is an anti-feature; it makes the code much harder to understand when reading or debugging.
 - **Types are erased after compilation** and don't exist at runtime. You don't need type info during runtime; so any type errors are automatically reported at compile time so you can catch the bugs earlier.
@@ -43,13 +43,25 @@ This all could be summed up in a few different points:
 
 **Dependency-free**. Eliph aims to provide a suite of built-in classes, methods and functions that provide more than what JS can, so there is no need for you to compose your own functions on the fly. At the same time, Eliph should include in and of itself a **standard library** (inspired by languages like Python, Ruby and Go) since the JS ecosystem is littered with dependencies. Shipping the final product inevitably drags in a huge amount of code, most of which the project doesn't actually use.
 
-- Eliph can be used **directly on Node.JS** and runs standalone with no dependencies, `@eliph/stdlib` like other standard libraries.
+- Eliph can be used directly on Node.JS and even has its own standalone library with no dependencies, `@eliph/stdlib`, similar to other compile-to-JS languages.
 - The Eliph standard library can be used directly on any Node.JS application, even alongside other to-JS languages like TypeScript and CoffeeScript.
 
 **One-to-one mapping**. Unreadable boilerplate JS code generated from other compiled-to-JS languages makes it so that it could be, practically speaking, hard to debug, hard to learn from and hard to integrate with existing handwritten JS. Whereas for Eliph, the compiled output is automatically mapped to one source file, while the code structure is preserved. This is especially important while learning, where users might want to understand how the code's compiled, and to audit for bugs. Eliph does a number of things to remove unnecessary boilerplate code from the compiled output.
 
 - Syntactic sugar, `stdlib` modules and built-in functions such as range literals, fractions and s(p)licing, whenever mentioned in Eliph code, are automatically generated as import statements from `@eliph` in the final output, and map cleanly to regular JavaScript functions.
 - Variables and constants are temporary. They are declared `let` by default the moment they first appear. Those with **illegal identifier names**, or the values which are passed onto the `del` statement, are put in a "header" object that exists only on the current scope.
+
+---
+
+## the Compilation Process
+
+---
+
+## Eliph's Standard Library
+
+While the Eliph Language Reference describes the syntax and semantics and programming of the Eliph programming language, this library reference manual describes the standard library that is distributed in Eliph's module `@eliph/stdlib`. It also describes some of the optional components that are commonly included in Python distributions.
+
+Eliph's standard library is very extensive, offering a wide range of facilities as indicated by the long table of contents listed below. These modules written in JavaScript that provide standardized solutions for many problems that occur in everyday programming.
 
 ---
 
@@ -85,8 +97,8 @@ This all could be summed up in a few different points:
       2. Array and Object Comprehensions
    7. Data Structures
       1. Tuples `()` and Arrays `[]`
-      2. Objects `{}` and Maps `{| |}`
-      3. Lists `(| |)` and Sets `[| |]`
+      2. Objects `{}` and Records `(| |)` 
+      3. Maps `{| |}` and Sets `[| |]`
       4. Weak Sets `#[]` and Maps `#{}`
       5. Destructuring assignment
 5. Control Flow
@@ -118,8 +130,8 @@ This all could be summed up in a few different points:
    7. Currying
 7. Types
    1. `any`, `void`, `unknown`, `other` and `never`
-   2. Aliases
-   3. Specific values
+   2. Type aliases
+   3. Literal types
    4. Unions and intersection types
    5. Interfaces
    6. `enum`
@@ -133,7 +145,6 @@ This all could be summed up in a few different points:
    4. Access modifiers
 9. Modules
    1. Import and export
-   2. The `dotfiles`
-   3. Using NPM modules
-   4. Namespaces
+   2. Using NPM modules
+   3. Namespaces
 10. Standard Library
