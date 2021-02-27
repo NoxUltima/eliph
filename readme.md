@@ -157,77 +157,76 @@ Standard Library
 1.  Text Processing `text`
     1. `string` - advanced string manipulation
     2. `regexp` - advanced regular expressions and operations
-    3. `difflib` -
-    4. `unicode` - Unicode character data
-2.  Mathematical and Numeric Modules
-    1. `math` - mathematical functions
+    3. `unicode` - Unicode character data
+2.  Mathematical and Numeric Modules (inspired by MathJS)
+    1. `math` (alias `quickmafs` - mathematical functions
     2. `decimal` - decimal fixed point and floating point arithmetic
     3. `fraction` - rational numbers
-    4. `complex` - complex number math
-    5. `algebra` - algebraic and polynomial a
-    6. `random`, `chance` - PRNG and advanced random algorithms
-    7. `radix` - formatting and converting numbers
+    4. `complex` - complex numbers
+    5. `algebra` - algebra and polynomials
+    6. `random`, `chance` - PRNG and advanced random generation
+    7. `radix` - formatting and converting numbers between locales and bases
     8. `units` - unit conversion
     9. `stats` - statistics functions
     10. `money` - currency conversion and manipulation
-3.  Data Types
+3.  Data Types (inspired by Moment and DateJS)
     1. `datetime` — date parsing, conversion and manipulation
     2. `datetime.timezone` — IANA time zone support
     3. `calendar` — calendar-related functions
     4. `mutable` - mutable data structures
     5. `immutable` - immutable data structures
-4.  Data Analysis and Manipulation
+4.  Data Analysis and Manipulation (insipred by SciPy)
     1. `transform` - data manipulation and transformation algorithms
     2. `sym` - scientific computing and data analysis tools
     3. `plot` - data visualization tools
-5.  Reactive Programming
+5.  Reactive Programming (inspired by RXJS)
     1. `react` - tools for reactive programming
     2. `reactfunc` - reactive functional programming
-6.  Functional Programming
+6.  Functional Programming (inspired by Ramda and LazyJS)
     1. `iterator` - functions creating iterators for efficient looping
     2. `function` - higher-order functions and operations on callable objects
     3. `operator` - operators as functions
-7.  Code Analysis
-    1.  `typecheck` - static runtime type checking
-    2.  `assert` - testing and debugging tools
-    3.  `format` - code formatter and prettifier
-8.  File System and I/O
+7.  File System and I/O
     1. `glob` - Unix style pathname pattern expansion
     2. `pathlib` — Object-oriented filesystem paths
     3. `path` — Common pathname manipulations
     4. `schedule` - Task scheduler
-9.  Web Templating and Design
+8.  Web Templating and Design
     1.  `url` - URL utilities and manipulation
     2.  `html` - templating utilities
     3.  `color` - color manipulation
-10. Data Serialization
+9.  Data Serialization
     1.  `json`, `yaml`, `toml` - data serialization for JSON, YAML and TOML config files
     2.  `csv` - CSV file reading and writing
     3.  `html` - HTML manipulation, templating and functions
     4.  `convert` - templating language conversion
-11. Data Generation
-    1.  `faker` - data generation library
-12. Security and Cryptography
+10. Data Generation
+    1.  `datagen` - data generation library
+11. Security and Cryptography
     1. `crypto` - cryptography and security algorithm and tools
     2. `passhash` - password hashing algorithms
-13. Internationalization and Localization
+12. Internationalization and Localization
     1. `i18n` - tools for i18n, with built-in plurals
-14. APIs and web services
+13. APIs and web services (inspired by Axios)
     1.  `api` - tools for interacting with web APIs
     2.  `rest` - building web APIs
-15. Machine Learning
+14. Machine Learning (inspired by scikit-learn)
     1. `mine` - web mining
     2. `ml.classify` - classification algorithms
     3. `ml.regress` - regression algorithms
     4. `ml.cluster` - clustering algorithms
-    5. `ml.reduce` - dimensionaliy reduction algorithms
-    6. `ml.select` - validating and comparing parameters and models.
+    5. `ml.reduce` - dimensionality reduction algorithms
+    6. `ml.select` - validating and comparing parameters and models
     7. `ml.process` - feature extraction and normalization
-16. Natural Language Processing
+15. Natural Language Processing
     1.  `lang` - Textual processing and analysis
     2.  `lang.data` - Datasets and corpora for NLP
     3.  `lang.topic` - Gensim-inspired topic modeling
-17. Language
+16. Code Analysis (inspired by Flow and TypeScript)
+    1.  `typecheck` - static runtime type checking
+    2.  `assert` - testing and debugging tools
+    3.  `format` - code formatter and prettifier
+17. the Eliph Programming Language
     1.  `parser` — Access Eliph parse trees
     2.  `ast` — Abstract Syntax Trees
     3.  `symtable` — Access to the compiler's symbol tables
