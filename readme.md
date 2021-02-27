@@ -53,11 +53,17 @@ This all could be summed up in a few different points:
 
 ---
 
-## the Compilation Process
+## Roadmap
+
+Marked as TODO
+
+## Compilation
+
+Marked as TODO
 
 ---
 
-## Eliph's Standard Library
+## Standard Library
 
 While the Eliph Language Reference describes the syntax and semantics and programming of the Eliph programming language, this library reference manual describes the standard library that is distributed in Eliph's module `@eliph/stdlib`. It also describes some of the optional components that are commonly included in Python distributions.
 
@@ -155,79 +161,79 @@ Eliph's standard library is very extensive, offering a wide range of facilities 
 Standard Library
 
 1.  Text Processing `text`
-    1. `string` - advanced string manipulation
-    2. `regexp` - advanced regular expressions and operations
-    3. `unicode` - Unicode character data
+    1. `string` — advanced string manipulation
+    2. `regexp` — advanced regular expressions and operations
+    3. `unicode` — Unicode character data
 2.  Mathematical and Numeric Modules (inspired by MathJS)
-    1. `math` (alias `quickmafs` - mathematical functions
-    2. `decimal` - decimal fixed point and floating point arithmetic
-    3. `fraction` - rational numbers
-    4. `complex` - complex numbers
-    5. `algebra` - algebra and polynomials
-    6. `random`, `seed`, `chance` - PRNG and advanced (seeded) random generation
-    7. `radix` - formatting and converting numbers between locales and bases
-    8. `units` - unit conversion
-    9. `stats` - statistics functions
-    10. `money` - currency conversion and manipulation
+    1. `math` (alias `quickmafs` — mathematical functions
+    2. `decimal` — decimal fixed point and floating point arithmetic
+    3. `fraction` — rational numbers
+    4. `complex` — complex numbers
+    5. `algebra` — algebra and polynomials
+    6. `random`, `seed`, `chance` — PRNG and advanced (seeded) random generation
+    7. `radix` — formatting and converting numbers between locales and bases
+    8. `units` — unit conversion
+    9. `stats` — statistics functions
+    10. `money` — currency conversion and manipulation
 3.  Data Types (inspired by Moment and DateJS)
     1. `datetime` — date parsing, conversion and manipulation
     2. `datetime.timezone` — IANA time zone support
     3. `calendar` — calendar-related functions
-    4. `mutable` - mutable data structures
-    5. `immutable` - immutable data structures
+    4. `mutable` — mutable data structures
+    5. `immutable` — immutable data structures
 4.  Data Analysis and Manipulation (insipred by SciPy)
-    1. `transform` - data manipulation and transformation algorithms
-    2. `sym` - scientific computing and data analysis tools
-    3. `plot` - data visualization tools
+    1. `transform` — data manipulation and transformation algorithms
+    2. `sym` — scientific computing and data analysis tools
+    3. `plot` — data visualization tools
 5.  Reactive Programming (inspired by RXJS)
-    1. `react` - tools for reactive programming
-    2. `reactfunc` - reactive functional programming
+    1. `react` — tools for reactive programming
+    2. `reactfunc` — reactive functional programming
 6.  Functional Programming (inspired by Ramda and LazyJS)
-    1. `iterator` - functions creating iterators for efficient looping
-    2. `function` - higher-order functions and operations on callable objects
-    3. `operator` - operators as functions
+    1. `iterator` — functions creating iterators for efficient looping
+    2. `function` — higher-order functions and operations on callable objects
+    3. `operator` — operators as functions
 7.  File System and I/O
-    1. `glob` - Unix style pathname pattern expansion
+    1. `glob` — Unix style pathname pattern expansion
     2. `pathlib` — Object-oriented filesystem paths
     3. `os` and `path` — Common pathname manipulations
-    4. `schedule` - Task scheduler
+    4. `schedule` — Task scheduler
 8.  Data Serialization, Web Templating and Design
-    1. `json`, `yaml`, `toml` - data serialization for JSON, YAML and TOML config files
-    2. `url` - URL utilities and manipulation
-    3. `html` - templating utilities
-    4. `color` - color manipulation
-    5. `csv` - CSV file reading and writing
-    6. `css` - CSS functions and conversions
-    7. `html` - HTML manipulation, templating and functions
-    8. `convert` - templating language conversion
+    1. `json`, `yaml`, `toml` — data serialization for JSON, YAML and TOML config files
+    2. `url` — URL utilities and manipulation
+    3. `html` — templating utilities
+    4. `color` — color manipulation
+    5. `csv` — CSV file reading and writing
+    6. `css` — CSS functions and conversions
+    7. `html` — HTML manipulation, templating and functions
+    8. `convert` — templating language conversion
 9.  Data Generation
-    1.  `datagen` - data generation library
+    1.  `datagen` — data generation library
 10. Security and Cryptography
-    1. `crypto` - cryptography and security algorithm and tools
-    2. `passhash` - password hashing algorithms
+    1. `crypto` — cryptography and security algorithm and tools
+    2. `passhash` — password hashing algorithms
 11. Internationalization and Localization
-    1. `i18n` - tools for i18n, with built-in plurals
+    1. `i18n` — tools for i18n, with built-in plurals
 12. APIs and web services (inspired by Axios)
-    1.  `api` - tools for interacting with web APIs
-    2.  `rest` - building web APIs
+    1.  `api` — tools for interacting with web APIs
+    2.  `rest` — building web APIs
 13. Machine Learning (inspired by scikit-learn)
-    1. `mine` - a web scraping module for JS
-    2. `ml.classify` - classification
-    3. `ml.regress` - regression
-    4. `ml.cluster` - clustering
-    5. `ml.reduce` - dimensionality reduction
-    6. `ml.select` - validating/comparing parameters
-    7. `ml.process` - extraction and normalization
+    1. `mine` — a web scraping module for JS
+    2. `ml.classify` — classification
+    3. `ml.regress` — regression
+    4. `ml.cluster` — clustering
+    5. `ml.reduce` — dimensionality reduction
+    6. `ml.select` — validating/comparing parameters
+    7. `ml.process` — extraction and normalization
 14. Natural Language Processing
-    1.  `lang` - textual processing and analysis
-    2.  `lang.data` - datasets and corpora for NLP
-    3.  `lang.model` - NLP framework and pipeline
-    4.  `lang.gen` - natural language generation modules
-    5.  `lang.topic` - Gensim-inspired topic modeling
+    1.  `lang` — textual processing and analysis
+    2.  `lang.data` — datasets and corpora for NLP
+    3.  `lang.model` — NLP framework and pipeline
+    4.  `lang.gen` — natural language generation modules
+    5.  `lang.topic` — Gensim-inspired topic modeling
 15. Code Analysis (inspired by Flow and TypeScript)
-    1.  `typecheck` - static runtime type checking
-    2.  `assert` - testing and debugging tools
-    3.  `format` - code formatter and prettifier
+    1.  `typecheck` — static runtime type checking
+    2.  `assert` — testing and debugging tools
+    3.  `format` — code formatter and prettifier
 16. the Eliph Programming Language
     1.  `parser` — Access Eliph parse trees
     2.  `ast` — Abstract Syntax Trees
