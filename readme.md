@@ -108,8 +108,8 @@ Eliph's standard library is very extensive, offering a wide range of facilities 
 5. Control Flow
    1. The `do` block, closures and `pass`
    2. Decision Making
-      1. `if`, `elif`, `else`, `from an
-      2. `guard`
+      1. `if`, `elif`, `else`, `unless`, `elun`
+      2. `guard-else`
    3. Loops
       1. Range, `for-in`, `for-of` and `for-from`
       2. `break` and `continue`
