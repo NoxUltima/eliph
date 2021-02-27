@@ -67,6 +67,10 @@ Eliph's standard library is very extensive, offering a wide range of facilities 
 
 # Table of Contents
 
+[awesomejs]: https://github.com/sorrycc/awesome-javascript/
+[awesomenode]: https://github.com/sindresorhus/awesome-nodejs
+[awesomepy]: https://github.com/vinta/awesome-python
+
 1. A Formal Introduction
 2. The Basics
    1. Your First Program
@@ -97,14 +101,14 @@ Eliph's standard library is very extensive, offering a wide range of facilities 
       2. Array and Object Comprehensions
    7. Data Structures
       1. Tuples `()` and Arrays `[]`
-      2. Objects `{}` and Records `(| |)` 
+      2. Objects `{}` and Records `(| |)`
       3. Maps `{| |}` and Sets `[| |]`
       4. Weak Sets `#[]` and Maps `#{}`
       5. Destructuring assignment
 5. Control Flow
    1. The `do` block, closures and `pass`
    2. Decision Making
-      1. `if-else`
+      1. `if`, `elif`, `else`, `from an
       2. `guard`
    3. Loops
       1. Range, `for-in`, `for-of` and `for-from`
@@ -112,7 +116,7 @@ Eliph's standard library is very extensive, offering a wide range of facilities 
       3. `while` and `until`; `repeat-while` and `repeat-until`
       4. Infinite `loop`
    4. Switch
-      1. Conditional `switch`
+      1. Basic (conditional) `switch`
       2. Multiple cases and half-expressions
       3. `break` and `fallthru`
       4. Pattern matching
@@ -147,4 +151,87 @@ Eliph's standard library is very extensive, offering a wide range of facilities 
    1. Import and export
    2. Using NPM modules
    3. Namespaces
-10. Standard Library
+
+Standard Library
+
+1.  Text Processing `text`
+    1. `string` - advanced string manipulation
+    2. `regexp` - advanced regular expressions and operations
+    3. `difflib` -
+    4. `unicode` - Unicode character data
+2.  Mathematical and Numeric Modules
+    1. `math` - mathematical functions
+    2. `decimal` - decimal fixed point and floating point arithmetic
+    3. `fraction` - rational numbers
+    4. `complex` - complex number math
+    5. `algebra` - algebraic and polynomial a
+    6. `random`, `chance` - PRNG and advanced random algorithms
+    7. `radix` - formatting and converting numbers
+    8. `units` - unit conversion
+    9. `stats` - statistics functions
+    10. `money` - currency conversion and manipulation
+3.  Data Types
+    1. `datetime` — date parsing, conversion and manipulation
+    2. `datetime.timezone` — IANA time zone support
+    3. `calendar` — calendar-related functions
+    4. `mutable` - mutable data structures
+    5. `immutable` - immutable data structures
+4.  Data Analysis and Manipulation
+    1. `pattern` - web mining
+    2. `sym` - scientific computing and data analysis tools
+    3. `plot` - plottin an
+5.  Reactive Programming
+    1. `react` - tools for reactive programming
+    2. `reactfunc` - reactive functional programming
+6.  Functional Programming
+    1. `iterator` - functions creating iterators for efficient looping
+    2. `function` - higher-order functions and operations on callable objects
+    3. `operator` - operators as functions
+7.  Code Analysis
+    1.  `typecheck` - static runtime type checking
+    2.  `assert` - testing and debugging tools
+    3.  `format` - code formatter and prettifier
+8.  File System and I/O
+    1. `glob` - Unix style pathname pattern expansion
+    2. `pathlib` — Object-oriented filesystem paths
+    3. `path` — Common pathname manipulations
+    4. `schedule` - Task scheduler
+9.  Web Templating and Design
+    1.  `url` - URL utilities and manipulation
+    2.  `html` - templating utilities
+    3.  `color` - color manipulation
+10. Data Serialization
+    1.  `json`, `yaml`, `toml` - data serialization for JSON, YAML and TOML config files
+    2.  `csv` - CSV file reading and writing
+    3.  `html` - HTML manipulation, templating and functions
+    4.  `convert` - templating language conversion
+11. Data Generation
+    1.  `faker` - data generation library
+12. Security and Cryptography
+    1. `crypto` - cryptography and security algorithm and tools
+    2. `passhash` - password hashing algorithms
+13. Internationalization and Localization
+    1. `i18n` - tools for i18n, with built-in plurals
+14. APIs and web services
+    1.  `api` - tools for interacting with web APIs
+    2.  `rest` - building web APIs
+15. Machine Learning
+    1. `ml.classify` - classification algorithms
+    2. `ml.regress` - regression algorithms
+    3. `ml.cluster` - clustering algorithms
+    4. `ml.reduce` - dimensionaliy reduction algorithms
+    5. `ml.select` - validating and comparing parameters and models.
+    6. `ml.process` - feature extraction and normalization
+16. Natural Language Processing
+    1.  `lang` - Textual processing and analysis
+    2.  `lang.data` - Datasets and corpora for NLP
+    3.  `lang.topic` - Gensim-inspired topic modeling
+17. Language
+    1.  `parser` — Access Eliph parse trees
+    2.  `ast` — Abstract Syntax Trees
+    3.  `symtable` — Access to the compiler's symbol tables
+    4.  `symbol` — Constants used with Eliph parse trees
+    5.  `token` — Constants used with Eliph parse trees
+    6.  `keyword` — Testing for Eliph keywords
+    7.  `tokenize` — Tokenizer for Eliph source
+    8.  `tabnanny` — Detection of ambiguous indentation
