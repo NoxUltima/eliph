@@ -375,7 +375,7 @@ mobyDick = 'Call me Ishmael. Some years ago --
   world...'
 ```
 
-Strings can be concatenated `+`, replaced `-`, repeated `:`, sliced or split `/` with arithmetic operators.
+Strings can be concatenated `+`, replaced `-`, repeated `*`, sliced or split `/` with arithmetic operators.
 
 Use `*` to join strings back from arrays `[]` or tuples `()`, where the right operand is the delimiter. This operation will convert all non-strings (including `char`s) into strings.
 
@@ -393,6 +393,7 @@ s = 'Hello' - (/llo$/, 'lp me'); // 'Help me'
 
 // Splitting
 str[] t = s / 1; // ['H', 'e', 'l', 'l', 'o']
+str[] t = s / [2, 3]; // ['He', 'llo']
 t = s / ''; // ['H', 'e', 'l', 'l', 'o']
 
 // Splitting with spread operator
@@ -463,7 +464,24 @@ thistuple = (1, 2, 3);
 print thistuple;
 ```
 
-Like strings, tuples can be indexed, modulo its length.
+Like strings, tuples can be indexed (modulo its length), and also can be concatenated `+`, filtered `-`, repeated `*`, sliced or split `/` with arithmetic operators.
+
+```res
+// Concatenation
+a = (1, 2) + (3, 4); // (1, 2, 3, 4)
+
+// Filtering (all instances of the values will be removed)
+a = (1, 2, 3) - 3; // (1, 2)
+a = (1, 3, 2, 3) - 3; // (1, 2)
+a = (1, 3, 2, 3) - (2, 3); // (1)
+
+// Repeating
+a = tuple(1) * 3 // (1, 1, 1)
+
+// Subdividing
+a = (1::10) / 2 // ((1, 2), (3, 4), (5, 6), (7, 8), (9, 10))
+a = (1::10) / (1, 2, 3, 4) // ((1), (2, 3), (4, 5, 6), (7, 8, 9, 10))
+```
 
 ```res
 a = [1, 2] + [3, 4]; // Concatenation
@@ -561,7 +579,7 @@ It's common to insert a closure wrapper in order to ensure that all variables ar
 ```res
 res = do 36; // 36
 res = do { 36; }; // 36
-res = do (~a = 6; ~b = 6) { a * b; }; // 36
+res = do (~a = 6, ~b = 6) { a * b; }; // 36
 
 res = do factorial(n = 3) int {
   if n < 0 then nan
