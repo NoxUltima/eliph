@@ -177,9 +177,9 @@ Standard Library
     4. `mutable` - mutable data structures
     5. `immutable` - immutable data structures
 4.  Data Analysis and Manipulation
-    1. `pattern` - web mining
+    1. `transform` - data manipulation and transformation algorithms
     2. `sym` - scientific computing and data analysis tools
-    3. `plot` - plottin an
+    3. `plot` - data visualization tools
 5.  Reactive Programming
     1. `react` - tools for reactive programming
     2. `reactfunc` - reactive functional programming
@@ -216,12 +216,13 @@ Standard Library
     1.  `api` - tools for interacting with web APIs
     2.  `rest` - building web APIs
 15. Machine Learning
-    1. `ml.classify` - classification algorithms
-    2. `ml.regress` - regression algorithms
-    3. `ml.cluster` - clustering algorithms
-    4. `ml.reduce` - dimensionaliy reduction algorithms
-    5. `ml.select` - validating and comparing parameters and models.
-    6. `ml.process` - feature extraction and normalization
+    1. `mine` - web mining
+    2. `ml.classify` - classification algorithms
+    3. `ml.regress` - regression algorithms
+    4. `ml.cluster` - clustering algorithms
+    5. `ml.reduce` - dimensionaliy reduction algorithms
+    6. `ml.select` - validating and comparing parameters and models.
+    7. `ml.process` - feature extraction and normalization
 16. Natural Language Processing
     1.  `lang` - Textual processing and analysis
     2.  `lang.data` - Datasets and corpora for NLP
