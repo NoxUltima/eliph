@@ -70,88 +70,99 @@ While the Eliph Language Reference describes the syntax and semantics and progra
 Eliph's standard library is very extensive, offering a wide range of facilities as indicated by the long table of contents listed below. These modules written in JavaScript that provide standardized solutions for many problems that occur in everyday programming.
 
 1.  Text Processing `text`
-    1. `string` — advanced string manipulation
-    2. `regexp` — advanced regular expressions and operations
-    3. `unicode` — Unicode character data
+    1. `string` - advanced string manipulation
+    2. `regexp` - advanced regular expressions and operations
+    3. `textprep` - text preparation modules
+    4. `unicode` - Unicode character data
+    5. `adobe` - Adobe Glyph List data
 2.  Mathematical and Numeric Modules (inspired by MathJS)
-    1. `math` (alias `quickmafs` — mathematical functions
-    2. `decimal` — decimal fixed point and floating point arithmetic
-    3. `fraction` — rational numbers
-    4. `complex` — complex numbers
-    5. `algebra` — algebra and polynomials
-    6. `random`, `seed`, `chance` — PRNG and advanced (seeded) random generation
-    7. `radix` — formatting and converting numbers between locales and bases
-    8. `units` — unit conversion
-    9. `stats` — statistics functions
-    10. `money` — currency conversion and manipulation
+    1. `math` - mathematical functions
+    2. `decimal` - decimal fixed point and floating point arithmetic
+    3. `fraction` - rational numbers
+    4. `complex` - complex numbers
+    5. `algebra` - algebra and polynomials
+    6. `random`, `seed` - seeded PRNG and advanced random modules
+    7. `radix` - formatting and converting numbers between locales and bases
+    8. `units` - unit conversion
+    9. `stats` - statistics functions
+    10. `money` - currency conversion and manipulation
 3.  Data Types (inspired by Moment and DateJS)
-    1. `datetime` — date parsing, conversion and manipulation
-    2. `datetime.timezone` — IANA time zone support
-    3. `calendar` — calendar-related functions
-    4. `mutable` — mutable data structures
-    5. `immutable` — immutable data structures
+    1. `datetime` - date parsing, conversion and manipulation
+    2. `datetime.timezone` - IANA time zone support
+    3. `calendar` - calendar-related functions
+    4. `mutable` - mutable data structures
+    5. `immutable` - immutable data structures
 4.  Data Analysis and Manipulation (insipred by SciPy)
-    1. `transform` — data manipulation and transformation algorithms
-    2. `sym` — scientific computing and data analysis tools
-    3. `plot` — data visualization tools
+    1. `transform` - data manipulation and transformation algorithms
+    2. `sym` - scientific computing and data analysis tools
+    3. `plot` - data visualization tools
 5.  Reactive Programming (inspired by RXJS)
-    1. `react` — tools for reactive programming
-    2. `reactfunc` — reactive functional programming
+    1. `observable` - tools for reactive programming
+    2. `promise` - asynchronous programming
+    3. `reactive` - reactive functional programming
+    4. `stream` - tools for working with streams
+    5. `callback` - async callback functions
 6.  Functional Programming (inspired by Ramda and LazyJS)
-    1. `iterator` — functions creating iterators for efficient looping
-    2. `function` — higher-order functions and operations on callable objects
-    3. `operator` — operators as functions
+    1. `iterator` - functions creating iterators for efficient looping
+    2. `function` - higher-order functions and operations on callable objects
+    3. `operator` - operators as functions
 7.  File System and I/O
-    1. `glob` — Unix style pathname pattern expansion
-    2. `pathlib` — Object-oriented filesystem paths
-    3. `os` and `path` — Common pathname manipulations
-    4. `schedule` — Task scheduler
-8.  Data Serialization, Web Templating and Design
-    1. `json`, `yaml`, `toml` — data serialization for JSON, YAML and TOML config files
-    2. `url` — URL utilities and manipulation
-    3. `html` — templating utilities
-    4. `color` — color manipulation
-    5. `csv` — CSV file reading and writing
-    6. `css` — CSS functions and conversions
-    7. `html` — HTML manipulation, templating and functions
-    8. `convert` — templating language conversion
-9.  Data Generation
-    1.  `datagen` — data generation library
-10. Security and Cryptography
-    1. `crypto` — cryptography and security algorithm and tools
-    2. `passhash` — password hashing algorithms
+    1.  `glob` - Unix style pathname pattern expansion
+    2.  `pathlib` - Object-oriented filesystem paths
+    3.  `os` and `path` - Common pathname manipulations
+    4.  `schedule` - Task scheduler
+    5.  `json`, `yaml`, `toml`, `cson`, `xml` parsing and serialization
+    6.  `csv` - CSV file reading and writing
+    7.  `binary` - tools for reading/writing binary files
+    8.  `datagen` - data generation library
+8.  Image and Audio
+    1. `img` - image manipulation and processing tools
+    2. `img.gen` - image generation tools
+    3. `tts` - text-to-speech
+    4. `voice` - voice commands
+9.  Web Templating and Design
+    1. `url` - URL utilities and manipulation
+    2. `color` - color manipulation
+    3. `css` - CSS parsing, conversion and stringify
+    4. `html` - HTML manipulation, templating and functions
+    5. `convert` - templating language conversion
+    6. `minify` - web scraping
+10. 1. Security and Cryptography
+    1. `crypto` - cryptography and security algorithm and tools
+    1. `passhash` - password hashing algorithms
 11. Internationalization and Localization
-    1. `gettext` — Multilingual i18n services
-    2. `locale` — i18n services + numbers, plurals and currencies
+    1. `gettext` - Multilingual i18n services
+    2. `locale` - i18n services + numbers, plurals and currencies
 12. APIs and web services (inspired by Axios)
-    1.  `api` — tools for interacting with web APIs
-    2.  `rest` — building web APIs
-13. Machine Learning (inspired by scikit-learn)
-    1. `mine` — a web scraping module for JS
-    2. `ml.classify` — classification
-    3. `ml.regress` — regression
-    4. `ml.cluster` — clustering
-    5. `ml.reduce` — dimensionality reduction
-    6. `ml.select` — validating/comparing parameters
-    7. `ml.process` — extraction and normalization
-14. Natural Language Processing
-    1.  `lang` — textual processing and analysis
-    2.  `lang.data` — datasets and corpora for NLP
-    3.  `lang.model` — NLP framework and pipeline
-    4.  `lang.gen` — natural language generation modules
-    5.  `lang.topic` — Gensim-inspired topic modeling
-15. Code Analysis (inspired by Flow and TypeScript)
-    1.  `typecheck` — static runtime type checking
-    2.  `assert` — testing and debugging tools
-    3.  `format` — code formatter and prettifier
+    1.  `rest` - built-in REST framework
+    2.  `api` - interacting with web APIs
+    3.  `doc` - API documentation generator
+    4.  `graphql` - interacting with GraphQL APIs
+    5.  `mine` - web scraping and analysis
+    6.  Clients, like MongoDB, Redis, FaunaDB, PostgreSQL, etc...
+    7.  `query` - query builder for the aforementioned database clients
+13. Machine Learning (inspired by scikit-learn, ml5.js and )
+    1. `na` - network analysis tools
+    2. `ml` - machine learning tools
+14. Natural Language Processing (inspired by Gensim, NLTK and Compromise)
+    1.  `lang` - textual processing and analysis
+    2.  `lang.data` - datasets and corpora
+    3.  `lang.model` - framework and pipeline
+    4.  `lang.gen` - generation
+15. Code Analysis and Debugging
+    1.  `typecheck` - static runtime type checking
+    2.  `assert` - testing and debugging tools
+    3.  `format` - code formatter and prettifier
+    4.  `console` - console logging tools
+    5.  `command` - command-line utilities
 16. the Eliph Programming Language
-    1.  `parser` — Access Eliph parse trees
-    2.  `ast` — Abstract Syntax Trees
-    3.  `symtable` — Access to the compiler's symbol tables
-    4.  `symbol` — Constants used with Eliph parse trees
-    5.  `token` — Constants used with Eliph parse trees
-    6.  `keyword` — Testing for Eliph keywords
-    7.  `tokenize` — Tokenizer for Eliph source code
+    1.  `parser` - Access Eliph parse trees
+    2.  `ast` - Abstract Syntax Trees
+    3.  `symtable` - Access to the compiler's symbol tables
+    4.  `symbol` - Constants used with Eliph parse trees
+    5.  `token` - Constants used with Eliph parse trees
+    6.  `keyword` - Testing for Eliph keywords
+    7.  `tokenize` - Tokenizer for Eliph source code
 
 ---
 
