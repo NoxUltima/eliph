@@ -11,7 +11,7 @@ for i = 0; i < 10; i++ { console.log(i); }
 till i = 0; i == 10; i++ { console.log(i); } // till is the opposite of for
 ```
 
-Function calls must require parentheses, as in many other programming languages. Statements such as `break`, `continue` and `goto`, and unary operators such as `not`, `len` and `size` do not require parentheses, since they are not functions.
+Function calls must require parentheses, as in many other programming languages. **Statements** such as `break`, `continue` and `goto`, and **unary operators** such as `len` and `size` do not require parentheses, since they are not functions.
 
 ```swift
 echo sys.inspect(e) // echo is a statement
@@ -22,8 +22,6 @@ When invoking functions as arguments to methods, such as in `map` and `filter` o
 ```swift
 [1, 2, 3, 4, 5].map { $ * 2 }.filter { $ % 3 == 0 }
 ```
-
-## Variables
 
 Valid variable or identifier names with a letter, underscore `_` or **any Unicode character** that is not punctuation or symbols. All other characters can include digits, `-` and `$`.
 
@@ -95,11 +93,11 @@ j .= 4; // var j = 4
 k := 5; // const k = 5
 ```
 
-Non-local or `var` variables are declared with `.=`, and you are required to use `.=` whenever you modify the same variable in upper scopes, such as outside functions.
+Non-local or `var` variables are declared with `.=`, and you are required to use `.=` whenever you refer to the same variable in upper scopes, such as outside functions.
 
 ```swift
 x .= 10 // declared as `var x`
-do { x = 5 } // 10 => creates a new variable called x
+do { x = 5 } // 10 => creates a temporary variable called x
 do { x .= 2 } // 2 => modifies `var x`
 ```
 
@@ -134,15 +132,15 @@ You can destructure from tuples, arrays, objects, records and maps, like in Swif
 {| 'x': x, 'y': y, 'z': z |} = {| 'x': 0, 'y': 0, 'z': 0 |};
 ```
 
-## Data types
+# Data types
 
 In addition to the JavaScript basic types, such as `bool`, `str`, and `float` (all `number`s in JavaScript are `float`), we do provide a few more.
 
-You can add an annotation that goes right before the variable name, similar to C# and Java.
+You can add a type annotation that goes atfer the variable name, similar to how you would do it in Swift and TypeScript:
 
 ```swift
-let int count;
-var int count;
+let count: int;
+var count: int;
 ```
 
 Because `count` has a type the compiler knows what we are and are not allowed to do with its value:
@@ -159,19 +157,19 @@ You can cast (convert a value from one type to another) with the `as` keyword or
 
 ```swift
 someValue = "this is a string"; // assigned 'str'
-int strLength = len (someValue as str);
+strLength: int = len (someValue as str);
 ```
 
 Another is through using constructor functions:
 
 ```swift
 someValue = "this is a string";
-int strLength = len str(someValue);
+strLength: int = len str(someValue);
 ```
 
-### Null and Undefined
+## Null and Undefined
 
-#### Void, Null and Undefined
+### Void, Null and Undefined
 
 Both `undef` and `null` actually have their **own** types, but they’re not extremely useful on their own.
 
@@ -179,14 +177,14 @@ Both `undef` and `null` actually have their **own** types, but they’re not ext
 
 ```swift
 // Not much else we can assign to these variables!
-undef u = undef;
-null n = null;
+u: undef = undef;
+n: null = null;
 ```
 
 `void` is a type alias, and `void == null | undef`.
 
 ```swift
-void warnUser() {
+warnUser(): void {
   print "This is my warning message";
 }
 ```
@@ -194,16 +192,16 @@ void warnUser() {
 So declaring variables of type `void` is not useful because you can only assign `null` or `undef` to them:
 
 ```swift
-void unusable = undef;
+unusable: void = undef;
 unusable = null;
 ```
 
-### Boolean
+## Boolean
 
 A boolean is either one of two values, `true` and `false`, and has the type `bool`. As in YAML, `on` `and` yes are the same as boolean `true`, while `off` and `no` are boolean `false`.
 
 ```swift
-bool isDone := false;
+isDone: bool := false;
 ```
 
 Logical and comparison operators such as `!`, `&&`, `||`, `<`, `>`, `<=`, `>=` are retained.
@@ -229,7 +227,7 @@ false ^^ false // false
 
 If you really want to use JavaScript's `==` and `!=`, use the _fuzzy equality_ operators `=~` and `!~` instead.
 
-### Numbers
+## Numbers
 
 In JavaScript, all numbers are either floating point values or (big) integers. These floating point numbers get the type `float`, while integers simply get `int`.
 
@@ -302,7 +300,7 @@ PHP's "spaceship" operator `<=>`, returns either `1`, `0` or `-1` depending on w
 2 <=> 2; // 0
 ```
 
-Bases 2 to 64 can be used, as long as they use these digits below and are surrounded in string literals and suffixed with the base. Bases are not case-sensitive if 36 and below.
+Bases 2 to 64 can be used, as long as they contain any combination of the below digits, are surounded in brackets and suffixed with the base.
 
 ```
 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$&
@@ -312,18 +310,18 @@ Bases 2 to 64 can be used, as long as they use these digits below and are surrou
 i = '105'6; // 41
 ```
 
-### Characters and Strings
+## Characters and Strings
 
 Characters, of type `char`, enclosed in ` `` `, are strings of length 1. They can be converted into integers with `int()`, and concatenated with `+` or repeated with `*` to form strings.
 
 ```swift
-char a = `a`;
+a: char = `a`;
 ```
 
 As in other languages, we use the type `str` (not `string`) to refer to these textual datatypes. Just like JavaScript, Eliph also uses double quotes `"` or single quotes `'` to surround string data.
 
 ```swift
-str color = 'blue';
+color: str = 'blue';
 color = 'red';
 ```
 
@@ -380,7 +378,7 @@ Strings can be concatenated `+`, replaced `-`, repeated `*`, sliced or split `/`
 Use `*` to join strings back from arrays `[]` or tuples `()`, where the right operand is the delimiter. This operation will convert all non-strings (including `char`s) into strings.
 
 ```swift
-str s = 'Hello';
+s: str = 'Hello';
 
 // Concatenating strings together
 s = 'Hello' + 'World!' // 'Hello World!'
@@ -392,12 +390,12 @@ s = 'Hello' - (/llo$/, 'lp me'); // 'Help me'
 // (calls String.replace() with the right operand)
 
 // Splitting
-str[] t = s / 1; // ['H', 'e', 'l', 'l', 'o']
-str[] t = s / [2, 3]; // ['He', 'llo']
+t: str[] = s / 1; // ['H', 'e', 'l', 'l', 'o']
+t = s / [2, 3]; // ['He', 'llo']
 t = s / ''; // ['H', 'e', 'l', 'l', 'o']
 
 // Splitting with spread operator
-char[] c = [...s]; // [`h`, `e`, `l`, `l`, `o`]
+c: char[] = [...s]; // [`h`, `e`, `l`, `l`, `o`]
 
 // Joining
 strArr = ['H', 'e', `l`, 'l', 'o'];
@@ -451,57 +449,169 @@ str = '12345'
 str.index(4) // 5
 ```
 
-### Regular Expressions
+## Regular Expressions
 
-Marked as #TODO
+A regular expression is an object that describes a pattern of characters. Regular expressions have the type `regex` are used to perform pattern-matching and "search-and-replace" functions on text.
 
-### Tuples and Arrays
+You construct a regular expression in one of two ways:
 
-Tuples are used to store multiple items in a single variable. A tuple is a collection which is ordered and unchangeable. Tuples are written inside parentheses and the elements are separated by either commas or new lines.
-
-```swift
-thistuple = (1, 2, 3);
-print thistuple;
-```
-
-Like strings, tuples can be indexed (modulo its length), and also can be concatenated `+`, filtered `-`, repeated `*`, sliced or split `/` with arithmetic operators.
+Using a regular expression literal, which consists of a pattern enclosed between slashes, as follows:
 
 ```swift
-// Concatenation
-a = (1, 2) + (3, 4); // (1, 2, 3, 4)
-
-// Filtering (all instances of the values will be removed)
-a = (1, 2, 3) - 3; // (1, 2)
-a = (1, 3, 2, 3) - 3; // (1, 2)
-a = (1, 3, 2, 3) - (2, 3); // (1)
-
-// Repeating
-a = tuple(1) * 3 // (1, 1, 1)
-
-// Subdividing
-a = (1::10) / 2 // ((1, 2), (3, 4), (5, 6), (7, 8), (9, 10))
-a = (1::10) / (1, 2, 3, 4) // ((1), (2, 3), (4, 5, 6), (7, 8, 9, 10))
+patt: regex = /w3schools/i
 ```
+
+or surround your pattern in a set of slashes, to turn it into a **block regular expression**. `/\/`. You can interpolate and transform variables and embed code and expressions, by using the hash interpolation syntax described earlier.
 
 ```swift
-a = [1, 2] + [3, 4]; // Concatenation
-[x, , ...z] = a // Destructuring
-print(x, z); // 1, [3, 4]
-$a = [...a, ...a, 4]; // [1, 2, 3, 4, 1, 2, 3, 4, 5]
-$a = a * 2 + [4]; // [1, 2, 3, 4, 1, 2, 3, 4, 5]
+patt: regex = /\/
+w3schools
+/\/i
 ```
 
-Marked as #TODO
+Eliph (aims to) natively support(s) the regex definitions in XRegExp, which is a superset of JavaScript regular expressions, as well as most of the features as described in [RegularExpressions.info](https://www.regular-expressions.info/). The following tables below is actually a cheat sheet and is taken from [this Perl documentation](https://perldoc.perl.org/perlre), but with some edits.
 
-### Records, Objects and Maps
+```
+           PURPOSE                                  WHERE
+\   Escape the next character                    Always, except when
+                                                 escaped by another \
+^   Match the beginning of the string            Not in []
+      (or line, if /m is used)
+^   Complement the [] class                      At the beginning of []
+.   Match any single character except newline    Not in []
+      (under /s, includes newline)
+$   Match the end of the string                  Not in [], but can
+      (or before newline at the end of the       mean interpolate a
+      string; or before any newline if /m is     scalar
+      used)
+|   Alternation                                  Not in []
+()  Grouping                                     Not in []
+[   Start Bracketed Character class              Not in []
+]   End Bracketed Character class                Only in [], and
+                                                   not first
+*   Matches the preceding element 0 or more      Not in []
+      times
++   Matches the preceding element 1 or more      Not in []
+      times
+?   Matches the preceding element 0 or 1         Not in []
+      times
+{   Starts a sequence that gives number(s)       Not in []
+      of times the preceding element can be
+      matched
+{   when following certain escape sequences
+      starts a modifier to the meaning of the
+      sequence
+}   End sequence started by {
+-   Indicates a range                            Only in [] interior
+//  Beginning of comment, extends to line end    Only with /x modifier
+/*  Beginning of end comment                     Only with /x modifier
+*/  End of block comment                         Only with /x modifier
+```
 
-Marked as #TODO
+Quantifiers
 
-### Sets
+```
+*           Match 0 or more times
++           Match 1 or more times
+?           Match 1 or 0 times
+{n}         Match exactly n times
+{n,}        Match at least n times
+{n,m}       Match at least n but not more than m times
 
-Marked as #TODO
+*?        Match 0 or more times, not greedily
++?        Match 1 or more times, not greedily
+??        Match 0 or 1 time, not greedily
+{n}?      Match exactly n times, not greedily (redundant)
+{n,}?     Match at least n times, not greedily
+{n,m}?    Match at least n but not more than m times, not greedily
 
-### Ranges
+*+     Match 0 or more times and give nothing back
+++     Match 1 or more times and give nothing back
+?+     Match 0 or 1 time and give nothing back
+{n}+   Match exactly n times and give nothing back (redundant)
+{n,}+  Match at least n times and give nothing back
+{n,m}+ Match at least n but not more than m times and give nothing back
+```
+
+Characters
+
+```
+\t          tab                   (HT, TAB)
+\n          newline               (LF, NL)
+\r          return                (CR)
+\f          form feed             (FF)
+\a          alarm (bell)          (BEL)
+\e          escape (think troff)  (ESC)
+\cK         control char          (example: VT)
+\x{}, \x00  character whose ordinal is the given hexadecimal number
+\N{name}    named Unicode character or character sequence
+\N{U+263D}  Unicode character     (example: FIRST QUARTER MOON)
+\o{}, \000  character whose ordinal is the given octal number
+\l          lowercase next char (think vi)
+\u          uppercase next char (think vi)
+\L          lowercase until \E (think vi)
+\U          uppercase until \E (think vi)
+\Q          quote (disable) pattern metacharacters until \E
+\E          end either case modification or quoted section, think vi
+```
+
+Character Classes
+
+```
+Sequence   Description
+[...]      Match a character according to the rules of the
+              bracketed character class defined by the "...".
+              Example: [a-z] matches "a" or "b" or "c" ... or "z"
+[[:...:]]  Match a character according to the rules of the POSIX
+              character class "..." within the outer bracketed
+              character class.  Example: [[:upper:]] matches any
+              uppercase character.
+(?[...])    Extended bracketed character class
+\w          Match a "word" character (alphanumeric plus "_", plus
+              other connector punctuation chars plus Unicode
+              marks)
+\W          Match a non-"word" character
+\s          Match a whitespace character
+\S          Match a non-whitespace character
+\d          Match a decimal digit character
+\D          Match a non-digit character
+\pP         Match P, named property.  Use \p{Prop} for longer names
+\PP         Match non-P
+\X          Match Unicode "eXtended grapheme cluster"
+\1          Backreference to a specific capture group or buffer.
+              1 may actually be any positive integer.
+\g1         Backreference to a specific or previous group,
+\g{-1}      The number may be negative indicating a relative
+              previous group and may optionally be wrapped in
+              curly brackets for safer parsing.
+\g{name}    Named backreference
+\k<name>    Named backreference (ES6 syntax)
+\K          Keep the stuff left of the \K, don't include it in $&
+\N          Any character but \n.  Not affected by /s modifier
+\v          Vertical whitespace
+\V          Not vertical whitespace
+\h          Horizontal whitespace
+\H          Not horizontal whitespace
+\R          Linebreak
+```
+
+Assertions
+
+```
+\b{}   Match at Unicode boundary of specified type
+\B{}   Match where corresponding \b{} doesn't match
+\b     Match a \w\W or \W\w boundary
+\B     Match except at a \w\W or \W\w boundary
+\A     Match only at beginning of string
+\Z     Match only at end of string, or before newline at the end
+\z     Match only at end of string
+\G     Match only at pos() (e.g. at the end-of-match position
+       of prior m//g)
+```
+
+...more coming soon...
+
+## Ranges
 
 There are also range literals, like in swiftScript, Kotlin or Swift, for example, `[1,2,3]` or `[1:100:1]`.
 
@@ -534,7 +644,7 @@ Some things to note:
 
 Slice syntax is always enclosed in `[]` immediately after the literal or variable, like how we would access arrays or objects in JS.
 
-The placeholder `$` stands for the length of the array or string it refers to, and remains constant.
+The placeholder `$` stands for the length of the array or string it refers to.
 
 ```swift
 c = 'hello'; // Slicing
@@ -550,14 +660,14 @@ When splicing, each individual index must be assigned a literal value, and for s
 - `a::b:c=<1,2>` - Assign to every index evaluated by the range expression `a::b:c`, alternating between values `1, 2`, in order of appearance.
 
 ```swift
-t = (1, 2, 3); // Splicing
-t = t + (4, 5); // (1, 2, 3, 4, 5)
-t = t * 2; // (1, 2, 3, 4, 5, 1, 2, 3, 4, 5)
-t = (1, 2, 3, 4, 5)[$>:];   // (5, 4, 3, 2, 1)
-t = (1, 2, 3, 4, 5)[-1='5']; // (1, 2, 3, 4, '5')
+t = '123'; // Splicing
+t = t + '45'; // '12345'
+t = t * 2; // '1234512345'
+t = '12345'[$>:]; // '54321'
+t = '12345'[-1='6']; // '123456'
 ```
 
-## Control Flow
+# Control Flow
 
 Control flow statements can be written without the use of parentheses. As with functions and other block expressions, multi-line conditionals are delimited inside curly braces.
 
@@ -634,7 +744,7 @@ goTo();
 goto runThis; // Throws an error
 ```
 
-### If-Else
+## If-Else
 
 `if` statements are compiled either into JavaScript expressions, using the ternary operator when possible, and closure wrapping otherwise.
 
@@ -667,10 +777,10 @@ x = a if condition;
 A `guard` statement is similar to an `if-else` statement without an `if` body.
 
 ```swift
-func greet({[str x]: str} person) {
-  guard let name = person.name else return;
+func greet(person: {[str]: str} ) {
+  guard name = person.name else return;
   print "Hello \(name)!";
-  guard let location = person.location else {
+  guard location = person.location else {
     print "I hope the weather is nice near you.";
     return;
   }
@@ -683,7 +793,7 @@ greet(person: {name: "Jane", location: "Cupertino"});
 // Prints "Hello Jane!" "I hope the weather is nice in Cupertino."
 ```
 
-### Loops
+## Loops
 
 Typically, you would write down a `for`-loop like this in JavaScript, which is very confusing to most developers. Also note the compulsory parentheses following the `for` keyword.
 
@@ -703,7 +813,7 @@ We also provide an opposite for the for-loop, the `till` loop, which is basicall
 till i = 1; i > 10; i++ {}
 ```
 
-You can iterates over the items in a sequence, such as items in an array, ranges of numbers, or characters in a string using the `for-in` loop.
+You can iterate over the items in a sequence, such as items in an array, ranges of numbers, or characters in a string using the `for-in` loop.
 
 ```swift
 for i in [1::100] {
@@ -758,7 +868,7 @@ gen fibonacci(): int {
   }
 }
 
-func getFibonacciNumbers(int length) int[] {
+func getFibonacciNumbers(length: int): int[] {
   results = [1], fibSeq = fibonacci();
   for n from fibSeq {
     results += [n];
@@ -938,7 +1048,6 @@ switch point {
 }
 // Prints "(1, 1) is inside the box"
 ```
-
 **Control transfer statements** change the order in which your code is executed, by transferring control from one piece of code to another. There are six control transfer statements in Eliph:
 
 - `continue`
@@ -1019,6 +1128,52 @@ print desc;
 // Prints "The number 5 is a prime number, and also an integer."
 ```
 
-### Error Handling
+## Error Handling
+
+Marked as #TODO
+
+## Tuples and Arrays
+
+Tuples are used to store multiple items in a single variable. A tuple is a collection which is ordered and unchangeable. Tuples are written inside parentheses and the elements are separated by either commas or new lines.
+
+```swift
+thistuple = (1, 2, 3);
+print thistuple;
+```
+
+Like strings, tuples can be indexed (modulo its length), and also can be concatenated `+`, filtered `-`, repeated `*`, sliced or split `/` with arithmetic operators.
+
+```swift
+// Concatenation
+a = (1, 2) + (3, 4); // (1, 2, 3, 4)
+
+// Filtering (all instances of the values will be removed)
+a = (1, 2, 3) - 3; // (1, 2)
+a = (1, 3, 2, 3) - 3; // (1, 2)
+a = (1, 3, 2, 3) - (2, 3); // (1)
+
+// Repeating
+a = tuple(1) * 3 // (1, 1, 1)
+
+// Subdividing
+a = (1::10) / 2 // ((1, 2), (3, 4), (5, 6), (7, 8), (9, 10))
+a = (1::10) / (1, 2, 3, 4) // ((1), (2, 3), (4, 5, 6), (7, 8, 9, 10))
+```
+
+```swift
+a = [1, 2] + [3, 4]; // Concatenation
+[x, , ...z] = a // Destructuring
+print(x, z); // 1, [3, 4]
+$a = [...a, ...a, 4]; // [1, 2, 3, 4, 1, 2, 3, 4, 5]
+$a = a * 2 + [4]; // [1, 2, 3, 4, 1, 2, 3, 4, 5]
+```
+
+Marked as #TODO
+
+## Records, Objects and Maps
+
+Marked as #TODO
+
+## Sets
 
 Marked as #TODO
