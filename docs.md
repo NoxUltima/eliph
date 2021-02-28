@@ -1,132 +1,177 @@
-# A Formal Introduction
+# Documentation
 
-> This reference is structured so that it can be read from top to bottom, if you like. Later sections use ideas and syntax previously introduced. Familiarity with JavaScript is assumed.
+> This documentation introduces various features of the Eliph language through examples, beginning with simple expressions, statements and data types, through functions and modules, and finally touching upon advanced concepts like errors and user-defined classes.
 
-Like many programming languages such as JS, Eliph uses significant use of **curly braces** `{}` to delimit blocks of code, rather than indentation.
+## An Informal Introduction
 
-Semicolons are optional and are mainly used to fit multiple expressions onto a single line, and in basic `for` and `till`-loops like below.
+Eliph provides its own versions of all JavaScript and TypeScript types, including `int` and `float` as JavaScript `number` and `bigint`, `bool` for `boolean` and `str` as `string` (and `char` as an extension of `string`).
 
-```res
-for i = 0; i < 10; i++ { console.log(i); }
-till i = 0; i == 10; i++ { console.log(i); } // till is the opposite of for
+In addition to familiar types, Eliph introduces advanced types not found in JavaScript, such as tuples, maps, sets, arbitrary precision numbers and algebraic data types.
+
+First, the basics. Like many programming languages such as Swift, Scala, Rust and Reason, Eliph uses significant use of **curly braces** `{}` to delimit blocks of code, rather than indentation. What has been eliminated (although not entirely) are the parentheses `()` that go after control flow statements such as `if`, `for` and `while`, but most importantly, commas and semicolons.
+
+You don't _actually_ need to use semicolons unless you want to fit multiple expressions onto a single line. Commas are also entirely optional in compound data types, when each property is listed on its own line. The only compulsory thing you need is the outer brackets or braces.
+
+Function calls require parentheses, as in many other programming languages.
+
+```swift
+print(sys.inspect(e)) // This is okay
+print (sys.inspect e) // This will throw a SyntaxError
+print sys.inspect e   // This will also throw a SyntaxError
 ```
 
-Function calls must require parentheses, as in many other programming languages. Statements such as `break`, `continue` and `goto`, and unary operators such as `not`, `len` and `size` do not require parentheses, since they are not functions.
+You can also chain methods without parentheses by spacing them out. Note the function syntax on the right.
 
-```res
-echo sys.inspect(e) // echo is a statement
+```swift
+[1, 2, 3, 4, 5].slice 10 * 3 .filter { $ % 3 == 0 }
+[1, 2, 3, 4, 5].slice(10 * 3).filter((i) => i % 3 == 0)
 ```
 
-When invoking functions as arguments to methods, such as in `map` and `filter` operations, you can leave out the parentheses.
+Eliph has a lot of keywords, most of which you are familiar with. Let's go through them in a bit of detail here:
 
-```res
-[1, 2, 3, 4, 5].map { $ * 2 }.filter { $ % 3 == 0 }
-```
-
-## Variables
-
-Valid variable or identifier names with a letter, underscore `_` or **any Unicode character** that is not punctuation or symbols. All other characters can include digits, `-` and `$`.
-
-If you need to give a constant or variable the same name as a reserved Eliph keyword, prefix `$`. Use `$$` in place of `$`. This is because a single `$` is considered a **topical identifier**.
-
-The following are a list of all the **keywords** of the language in Eliph:
-
-```res
-var let const def
+```swift
+// Control flow
+var let const declare define infix
 if unless then elif elun else
-for till own in of when break continue
+for own in of when break continue
 while until loop repeat pass
-switch case where rise fall
+with skip at from to til by
+switch case other fallthru
 try throw catch raise except finally
-do return yield label goto guard
-import export default from as
-args this it debugger
-get set async await
-
-// Contextual keywords
-at to til by with skip
-ext impl pub pvt prot read fin mut stat
-
-// Declarations
-func gen infix unary
-class | type | interface
-struct | package | namespace
-
-// Operators
-and nand or nor xor xnor not
-super len ctor size typeof instof del void
-
-// Statements
-print puts echo assert debug info warn error
-
-// Types
-any unknown other never
-num int float deci frac comp
-str char bool sym
-tuple array record object
-set map weakset weakmap regex
+do begin end start stop return yield
+label goto guard
+import export default as
 
 // Constants
 true yes on | false no off
 null | undef | infin | nan
+document | event | navigator | performance | screen | window
+console | module | native | global | require | exports
+args | this | it | ctor | debugger
 
-// Browser constants
-document event navigator performance screen window
+// Data types and declarations
+any | never | unknown | auto
+num | int | float | dec | frac | comp
+str | char | bool | sym
+tuple | arr | rec | obj | set | map | weakset | weakmap | regex | date
+func | gen
+class | type | enum | interface | struct | namespace | package
 
-// Node constants
-console module native global require exports
+// Do not use these keywords at all!
+byte | ushort | uint | ulong | sbyte | short | long | double | bigint | bigdeci
+
+// Built-in data types
+Array ArrayBuffer Atomics BigInt BigInt64Array BigUint64Array
+Boolean DataView Date Float32Array Float64Array Function Generator
+GeneratorFunction Int8Array Int16Array Int32Array Intl Map Number
+Object Proxy Reflect RegExp Set SharedArrayBuffer SIMD String
+Symbol TypedArray Uint8Array Uint16Array Uint32Array
+Uint8ClampedArray WeakMap WeakSet Math JSON
+
+// Operators
+super len size typeof instof delete void
+and nand or nor xor xnor not
+lt gt lte gte leg is isnt eq ne sim diff
+
+// Built-in console statements
+print puts echo assert debug info warn error
+
+// LINQ syntax
+select join group add remove | alias | order asc desc | where into | get set | async await
+
+// Access modifiers (are defined when they are)
+ext impl
+pub pvt prot read fin mut stat
+defer refer dyn check uncheck
+abst over dele lock sync
+part sealed trans vol unsafe
 ```
 
-You can declare `let` and `var` variables on their own. The `const` keyword is only used when declaring variables in loops.
+There are really only two types of comments: `// line comments` and `/* block comments */`. Both can be nested. You can also use the familiar `/** JSDoc comment syntax */` (which is basically just a block comment with an extra asterisk) if you like as well.
 
-```res
+```swift
+/* /* hooray for nested comments */ */
+/**
+ * @param hooray for nested comments
+ * /* dang! */
+ */
+```
+
+### Variables
+
+Constants and variables must be declared before they're used. You declare constants with the `const` keyword and variables with the `let` keyword. You can also declare non-local variables with the `var` keyword. The value of a constant can't be changed once it's set, whereas a variable can be set to a different value in the future.
+
+Identifier names can begin with a letter, underscore `_` or **any** Unicode character that is not punctuation or symbol\*. All other characters, in addition to that, can have digits and `$`. This is slightly different than JavaScript, in which `$` was a valid identifier. The first `$` is ignored, use `$$` instead.
+
+If you need to give a constant or variable the same name as a reserved Eliph keyword, surround the keyword with quotes _or_ prefix a `$` when using it as a name. However, avoid using keywords as names unless you have absolutely no choice.
+
+\*<small>This means, whitespace characters, mathematical symbols, arrows, private-use Unicode scalar values, or line- and box-drawing characters. Nor can they begin with a number, although numbers may be included elsewhere within the name.</small>
+
+`$` is a topic placeholder identifier that you will see in many code examples---for instance Scala uses `_`.
+
+```swift
+π = 3.14159
+你好 = "你好世界"
+🐶🐮 = "dogcow"
+```
+
+You can declare `let` and `var` variables with a value. They can be seen and referenced by code that comes after them.
+
+```swift
 let i;
 var j;
 for const i in [0::len array] {}
 ```
 
-All variables when declared with the `=` assignment operator are automatically assigned a `let` declaration in the compiled output, the first time they appear.
+By default, all variables when declared with the `=` assignment operator are automatically assigned a `let` declaration, the first time they appear. Constants are always initialized with `:=`.
 
-Likewise, `const` variables are always initialized with `:=`, and **cannot be modified**.
-
-```res
+```swift
 i = 3;  // let i = 3
 j .= 4; // var j = 4
 k := 5; // const k = 5
 ```
 
-Non-local or `var` variables are declared with `.=`, and you are required to use `.=` whenever you modify the same variable in upper scopes, such as outside functions.
+You can declare non-local variables with `var` using `.=`, and you are required to use `.=` all the time whenever you modify the same variable in upper scopes, such as outside functions.
 
-```res
+```swift
 x .= 10 // declared as `var x`
 do { x = 5 } // 10 => creates a new variable called x
 do { x .= 2 } // 2 => modifies `var x`
 ```
 
+Once you've declared a constant or variable of a certain type, you can't declare it again with the same name, or change it to store values of a different type. Nor can you change a constant into a variable or vice versa.
+
+You can change the value of an existing variable to another value, as long as it is of the same type (though you can reuse a variable name when you initialize it to be `any`). In this example, the value of friendlyWelcome is changed from "Hello!" to "Bonjour!":
+
+```swift
+friendlyWelcome = "Hello!"
+friendlyWelcome = "Bonjour!"
+// friendlyWelcome is now "Bonjour!"
+```
+
+Unlike a variable, the value of a constant can’t be changed after it’s set. Attempting to do so is reported as an error when your code is executed:
+
+```swift
+languageName := "Eliph"
+languageName = "Nadir"
+// Error: languageName cannot be changed.
+```
+
 You can declare multiple constants or multiple variables on a single line, separated by commas:
 
-```res
+```swift
 x = 0.0, y := 0.0, z .= 0.0;
 ```
 
-or assign different types of variables the same value.
+or put even more simply this if you want to initialize the same value for different variable names.
 
-```res
+```swift
 x = y := z .= 0.0;
 ```
 
-`// line comments` and `/* block comments */` work the same way as in JavaScript.
+You can destructure from tuples, arrays, objects and maps, like in Swift, Reason or JavaScript:
 
-```res
-/* hooray for nested comments */
-/**
- * @param hooray for nested comments
- */
-```
-
-You can destructure from tuples, arrays, objects, records and maps, like in Swift, Reason or JavaScript:
-
-```res
+```swift
 (x, y, , z) = (0, 0, 1, 0);
 [x, y, , z] = [0, 0, 1, 0];
 {x, y, z} = {x: 0, y: 0, z: 0, a: 1};
@@ -134,20 +179,36 @@ You can destructure from tuples, arrays, objects, records and maps, like in Swif
 {| 'x': x, 'y': y, 'z': z |} = {| 'x': 0, 'y': 0, 'z': 0 |};
 ```
 
-## Data types
+Within expressions, you can change and assign variables directly. This is because a value assigned will return its value backward.
 
-In addition to the JavaScript basic types, such as `bool`, `str`, and `float` (all `number`s in JavaScript are `float`), we do provide a few more.
+The expression `i += 2` is shorthand for `i = i + 2`. Effectively, the addition and the assignment are combined into one operator that performs both tasks at the same time.
 
-You can add an annotation that goes right before the variable name, similar to C# and Java.
+```swift
+// In this example, both i and j are declared with the value 3
+i = j := 3; i += 2 // i == 5
+j // j == 3
+```
 
-```res
-let int count;
-var int count;
+## Data Types
+
+For programs to be useful, we need to be able to work with some of the simplest units of data: numbers, strings, structures, boolean values, and the like. In Eliph, we support the same types as you would expect in JavaScript, plus a few more thrown in to help things along.
+
+This declaration is named `count`, was declared with `let`, is of type `int`, and has a value of `42`. Its type was inferred, we did not explicitly write down that it was an `int`.
+
+```swift
+count = 42;
+```
+
+Types can be explicitly added with an annotation, that goes right before the variable name.
+
+```swift
+let int i;
+var int j;
 ```
 
 Because `count` has a type the compiler knows what we are and are not allowed to do with its value:
 
-```res
+```swift
 // Allowed: addition
 nextCount = count + 1
 
@@ -155,89 +216,85 @@ nextCount = count + 1
 x = count.map => 3
 ```
 
-You can cast (convert a value from one type to another) with the `as` keyword or constructor function.
+### Casting
 
-```res
-someValue = "this is a string"; // assigned 'str'
+Sometimes we want to convert a type of a value into something we already know. Casting performs no special checking or restructuring of data. It has no runtime impact and is used purely by the compiler. Eliph assumes that you have performed any special checks you need. Type casting has three forms.
+
+One is the `as`-syntax:
+
+```swift
+unknown someValue = "this is a string";
 int strLength = len (someValue as str);
 ```
 
-Another is through using constructor functions:
+Another is the constructor function syntax:
 
-```res
-someValue = "this is a string";
+```swift
+unknown someValue = "this is a string";
 int strLength = len str(someValue);
 ```
 
-### Null and Undefined
+The other version is the "angle-bracket" syntax:
 
-#### Void, Null and Undefined
-
-Both `undef` and `null` actually have their **own** types, but they’re not extremely useful on their own.
-
-`undef` is the default value assigned to a variable, or the value returned from function calls, while `null` is the value which you assign explicitly.
-
-```res
-// Not much else we can assign to these variables!
-undef u = undef;
-null n = null;
+```swift
+unknown someValue = "this is a string";
+int strLength = len <str>someValue;
 ```
 
-`void` is a type alias, and `void == null | undef`.
-
-```res
-void warnUser() {
-  print "This is my warning message";
-}
-```
-
-So declaring variables of type `void` is not useful because you can only assign `null` or `undef` to them:
-
-```res
-void unusable = undef;
-unusable = null;
-```
+The two samples are equivalent. Using one over the other is mostly a choice of preference; however, when using JSX, do not **ever** use angle brackets.
 
 ### Boolean
 
-A boolean is either one of two values, `true` and `false`, and has the type `bool`. As in YAML, `on` `and` yes are the same as boolean `true`, while `off` and `no` are boolean `false`.
+A boolean is either one of two values, `true` and `false`, and has the type `bool`. `true` can have the aliases `yes` and `on` while `false` can have the aliases `no` and `off`.
 
-```res
+```swift
 bool isDone := false;
 ```
 
-Logical and comparison operators such as `!`, `&&`, `||`, `<`, `>`, `<=`, `>=` are retained.
+The regular boolean operations have been preserved:
 
-```res
+- logical operators `!`, `&&`, `||`, and their infix aliases `not`, `and`, `or`;
+- comparison operators `<`, `>`, `<=`, `>=`;
+
+```swift
 !true // false
 true && false // false
 true || false // true
 ```
 
-We do provide a few more, such as the xor operator `^^`.
+We do provide a few more, such as the `^^` or `xor` logical operator, which returns `true` as long as both operands are distinct. It functions roughly the same way as `!==`. <small>Note any operators that doesn't have a JavaScript counterpart automatically compile to private functions.</small>
 
-`&&`, `||` and `^^`, and their infix forms `and`, `or` and `xor`, have their own inverses: `!&`/`nand`, `!|`/`nor` and `!^`/`xnor`.
+```swift
+xor = (a, b) => !a !== !b && (a || b);
+```
 
-```res
+```swift
 false ^^ true  // true
 false ^^ false // false
 1 ^^ 0         // 1
 1 ^^ 1         // false
 ```
 
-`==` and `!=` in Eliph compile to `===` and `!==` in JavaScript.
+`&&`, `||` and `^^`, and their infix forms `and`, `or` and `xor`, have their own inverses: `!&`/`nand`, `!|`/`nor` and `!^`/`xnor`.
 
-If you really want to use JavaScript's `==` and `!=`, use the _fuzzy equality_ operators `=~` and `!~` instead.
+`==` and `!=` in Eliph compile to `===` and `!==` in JavaScript. If you really want to use JavaScript's `==` and `!=`, use the _fuzzy equality_ operators `=~` and `!~` instead.
 
 ### Numbers
 
-In JavaScript, all numbers are either floating point values or (big) integers. These floating point numbers get the type `float`, while integers simply get `int`.
+As in JavaScript, all numbers are either floating point values or (big) integers. These floating point numbers get the type `float`, while integers simply get `int`.
 
-`int` literals have no `.`, whereas `float`s have. `int`s also can end in `n`, of which explicitly tell the compiler it is a `bigint`.
+The integer numbers (e.g. `2`, `4`, `20`) have type `int`, the ones with a fractional part or with a dot `.` (e.g. `5.0`, `1.6`) have type `float`. `int`s also can end in `n`, of which explicitly tell the compiler it is a `bigint`.
+
+```swift
+dec := 6.;
+hex := 0xf00d;
+binary := 0b1010;
+octal := 0o744;
+```
 
 The basic operations `+`, `-`, `*` and `/` work the same way as in JS, and you can use parentheses `()` in grouping your expressions:
 
-```res
+```swift
 2 + 2 // 4
 50 - 5 * 6 // 20
 (50 - 5 * 6) / 4 // 5.0
@@ -246,20 +303,20 @@ The basic operations `+`, `-`, `*` and `/` work the same way as in JS, and you c
 
 Regular division with `/` will evaluate to a `float`, but floor division with `~/` will return `int`. Operators with mixed type operands convert the evaluated result to `float`:
 
-```res
+```swift
 4 * 3.75 - 1;
 ```
 
-```res
+```swift
 17 / 3; // 5.666666666666667
 17 ~/ 3; // 5
 17 % 3; // 2
 5 * 3 + 2; // 17
 ```
 
-Bitwise operations such as unary `~`, infix `&`, `|` and `^` (and their inverses `~&`, `~|`, `~^`), and shift operators `<<`, `>>` and `>>>` will evaluate into `int`, no matter the type.
+Bitwise operations such as `&`, `|` and `^` (and their inverses `~&`, `~|`, `~^`), unary `~` and bitwise shift operators `<<`, `>>` and `>>>` will evaluate into `int`.
 
-```res
+```swift
 5 & 1; // 1
 5 | 1; // 5
 5 ^ 1; // 4
@@ -271,255 +328,207 @@ Bitwise operations such as unary `~`, infix `&`, `|` and `^` (and their inverses
 
 `%%` provides dividend-dependent modulo:
 
-```res
+```swift
 -7 % 5 == -2; // The remainder of 7 / 5
 -7 %% 5 == 3; // n %% 5 is always between 0 and 4
 ```
 
-Radix literals can be created using prefixes `0x`, `0o`, `0b`. Literals can be broken up using the `_` character which will be ignored. Leading 0s are also ignored.
+Radix literals can be created using prefixes `0x`, `0o`, `0b`. Literals can be broken up using the `_` character which will be ignored:
 
-```res
-dec = 6.;
-hex = 0xf00d;
-binary = 0b1010;
-octal = 0o744;
-
+```swift
+decimal = 11256099;
+hexadecimal = 0xABC123;
+octal = 0o52740443;
+binary = 0b101010111100;
 billion = 1_000_000_000;
 ```
 
 The minimum/maximum operators `<?` and `>?`, which return the smaller or larger of the two operands.
 
-```res
+```swift
 3 <? 10; // 3
 3 >? 10; // 10
 ```
 
-PHP's "spaceship" operator `<=>`, returns either `1`, `0` or `-1` depending on whether the number on the left is greater than, equal to or lesser than the right.
+PHP's "spaceship" operator `<=>`, returns either `1`, `0` or `-1` depending on whether the number on the left isgreater than, equal to or lesser than the right.
 
-```res
+```js
+leg = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+```
+
+```swift
 3 <=> 1; // 1
 1 <=> 3; // -1
 2 <=> 2; // 0
 ```
 
-Bases 2 to 64 can be used, as long as they use these digits below and are surrounded in string literals and suffixed with the base. Bases are not case-sensitive if 36 and below.
+Besides the very common `int` and `float`, there are three more types `frac`, `deci` and `comp` types refer to arbitrary-precision fractional, rational and complex numbers respectively.
 
-```
-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$&
+- Fractions, withr `frac` end in `f`, and can be of the form:
+  - `(x,y)f`, where `x` is the numerator and `y` is the denominator.
+  - `x.k(d)?f`, where `x` is the integer part, `k` is the non-repeating fractional part and `d` is the repeating fractional part.
+- `deci`, whether with a `.` or not, always end in `m`. Alternatively it can also be expressed as a mathematical formula before the `m`, such as `(5**(1/2))n`.
+- `comp` of the form `(k,x)j`, where `k` is the real part and `x` is the imaginary part.
+
+`num` is a superset of `int`, `float`, `frac`, `deci`, and `comp`, and for expressions with mixed-type operands, any type lower in the hierarchy is always coerced to a higher superset type.
+
+```swift
+i = 1; // int
+i += 1.; // float
+i += 1f; // frac
+i += 1m; // deci
+i += (1,0)j; // comp
 ```
 
-```res
+Bases 2 to 64 can be used, as long as they use these digits and are surrounded in string literals and suffixed with the base: `0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$&`.
+
+```swift
 i = '105'6; // 41
 ```
 
-### Characters and Strings
+Note:
 
-Characters, of type `char`, enclosed in ` `` `, are strings of length 1. They can be converted into integers with `int()`, and concatenated with `+` or repeated with `*` to form strings.
+- All `_` and leading `0`s are ignored
+- Any numeric literal not ending in `f`, `j`, `m` or `n` (or more than two letters) will throw an error.
 
-```res
-char a = `a`;
+```swift
+040; // 40
+004k; // ERROR: Literal shound end in digits or either of f, j, m or n
 ```
 
-As in other languages, we use the type `str` (not `string`) to refer to these textual datatypes. Just like JavaScript, Eliph also uses double quotes `"` or single quotes `'` to surround string data.
+You can type-cast with the use of constructor functions, similar to how `Number()`, `String()` and `Boolean()` usually work.
 
-```res
+```swift
+int rounded = int(round(1.3f)); // 1
+```
+
+### Strings
+
+As in other languages, we use the type `str` (not `string`) to refer to these textual datatypes. Just like JavaScript, Eliph also uses double quotes (`"`) or single quotes (`'`) to surround string data.
+
+```swift
 str color = 'blue';
 color = 'red';
 ```
 
-Both character and single-quoted string literals have special escape syntax, as shown below. Single-quote strings evaluate as-is, and require you to escape some special characters, as shown below:
+Template strings, of the form `""`, which can span multiple lines and have embedded variables and expressions. These strings are surrounded by the double quote (`"`) character. Embedded variables are of the form `#var`, and interpolated expressions are of the form `#{ expr }`. The difference between `"` and `'`-delimited strings can be summed up in this short table below.
 
-```res
-'\''         // single quote
-'\"'         // double quote
-'\`'         // backtick
-'\\'         // literal backslash
-'\a'         // alert
-'\b'         // backspace
-'\e'         // escape
-'\f'         // form feed
-'\n'         // newline
-'\r'         // carriage return
-'\t'         // tab
-'\v'         // vertical tab
-'\x30'       // ASCII character
-'\uFFFF'     // BMP Unicode character
-'\u{10FFFF}' // non-BMP Unicode character
+|                             | `'` | `"` |
+| --------------------------- | --- | --- |
+| Single-line evaluation      | Yes | No  |
+| Interpolating and embedding | No  | Yes |
+| `\`-escaping (except `#`)   | Yes | No  |
+| Proper Unicode handling     | No  | Yes |
+
+```swift
+str fullName = "Bob Bobbington";
+int age = 37;
+str sentence = "Hello, my name is #fullName.
+I'll be #{age + 1} years old next month.";
 ```
 
-Double-quote strings allow interpolation and embedding of variables of expressions. Embedded variables are of the form `#var`, and interpolated expressions are of the form `#{ expr }`.
+Characters, of type `char`, enclosed in ` `` `, are really just strings of length 1. They don't do anything, really, except they are compatible with `int` operations and can be concatenated to form strings. So, strings basically are arrays of characters.
 
-You can delimit your string with as many `"` or `'` characters as you want, but each string literal should be surrounded with an **odd** number of the same character.
-
-|                                | `'` | `"` |
-| ------------------------------ | --- | --- |
-| Ignores indentation/newlines   | Yes | No  |
-| Allows interpolating/embedding | No  | Yes |
-| Raw, unescaped strings         | Yes | No  |
-| Proper Unicode handling        | No  | Yes |
-
-```res
-author = 'Wittgenstein'
-quote = "A picture is a fact. -- #author"
-sentence = "#{22 / 7} is a decent approximation of π"
+```swift
+char a = `a`;
 ```
 
-In single-quoted strings, lines are joined by a single space unless they end with a backslash. Indentation is ignored.
+Strings can be replaced with either a substring or through pattern matching, where the right operand is passed into the arguments of the [`String.replace()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace) function.
 
-```res
-mobyDick = 'Call me Ishmael. Some years ago --
-  never mind how long precisely -- having little
-  or no money in my purse, and nothing particular
-  to interest me on shore, I thought I would sail
-  about a little and see the watery part of the
-  world...'
-```
+Strings can be split into tuples of strings or characters with `/`, use casting into `char[]()` or `as char[]` if you want to convert the split result into individual characters. Spreading `[...string]` converts the string into an array of `char`s.
 
-Strings can be concatenated `+`, replaced `-`, repeated `*`, sliced or split `/` with arithmetic operators.
-
-Use `*` to join strings back from arrays `[]` or tuples `()`, where the right operand is the delimiter. This operation will convert all non-strings (including `char`s) into strings.
-
-```res
+```swift
 str s = 'Hello';
 
-// Concatenating strings together
-s = 'Hello' + 'World!' // 'Hello World!'
-s = 'Hello'
-
-// Replacing strings by substring or regex
 s = 'Hello' - `l`; // 'Heo'
 s = 'Hello' - (/llo$/, 'lp me'); // 'Help me'
-// (calls String.replace() with the right operand)
 
-// Splitting
 str[] t = s / 1; // ['H', 'e', 'l', 'l', 'o']
-str[] t = s / [2, 3]; // ['He', 'llo']
-t = s / ''; // ['H', 'e', 'l', 'l', 'o']
 
-// Splitting with spread operator
-char[] c = [...s]; // [`h`, `e`, `l`, `l`, `o`]
+char[] c = char[](s / 1); // [`h`, `e`, `l`, `l`, `o`]
 
-// Joining
-strArr = ['H', 'e', `l`, 'l', 'o'];
-strArr = strArr * ''; //  'Hello'
+// Alternatively:
+char[] c = [...s]
 ```
 
-Use the `len` operator to retrieve the length of a string:
+Use `*` to join strings back, where the right operand is the delimiter. This operation will convert all non-strings (including `char`s) into strings.
 
-```res
-strLen = len 'hello' // 5
+```swift
+strArr = ['H', 'e', `l`, 'l', 'o']
+strArr = strArr * '' //  'Hello'
 ```
 
-Strings are **modulo and zero-indexed**. Basically, indices can go on forever, but this does **not** mean the string has infinite length.
+### Arrays and Tuples
 
-When accessing **integer** indices in a string (or other sequential data structure such as arrays and tuples), they always are accessed modulo `%%` the length of the string.
+For array types, you can annotate in one of two ways: the type of the element followed by `[]` to denote an array of that element type. Note arrays work the same way as in JavaScript and are **mutable** in the sense that they can be modified directly by invoking methods such as `push`, `pop`, `shift`, `unshift` and `splice` on it.
 
-- `0` is the first index, `1` is the second, and so on
-- Indices can count backward: `-1` is the last, `-2` is second last and so on
-
-So given a string `s` of length `5`,
-
-| False index | -7  | -6  | -5  | -4  | -3  | -2  | -1  | 0   | 1   | 2   | 3   | 4   | 5   | 6   | 7   |
-| ----------- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| True index  | 3   | 4   | 0   | 1   | 2   | 3   | 4   | 0   | 1   | 2   | 3   | 4   | 0   | 1   | 2   |
-
-or to put it more simply, `... s[5] == s[0] == s[-4] == s[-9] ...`.
-
-Use commas to retrieve individual indices of strings, and combinations of `<>` and `:` to extract ranges of substrings from strings. More on #Ranges. This means, you can repeat substrings multiple times until a certain length.
-
-Much like JavaScript objects and maps, arrays and tuples do have keys (their **numeric** index) and values (which are the values you see on the screen), You can use `in` or its inverse `!in` to test whether a substring or character is in a string.
-
-```res
-'34' in '12345' // true
-`3` in '12345' // true
-
-'34' !in '12345' // false
-`3` !in '12345' // false
+```swift
+int[] myList = [1, 2, 3];
+myList[1] = 300
+myList[1, 3] = [300, 400]; // 300, 400
 ```
 
-`of` returns `true` if and only if the number passed in is a **non-negative integer** and between 0 and the last index (1 less than the length of the string).
+Same thing for tuples; the type followed by `()`. However, they are **immutable** and each operation you perform on it would return a new tuple.
 
-```res
+```swift
+int() myTuple = (1, 2, 3);
+myTuple[1] = 2 // ERROR: tuple elements cannot be assigned directly.
+```
+
+Use the unary `len` operator to retrieve the length of a(n) string/array/tuple:
+
+```swift
+arrLen = len [1, 2, 3, 4, 5] // 5
+```
+
+Much like JavaScript objects and maps, arrays and tuples do have keys (their **numeric** index) and values (which are the values you see on the screen), You can use `in` to test for value presence, and `of` to test for key presence.
+
+```swift
+'3' in '12345' // true
 3 of '12345' // true
--1 of '12345' // false
+'3' of '12345' // false
+
+'3' in (1, 2, '3', 4, 5) // true
+3 of (1, 2, 3, 4, 5) // true
+'3' of (1, 2, 3, 4, 5) // false
 ```
 
-Similarly, the `index()` function, similar to `indexOf()` in JavaScript, will always return a **non-negative integer** between 0 and the last index.
+Strings, arrays and tuples can be indexed, concatenated, repeated, sliced and spliced, much the same way as you do with Python.
 
-```res
-str = '12345'
-str.index(4) // 5
+Indices are 0-indexed and can accept integer values, but modulo `%%` the length of the array. So given a string/tuple/array `seq` of length `5`, `... seq[5] == seq[0] == seq[-4] == seq[-9] ...`.
+
+Array or tuple types allow you to express a fixed number of elements whose types are known, but need not be the same. For example, you may want to represent a value as a pair of a `str` and `int`.
+
+```swift
+let [str, int] x;
+
+// Initialize it
+x = ["hello", 10]; // OK
+
+// Initialize it incorrectly
+x = [10, "hello"];
+// ERROR: type [int, str] is not assignable to type [str, int]
 ```
-
-### Regular Expressions
-
-Marked as #TODO
-
-### Tuples and Arrays
-
-Tuples are used to store multiple items in a single variable. A tuple is a collection which is ordered and unchangeable. Tuples are written inside parentheses and the elements are separated by either commas or new lines.
-
-```res
-thistuple = (1, 2, 3);
-print thistuple;
-```
-
-Like strings, tuples can be indexed (modulo its length), and also can be concatenated `+`, filtered `-`, repeated `*`, sliced or split `/` with arithmetic operators.
-
-```res
-// Concatenation
-a = (1, 2) + (3, 4); // (1, 2, 3, 4)
-
-// Filtering (all instances of the values will be removed)
-a = (1, 2, 3) - 3; // (1, 2)
-a = (1, 3, 2, 3) - 3; // (1, 2)
-a = (1, 3, 2, 3) - (2, 3); // (1)
-
-// Repeating
-a = tuple(1) * 3 // (1, 1, 1)
-
-// Subdividing
-a = (1::10) / 2 // ((1, 2), (3, 4), (5, 6), (7, 8), (9, 10))
-a = (1::10) / (1, 2, 3, 4) // ((1), (2, 3), (4, 5, 6), (7, 8, 9, 10))
-```
-
-```res
-a = [1, 2] + [3, 4]; // Concatenation
-[x, , ...z] = a // Destructuring
-print(x, z); // 1, [3, 4]
-$a = [...a, ...a, 4]; // [1, 2, 3, 4, 1, 2, 3, 4, 5]
-$a = a * 2 + [4]; // [1, 2, 3, 4, 1, 2, 3, 4, 5]
-```
-
-Marked as #TODO
-
-### Records, Objects and Maps
-
-Marked as #TODO
-
-### Sets
-
-Marked as #TODO
 
 ### Ranges
 
-There are also range literals, like in CoffeeScript, Kotlin or Swift, for example, `[1,2,3]` or `[1:100:1]`.
+It may seem confusing at first, but...
 
-Ranges are short, sweet and very powerful, evaluating to tuples or arrays containing numeric values, depending on the brackets.
+We use the **range literal** syntax, for example, `[1,2,3]` or `[1:100:1]`. Range syntax is short, sweet and very powerful. Ranges can evaluate to tuples or arrays containing numeric values, depending on whether they are enclosed in parentheses or brackets.
 
-A range literal can either contain individual numeric elements separated by commas, or subranges of the form `start::end:step`, implicitly adding `0` wherever needed.
+A range literal can either contain individual numeric elements separated by commas, or subranges of the form `start::end:step`, implicitly adding `0` wherever needed if there is no number separatid by any of these two symbols.
 
-| Operator         | Meaning                           |
-| ---------------- | --------------------------------- |
-| `a,b`            | `a` and `b` only                  |
-| `,b,`            | implicit `0` -> `0,b,0`           |
-| `a,b:c`          | `a`, then from `b` to `c` by `±1` |
-| `a::b`           | from `a` to `b`, inclusive        |
-| `a:>b` or `a:<b` | ... excluding `b`                 |
-| `a<:b` or `a>:b` | ... excluding `a`                 |
-| `a<>b` or `a><b` | ... exclusive                     |
-| `a::b:c`         | ... inclusive, step by `c`        |
-| `a::b:c:d`       | ... step by `c`, then `d`\*       |
+| Operator         | Meaning                         |
+| ---------------- | ------------------------------- |
+| `a,b`            | `a` and `b` only                |
+| `,b,`            | implicit `0`: `0,b,0`           |
+| `a,b:c`          | `a`, then from `b` to `c`       |
+| `a::b`           | from `a` to `b`, inclusive      |
+| `a:>b` or `a:<b` | ... excluding `b`               |
+| `a<:b` or `a>:b` | ... excluding `a`               |
+| `a<>b` or `a><b` | ... exclusive                   |
+| `a::b:c`         | ... inclusive, stepping by `c`  |
+| `a::b:c:d`       | ... stepping by `c`, then `d`\* |
 
 In `[a::b:c:d]`:
 
@@ -530,67 +539,466 @@ Some things to note:
 
 - If the range counts **out of bounds**, it will coerce that to count in the right direction. `c + d > 0 && a > b || c + d < 0 && a < b`, then all numbers following `a` and `b` will be negated: `c` would be `-c` and `d` `-d`.
 
-**Slicing and splicing** allow you to retrieve and override elements in tuples and arrays, or individual `char`s in strings, using the same notation above.
+So a range expression `[1,2,0::50:1:2:3:4]` is compiled to this monstrosity in JavaScript:
 
-Slice syntax is always enclosed in `[]` immediately after the literal or variable, like how we would access arrays or objects in JS.
+```js
+[
+  1, // Individual elements
+  2,
+  ...(() => {
+    // Start, end and pattern
+    const [min, max, patt] = [0, 50, [1, 2, 3, 4]];
+    let sum = patt.reduce((a, b) => a + b, 0),
+      arr = [min];
+    for (let i = min; i <= max; i += sum) {
+      let idx = i;
+      for (let j of patt) {
+        arr.push((idx += j));
+      }
+    }
+    // Exclude start or end
+    return arr.filter(idx => min <= idx && idx <= max);
+  })()
+];
+```
 
-The placeholder `$` stands for the length of the array or string it refers to, and remains constant.
+**Slicing and splicing** allow you to retrieve and override elements in tuples and arrays, or individual `char`s in strings, using the same notation above but this time enclosed in square brackets `[]` immediately after the literal or variable name. The topic placeholder `$`, is used as an alias for the length of the array or string it refers to.
 
-```res
-c = 'hello'; // Slicing
+Each individual index must be assigned a literal value, and for subranges a tuple of values.
+
+| Operator         | Meaning                                                                                                                                                            |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `a = val`        | Assign `val` to index `a`                                                                                                                                          |
+| `a::b:c=<1,2,3>` | _Cycle-assign_ to every index evaluated by the range expression `a::b:c`, the values `1, 2, 3`, in order of appearance, overriding any previous overridden values. |
+
+```swift
+str c = 'hello'; // Slicing
 s = c[1]; // e
 s = c[1,2]; // el (specific indices)
 s = c[:>$]; // hello (string cloning)
 s = c[$>:]; // olleh (specific indices)
-```
 
-When splicing, each individual index must be assigned a literal value, and for subranges a tuple of values.
-
-- `a=1,b=2` - Assign `1` to index `a` and `2` to `b`.
-- `a::b:c=<1,2>` - Assign to every index evaluated by the range expression `a::b:c`, alternating between values `1, 2`, in order of appearance.
-
-```res
-t = (1, 2, 3); // Splicing
+any() t = (1, 2, 3); // Splicing
 t = t + (4, 5); // (1, 2, 3, 4, 5)
 t = t * 2; // (1, 2, 3, 4, 5, 1, 2, 3, 4, 5)
 t = (1, 2, 3, 4, 5)[$>:];   // (5, 4, 3, 2, 1)
 t = (1, 2, 3, 4, 5)[-1='5']; // (1, 2, 3, 4, '5')
+
+any[] a = [1, 2] + [3, 4]; // Concatenation
+[x, , ...z] = a // Destructuring
+print(x, z); // 1, [3, 4]
+$a = [...a, ...a, 4]; // [1, 2, 3, 4, 1, 2, 3, 4, 5]
+$a = a * 2 + [4]; // [1, 2, 3, 4, 1, 2, 3, 4, 5]
+```
+
+### Objects
+
+\#TODO
+
+### Sets
+
+\#TODO
+
+### Maps
+
+\#TODO
+
+### Other Types
+
+#### Any
+
+To opt-out of type checking when working with existing JS libraries, we label these values with the `any` type:
+
+```swift
+def (str key) => any getValue;
+// OK, return value of 'getValue' is not checked
+str $str = getValue("myString");
+```
+
+The `any` will continue to propagate through your objects:
+
+```swift
+any looselyTyped = {};
+let d = looselyTyped.a.b.c.d;
+//  ^ = let d: any
+```
+
+After all, remember that all the convenience of `any` comes at the cost of losing type safety.
+
+#### Unknown
+
+We may need to describe the type of variables that we do not know when we are writing an application. In these cases, we want to provide a type that tells the compiler and future readers that this variable could be anything, so we give it the `unknown` type.
+
+```swift
+unknown notSure = 4;
+notSure = "maybe a string instead";
+
+// OK, definitely a boolean
+notSure = false;
+```
+
+Also note `def` in Eliph is the equivalent of `declare` in TypeScript (commonly used in TS declaration files ending in `.d.ts`.)
+
+```swift
+def unknown maybe;
+// 'maybe' could be a string, object, boolean, undefined, or other types
+int anInt := maybe;
+// ERROR: Type 'unknown' is not assignable to type 'number'.
+```
+
+```swift
+if (typeof maybe == 'bool') {
+  // Eliph knows that maybe is a boolean now
+  bool aBoolean := maybe;
+  // So, it cannot be a string
+  str aString := maybe;
+// ERROR: Type 'bool' is not assignable to type 'str'.
+}
+```
+
+```swift
+if (typeof maybe == 'string') {
+  // Eliph knows that maybe is a string
+  bool aBoolean := maybe;
+  // So, it cannot be a boolean
+  str aString := maybe;
+  // ERROR: Type 'str' is not assignable to type 'bool'.
+}
+```
+
+Unlike `unknown`, variables of type `any` allow you to access arbitrary properties, even ones that don’t exist. These properties include functions and Eliph will not check their existence or type:
+
+```swift
+any looselyTyped := 4;
+looselyTyped.ifItExists(); // OK, ifItExists might exist at runtime
+looselyTyped.toFixed(); // OK, toFixed exists (but the compiler doesn't check)
+
+unknown strictlyTyped := 4;
+strictlyTyped.toFixed(); // ERROR: Object is of type 'unknown'.
+```
+
+#### Void, Null and Undefined
+
+`void` is a little like the opposite of `any`: the absence of having any type at all. `void == null | undef`.
+
+```swift
+void warnUser() {
+  print "This is my warning message";
+}
+```
+
+Declaring variables of type `void` is not useful because you can only assign `null` or `undef` to them:
+
+```swift
+void unusable = undef;
+unusable = null;
+```
+
+In TypeScript, both `undef` and `null` actually have their **own** types, but they’re not extremely useful on their own. They are considered literal types
+
+```swift
+// Not much else we can assign to these variables!
+undef u = undef;
+null n = null;
+```
+
+#### Other
+
+`other` is a type that represents the **non-primitive** type, i.e. anything that is not `int`, `float`, `str`, `char`, `bool`, `sym`, `void`, `null`, or `undef`.
+
+With object type, APIs like Object.create can be better represented. For example:
+
+```swift
+def func create(other | null) void;
+
+// OK
+create({ prop: 0 });
+create(null);
+create(undef); // Remember, `undef` is not a subtype of `null`
+// ERROR: Argument of type 'undef' is not assignable to parameter of type 'other | null'.
+
+create(42);
+// ERROR: Argument of type '42' is not assignable to parameter of type 'other | null'.
+create("string");
+// ERROR: Argument of type '"string"' is not assignable to parameter of type 'other | null'.
+create(false);
+```
+
+#### Never
+
+The `never` type represents the type of values that **never** occur. For instance, `never` is the return type for a `=>` that always throws an error or one that never returns. Variables also acquire the type `never` when narrowed by any type guards that can never be true.
+
+The `never` type is a subtype of, and assignable to, every type; however, no type is a subtype of, or assignable to, `never` (except never itself). Even `any` isn’t assignable to `never`.
+
+Some examples of functions returning `never`:
+
+```swift
+// Function returning `never` must not have a reachable end point
+error (message) never {
+  throw Error(message);
+}
+
+infiniteLoop() never {
+  loop {}
+}
+
+// Inferred return type is `never`
+fail() {
+  error "Something failed";
+}
+```
+
+### Primitive Constructors
+
+Primitive constructors `Int`, `Float`, `String`, `Char`, `Boolean`, `Symbol`, or `Other` are the same as the lowercase versions recommended above. They almost never should be used. This is not Java.
+
+```swift
+String reverse(String s) => (s / 1).rev() % '';
+reverse("hello world");
+```
+
+Instead, use the lowercase types.
+
+```swift
+str reverse(str s) => s[#:>0];
+reverse("hello world");
+```
+
+## Types
+
+Type annotations can appear almost anywhere. They are not often necessary due to type inference, but they can be helpful to confirm your own understanding of the program's types.
+
+`int` and `str` are annotations used throughout these examples.
+
+```swift
+int $5 := 5;
+$9 = (int $5) + (int $4 = 4);
+add = (int x, int y) int => x + y;
+drawCircle = (int radius) str => "hi";
+```
+
+### Aliases
+
+Aliases can be defined for types. This is helpful to attach meaning to simple types and when working with complex types that become long to write down.
+
+```swift
+type seconds = int;
+type timeInterval = (seconds, seconds);
+```
+
+Using the alias `seconds` it is clear how the sleep function works. If int were used it might not be obvious:
+
+```swift
+sleep = (timeInterval seconds) => { ... }
+```
+
+Type aliases are required in some cases, such as working with interfaces, intersections and unions.
+
+## Type Parameters
+
+Types can accept type parameters, which are similar to generics in other languages. Parameterized types are useful when defining structures that work with many types of values. Having a single `arr` type with an argument that can be `int`, `float`, or `str`, is better than having three separate `intArray`, `floatArray`, and `strArray` types.
+
+Parameters are prefixed with a single `#` when defining the type:
+
+```swift
+type arr<#item> = ...
+```
+
+When using this type as an annotation the parameter can be filled in with a concrete type:
+
+```swift
+arr<int> x = [1, 2, 3];
+arr<str> y = ["one", "two", "three"];
+```
+
+Types can have multiple parameters and be nested:
+
+```swift
+type pair<a, b> = (a, b);
+
+pair(int, str) x = (1, "one");
+pair(str, int[]) y = ("123", [1, 2, 3]);
+```
+
+Note:
+
+- It is common convention for type parameters to be named `#a`, `#b`, `#c`, etc.
+- Type parameters can still be inferred!
+
+### Union Types
+
+As you model more types you find yourself looking for tools which let you compose or combine existing types instead of creating them from scratch. Intersection and Union types are one of the ways in which you can compose types.
+
+A union type describes a value that can be one of several types. We use the vertical bar (`|`) to separate each type, so `int | str | bool` is the type of a value that can be an `int`, a `str` or a `bool`. As you have already heard,
+
+```swift
+type void = null | undef
+```
+
+If we have a value that is a union type, we can only access members that are common to all types in the union.
+
+```swift
+interface Bird = { void fly(); void layEggs(); }
+interface Fish = { void swim(); void layEggs(); }
+def func getSmallPet() Fish | Bird;
+
+pet = getSmallPet();
+pet.layEggs(); // will not throw since this property is common
+
+pet.swim(); // will throw
+```
+
+Intersection types are closely related to union types, but they are used very differently. An intersection type combines multiple types into one. For example, `Person & Serializable & Loggable` is a type which is all of `Person` and `Serializable` and `Loggable`.
+
+```swift
+interface ErrorHandling {
+  bool success;
+  { message: str } error?;
+}
+
+interface ArtworksData {
+  { str title }[] artworks;
+}
+
+interface ArtistsData {
+  { str name }[] artists;
+}
+
+// These interfaces are composed to have
+// consistent error handling, and their own data.
+type ArtworksResponse = ArtworksData & ErrorHandling;
+type ArtistsResponse = ArtistsData & ErrorHandling;
+```
+
+### Literal and Conditional Types
+
+A literal is a more concrete sub-type of a collective type. What this means is that `"Hello World"` is a `str`, but a `str` is not `"Hello World"` inside the type system.
+
+When you declare a variable with `.=` or `=`, you are telling the compiler that there is a chance that this variable will change its contents. In contrast, using `:=` to declare a variable will tell the compiler that this object will never change.
+
+The process of going from an infinite number of potential cases to a smaller, finite number of potential case is called narrowing.
+
+```swift
+// We're making a guarantee that this variable
+// helloWorld will never change, by using const.
+
+// So, the type of helloWorld is "Hello World", not str
+helloWorld := "Hello World";
+
+// On the other hand, a let can change, and so the compiler declares it a string
+hiWorld .= "Hi World";
+```
+
+#### Strings
+
+In practice string literal types combine nicely with unions, type guards, and type aliases. You can use these features together to get enum-like behavior with strings.
+
+```swift
+type Position = 'before' | 'after';
+```
+
+You can pass any of the three allowed strings, but any other string will give the error
+
+```
+Argument of type '"ok"' is not assignable to parameter of type "'before' | 'after'"
+```
+
+Same thing for characters.
+
+#### Numbers
+
+Numeric literal types act the same as the string literals above. A common case for their use is for describing config values:
+
+```swift
+interface MapConfig {
+  float lat, lng;
+  (8 | 16 | 32) tileSize
+}
+
+setupMap({ lng: -73.935242, lat: 40.73061, tileSize: 16 });
+```
+
+#### Booleans
+
+TypeScript also has boolean literal types. You might use these to constrain object values whose properties are interrelated.
+
+```swift
+interface ValidationSuccess {
+  true isValid;
+  null reason;
+}
+
+interface ValidationFailure {
+  false isValid;
+  str reason;
+}
+
+type ValidationResult = ValidationSuccess | ValidationFailure;
+```
+
+### Conditional Types
+
+Sometimes you have no choice but to list down all the possible literals a type may have. Enter conditional types, which allow you to explicitly specify which values are valid, without you having to exhaustively write down every single possible value.
+
+```swift
+type Dodecahedron = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+```
+
+Specify optional types, variables and then a conditional value or boolean function after the `where` keyword. (`it` is a placeholder for a function with a single argument.)
+
+```swift
+// Both are the same
+type Dodecahedron = int where 0 < it <= 12
+type Dodecahedron = int i where 0 < i <= 12
+```
+
+A conditional is a sub-type of a collective type, but a super-type of a literal. This means that `"Hello World"` is a sub-type of `str a where a in ["Hello World"]`, but the latter is not a subset of the former.
+
+This means you can pass any integer to the `Dodecahedron` type, as long as it is above 0 and at most 12. Any other integer value will produce an error:
+
+```
+Argument of type '21' does not satisfy the type "int i where 0 < i <= 12"
 ```
 
 ## Control Flow
 
-Control flow statements can be written without the use of parentheses. As with functions and other block expressions, multi-line conditionals are delimited inside curly braces.
+There are a couple ways of writing control flow statements, and it's completely up to you to decide how you want it. The formatter tries its best to know exactly how you want your statements to look like so it can be consistent across your code.
 
-```res
+The curly braces around the statements are only there to group the statements together so that the code can be compressed into a single line. These statements can return the value of the code that it executes, if so needed.
+
+A typical statement looks like this:
+
+```swift
+if (y <= 15) { x = 10; print x; }
+```
+
+You can remove the parentheses if you so wish:
+
+```swift
 if y <= 15 { x = 10; print x; }
 ```
 
-If you have only one statement on a line then you can use `then` or move the statement postfix:
+If there's only one statement then _that's_ the only time you enclose your expression (or statements) inside parentheses.
 
-```res
+```swift
+if (y <= 15) print y;
+```
+
+Similarly, use `then`:
+
+```swift
 if y <= 15 then print y;
+```
+
+Otherwise, you can put your control flow statements (this only works for `if/unless`, `for`, `while` and `until` statements), like Perl:
+
+```swift
 print if y <= 15;
 ```
 
-In Eliph, **everything is an expression**, which means that they can be assigned to variables and returned from functions.
+In Eliph, **everything is an expression**, which means that they can be assigned to variables and returned from functions:
 
-It's common to insert a closure wrapper in order to ensure that all variables are closed over, and all the generated functions don't share the final values. The `do` keyword, immediately invokes a passed function, forwarding any arguments.
-
-```res
-res = do 36; // 36
-res = do { 36; }; // 36
-res = do (~a = 6, ~b = 6) { a * b; }; // 36
-
-res = do factorial(n = 3) int {
-  if n < 0 then nan
-  else if n == 0 then 1
-  else n * factorial(n - 1);
-} // 6
-```
-
-When control flow statements are used as expressions, the value of the last statement of all executed bodies (enclosed in curly braces) is implicitly returned, unless explicitly specified with `return`. More on functions in the next section.
-
-```res
+```swift
 res = 3 if true else 0;
 
 res = if 2 & 3 ^^ 3 + 2 != 4 {
@@ -601,89 +1009,103 @@ res = if 2 & 3 ^^ 3 + 2 != 4 {
 
 x = 2
 res = switch {
-  case x == 3, x == 4 -> 3;
-  case x in [4, 5, 6] -> 4;
-  case x % 2 == 0 -> 2;
-  else -> 0;
+  | x == 3, x == 4 => 3;
+  | x in [4, 5, 6] => 4;
+  | x % 2 == 0 => 2;
+  | => 0;
 };
 
 y = 'string'
-res = try {
-  parseInt(i);
-} catch {
-  error 'unknown';
-} finally {
+res = try { parseInt(i) }
+catch { error 'unknown error' }
+finally { 4 };
+
+res = do {
+  print 1 + 2 + 3;
+  print 40;
   4;
 };
 ```
 
-You can mark a statement, such as a `do`-block, with a statement marked with `label`. Use `goto` followed by the labeled keyword. This is similar to calling functions without arguments. You can `goto` outside `labels` from inside other scopes, but you cannot do so the other way around.
+### If, Else, Unless, and Conditional Assignment
 
-```res
-i = 0;
-func goTo() void {
-  label runThis: do for j in [1::100] {
-    i .+= j; return;
-  }
-  print i; // 0
-  goto runThis; // will modify the i variable 100 times
-  print i; // 5050
-  return;
-}
-goTo();
-goto runThis; // Throws an error
+As with functions and other block expressions, multi-line conditionals are delimited by curly braces.
+
+`if` statements are compiled either into JavaScript expressions, using the ternary operator when possible, and closure wrapping otherwise. There is no explicit ternary statement in Eliph — you simply use a regular `if` statement on a single line.
+
+`if` and `else` work the same way as in many other languages, like Java. At its simplest form, it consists of a single `if` statement with a single statement immediately following it or multiple statements enclosed in curly braces.
+
+You can chain multiple `elif` (`else if`) clauses if you wish, or leave a dangling `else` which won't be executed.
+
+```swift
+if (temp <= 15)
+  print("It's very cold. Consider wearing a scarf.");
 ```
 
-### If-Else
-
-`if` statements are compiled either into JavaScript expressions, using the ternary operator when possible, and closure wrapping otherwise.
-
-There is no explicit ternary statement in Eliph — you simply use a regular `if` statement on a single line. The `else` and `elif` (not `else if`) blocks are optional.
-
-```res
+```swift
 temp = 28
 if (temp <= 15)
-  print "It's very cold. Consider wearing a scarf.";
-elif (temp >= 30)
-  print "It's really warm. Don't forget to wear sunscreen.";
+  print("It's very cold. Consider wearing a scarf.");
 else
-  print "It's not that cold. Wear a t-shirt.";
+  print("It's not that cold. Wear a t-shirt.");
 ```
 
-`unless` can be used in place of `if`, and refers to `if not`. Likewise, `elun` (not `else unless`) can be used in place of `elif`, and refers to `else if not`.
+```swift
+temp = 28
+if (temp <= 15)
+  print("It's very cold. Consider wearing a scarf.");
+elif (temp >= 30)
+  print("It's really warm. Don't forget to wear sunscreen.");
+```
+
+```swift
+temp = 28
+if (temp <= 15)
+  print("It's very cold. Consider wearing a scarf.");
+elif (temp >= 30)
+  print("It's really warm. Don't forget to wear sunscreen.");
+else // don't do anything else
+```
+
+```swift
+temp = 28
+if (temp <= 15)
+  print("It's very cold. Consider wearing a scarf.");
+elif (temp >= 30)
+  print("It's really warm. Don't forget to wear sunscreen.");
+else
+  print("It's not that cold. Wear a t-shirt.");
+```
+
+`unless` can be used in place of `if`, and refers to `if not`. Likewise, `elun` (`else unless`) can be used in place of `elif`, and refers to `else if not`.
 
 There are a handful of ways to write if statements. Note that there is no ternary operator `a ? b : c` in Eliph, as a regular `if` statement would suffice.
 
-```res
+```swift
+if condition { runA(); } else { runB(); }
 x = if (condition) a else b;
-x = a if condition else b; // Python postfix if statement
+x = a if condition else b; // Also possible, similar to Python
 ```
 
-```res
-// Implicit statement, make sure that there is an else
+There’s also a handy postfix form, with the `if` or `unless` at the end.
+
+```swift
 x = a if condition;
 ```
 
-A `guard` statement is similar to an `if-else` statement without an `if` body.
+Control flow statements can be written without the use of parentheses (to separate expressions from statements), and/or curly braces (if there is only one statement).
 
-```res
-func greet({[str x]: str} person) {
-  guard let name = person.name else return;
-  print "Hello \(name)!";
-  guard let location = person.location else {
-    print "I hope the weather is nice near you.";
-    return;
-  }
-  print "I hope the weather is nice in \(location)."
-}
+### Loops and Comprehensions
 
-greet(person: {name: "John"});
-// Prints "Hello John!" "I hope the weather is nice near you."
-greet(person: {name: "Jane", location: "Cupertino"});
-// Prints "Hello Jane!" "I hope the weather is nice in Cupertino."
+Most of the loops you write are comprehensions over arrays, objects, and ranges. Comprehensions replace (and compile into) `for` loops, with optional `when` clauses and the index. `for` loops are expressions, and can be returned and assigned.
+
+Comprehensions should be able to handle most places where you otherwise would use a loop, `each`/`forEach`, `map`, or `select`/`filter`, for example:
+
+```swift
+shortNames = (for (name in list when len name < 5) name)
 ```
 
-### Loops
+If you know the start and end of your loop, or would like to step through in fixed **or** variable-size increments, you can use a range to specify the start and end of your comprehension. By default, loops iterate from a starting value up to (and including) the ending value.
 
 Typically, you would write down a `for`-loop like this in JavaScript, which is very confusing to most developers. Also note the compulsory parentheses following the `for` keyword.
 
@@ -691,29 +1113,23 @@ Typically, you would write down a `for`-loop like this in JavaScript, which is v
 for (let i = 1; i <= 10; i++) {}
 ```
 
-Whereas in Eliph, you can either leave out the brackets following the `for`:
+Whereas in Eliph, you can write it out like this:
 
-```res
-for i = 1; i <= 10; i++ {}
+```swift
+for i in [1::10] {}
 ```
 
-We also provide an opposite for the for-loop, the `till` loop, which is basically the direct opposite of the tripartite for-loop. It runs until the second, conditional statement is `true`.
+...can be simplified into a `for-in` range loop, as shown below. You use the `for-in` loop to iterate over a sequence, such as items in an array, ranges of numbers, or characters in a string.
 
-```res
-till i = 1; i > 10; i++ {}
-```
-
-You can iterates over the items in a sequence, such as items in an array, ranges of numbers, or characters in a string using the `for-in` loop.
-
-```res
+```swift
 for i in [1::100] {
   // actual code goes here
 }
 ```
 
-You can pass in a second parameter which represents the **keys**, that is, indices of whatever you are iterating over.
+This example uses a `for-in` loop to iterate over the items in an array. The second element refers to each item's indices.
 
-```res
+```swift
 names = ["Anna", "Alex", "Brian", "Jack"];
 
 for name in names {
@@ -727,9 +1143,9 @@ for name, index in names {
 // Hello, person 1! | Hello, person 2! | Hello, person 3! | Hello, person 4!
 ```
 
-You use the `for-of` loop to iterate over an object or map's keys. The keys are assigned to a variable named `child`, and the values are assigned to `age`.
+You use the `for-of` loop to iterate over an object or map. The keys are assigned to a variable named `child`, and the values are assigned to `age`.
 
-```res
+```swift
 yearsOld = { Max: 10, Ida: 9, Tim: 11 };
 
 for child of yearsOld {
@@ -743,14 +1159,12 @@ for child, age of yearsOld {
 // Max is 10, Ida is 9, Tim is 11
 ```
 
-To put it in another way, `for value, key in object` is equivalent to `for key, value of object`.
-
-If you would like to iterate over just the keys that are defined on the object itself (by adding a `hasOwnProperty()` check), use `for own key, value of object`.
+If you would like to iterate over just the keys that are defined on the object itself, by adding a `hasOwnProperty()` check to avoid properties that may be inherited from the prototype, use `for own key, value of object`.
 
 To iterate values over a generator function, use `for-from`.
 
-```res
-gen fibonacci(): int {
+```swift
+genfn fibonacci(): int {
   (a, b) = (0, 1);
   loop {
     (a, b) = (b, a + b);
@@ -761,16 +1175,26 @@ gen fibonacci(): int {
 func getFibonacciNumbers(int length) int[] {
   results = [1], fibSeq = fibonacci();
   for n from fibSeq {
-    results += [n];
+    results + [n];
     break if len results == length;
   }
   results;
 }
 ```
 
-A `while` loop performs a set of statements until evaluating a condition. `while` evaluates its condition at the start of each pass through the loop, until the condition is `false`. `repeat-while` (not `do-while`) evaluates its condition at the end of each pass through the loop, until the condition is `false`.
+A while loop performs a set of statements until a condition becomes `false`. These kinds of loops are best used when the number of iterations isn’t known before the first iteration begins. There are five kinds of while-loops:
 
-```res
+- `while` evaluates its condition at the start of each pass through the loop, until the condition is `false`.
+- `repeat-while` evaluates its condition at the end of each pass through the loop, until the condition is `false`.
+
+For readability, `until condition` is `while !condition`, `repeat {} until condition` is `repeat {} while condition`, and `loop` which which is equivalent to `while true`.
+
+- `until` and `repeat-until` are like `while`, except the loop runs until the condition is `true`.
+- `loop` runs its body forever **unless** there is a `break` statement somewhere.
+
+These loops are equivalent (and compile into the same output):
+
+```swift
 while i < 10 {
   text += "The number is " + i;
   print text;
@@ -778,17 +1202,7 @@ while i < 10 {
 }
 ```
 
-```res
-repeat {
-  text += "The number is " + i;
-  print text;
-  i++;
-} while i < 10;
-```
-
-`until` and `repeat-until` are like `while`, except the loop runs until its condition is `true`.
-
-```res
+```swift
 until i == 10 {
   text += "The number is " + i;
   print text;
@@ -796,7 +1210,17 @@ until i == 10 {
 }
 ```
 
-```res
+and these are equivalent too:
+
+```swift
+repeat {
+  text += "The number is " + i;
+  print text;
+  i++;
+} while i < 10;
+```
+
+```swift
 repeat {
   text += "The number is " + i;
   print text;
@@ -804,9 +1228,7 @@ repeat {
 } until i == 10;
 ```
 
-`loop` runs its body forever **unless** there is a `break` statement somewhere.
-
-```res
+```swift
 loop {
   text += "The number is " + i;
   print text;
@@ -815,142 +1237,205 @@ loop {
 }
 ```
 
-The `switch` statement works a bit differently than its JavaScript cousin. You need to remember to `break` at the end of every case statement to avoid accidentally falling through to the default case.
+### Switch
 
-If no argument is supplied, the branch conditions are simply boolean expressions, and a branch is executed when its condition is true.
+Pattern matching provides a way to conditionally execute code when the shape of some data matches a particular pattern, using the `switch` statement. It is very similar to `switch-case` statements in other languages, however it allows you to do a lot with just a simple expression. The `else` keyword is used in place of `default` similar to swiftScript.
 
-```res
-x = 1;
-switch {
-  case x == 1 -> print 1;
-  case x in [2, 3] -> print [2, 3];
-  else -> print 4;
+These two are valid:
+
+```swift
+switch someValueToConsider {
+  case value1 ->
+    // respond to value 1
+  case value2, value3 ->
+    // respond to value 2 or 3
+  else ->
+    // otherwise, do something else
 }
 ```
 
-The switch statement can also match against primitive values, but this is highly disrecommended.
-
-```res
-x = 3; x += 2;
-switch 5 {
-  case x -> print "x == #x";
-  else -> { print ''; break; };
+```swift
+switch someValueToConsider {
+  | value1 ->
+    // respond to value1
+  | value2, value3 ->
+    // respond to value2 or value3
+  | ->
+    // otherwise, do something else
 }
 ```
 
-The switch finds the first pattern that matches the input, and then executes the code that the pattern points to `->`. Code for a single branch case can be a single expression, or a block of statements.
+Cases can either begin with the `case` keyword or with a vertical bar similar to Reason or OCaml. In these examples, the Reason variant is used instead. The `| ->` or "empty `case`" is short for `default`.
 
-Like an `if` statement, each case is a separate branch of code execution. The `switch` statement determines which branch should be selected. Only one branch is executed by default.
+The switch finds the first pattern that matches the input, and then executes the code that the pattern points to (the code after the next `->`). Code for a pattern can be a single expression, or a block of statements.
 
-```res
+Like the body of an `if` statement, each case is a separate branch of code execution. The `switch` statement determines which branch should be selected.
+
+```swift
 char z = `z`;
 switch someCharacter {
-  case `a` -> print "The first letter";
-  case `z` -> print "The last letter";
-  else -> print "Some other letter";
+  | `a` -> print "The first letter of the alphabet";
+  | `z` -> print "The last letter of the alphabet";
+  | -> print "Some other character";
 }
 ```
 
-The entire `switch` statement finishes its execution as soon as the first matching case is completed, without requiring an explicit `break` statement.
+Because the `switch` must have a case for **every possible character**, this `switch` statement uses a "default" case to match all characters other than 'a' and 'z'. This provision ensures that the `switch` statement is exhaustive.
 
-The body of each case must contain **at least one executable statement**.
+In contrast with `switch` statements in C, JS, Java and others, switch statements in Eliph don't fall through the bottom of each case and into the next one by default. Instead, the entire `switch` statement finishes its execution as soon as the first matching case is completed, without requiring an explicit `break` statement.
 
-You can use commas to separate the cases, and combine those into a single
+The body of each case must contain at least one executable statement. It isn't valid to write the following code, because the first case is empty:
 
-```res
+```swift
 char a = `a`;
 switch a {
-  case "a", "e", "i", "o", "u" ->
+  | "a" -> // Invalid, the case has an empty body
+  | "A" ->
+    print "The letter A";
+  | ->
+    print "Not the letter A";
+}
+```
+
+In contrast with switch statements in C-like languages, `switch` statements in Eliph don't fall through the bottom of each case and into the next one by default. Instead, the entire statement finishes its execution as soon as the first matching case is completed, without requiring an explicit `break` statement.
+
+To make a switch with a single case that matches both "a" and "A", combine the two values into a compound case, separating the values with commas.
+
+```swift
+char a = `a`;
+switch a {
+  | "a", "e", "i", "o", "u" ->
     print "#a is a vowel";
-  case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
+  | "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
     "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z" ->
     print "#a is a consonant";
-  else ->
+  | ->
     print "#a is neither a vowel nor a consonant";
 }
 ```
 
-In every case statement following the vertical bar, there can be half-expressions, in which the value to compare is inserted as the left operand to the expression. In this case, `in [12:<100]` when used inside a switch expression, is evaluated to `approx in [12:<100]`.
+Values in switch cases can be checked for their inclusion in an interval. This example uses range literals and the `in` membership operator to provide a natural-language count for numbers of any size:
 
-```res
+In every case statement following the vertical bar, there can be half-expressions, in which the value to compare is the first operand to the expression. In this case, `in [12:<100]` when used inside a switch expression, is evaluated to `approx in [12:<100]`.
+
+```swift
 approx = 62;
 things = "moons orbiting Saturn";
 str count;
 
 count = switch approx {
-  case 0 -> "no"; // approx == 0
-  case in [1:<5] -> "a few"; // approx in [1:<5], et alii
-  case in [5:<12] ->  "several";
-  case in [12:<100] -> "dozens of"
-  case in [100:<1000] -> "hundreds of";
-  else -> "many"; // else (by default), this will run
+  | 0 -> "no"; // approx == 0
+  | in [1:<5] -> "a few"; // approx in [1:<5], et alii
+  | in [5:<12] ->  "several";
+  | in [12:<100] -> "dozens of"
+  | in [100:<1000] -> "hundreds of";
+  | -> "many"; // else (by default), this will run
 };
 
 print "There are #count #things.";
 // Prints "There are dozens of moons orbiting Saturn."
 ```
 
-A case can have temporary variables. After they are declared, they can be used within the case's code block. All of the patterns of a compound case have to include **the same set of value bindings**.
+You can use tuples to test multiple values in the same switch statement. Each element of the tuple can be tested against a different value or interval of values. Alternatively, leave the space blank `()` or insert a wildcard placeholder `$`, to match any possible value.
 
-```res
-point = (9, 0)
+The example below takes an `(x, y)` point, expressed as a simple tuple of type `(int, int)`, and categorizes it on the graph that follows the example.
+
+Unlike C, Swift allows multiple switch cases to consider the same value or values. In fact, the point `(0, 0)` could match all four of the cases in this example. However, if multiple matches are possible, the **first matching case is always used**. The point `(0, 0)` would match case `(0, 0)` first, ignoring all other matching cases.
+
+```swift
+point = (1, 1);
 switch point {
-  case (dist, 0), (0, dist) ->
-    print "On an axis, #dist from the origin"
-  else ->
-    print "Not on an axis"
+  | (0, 0) ->
+    print "#point is at the origin";
+  | (, 0) ->
+    print "#point is on the x-axis";
+  | (0, ) ->
+    print "#point is on the y-axis";
+  | (in [-2::2], in [-2::2]) ->
+    print "#point is inside the box";
+  | ->
+    print "#point is outside of the box";
 }
-// Prints "On an axis, 9 from the origin"
+// Prints "(1, 1) is inside the box"
 ```
 
-A case can use a `where` clause to check for additional conditions.
+A case clause can have local variables, which are visible only inside the scope of that clause.
 
-```res
+After the temporary constants are declared, they can be used within the case's code block. This switch statement doesn't have a default case, as the case `let (x, y)`, declares a tuple of two placeholder constants that can match any value.
+
+```swift
+point = (1, 1);
+switch point {
+  | (let x, 0) ->
+    print "on the x-axis with an x value of #x";
+  | (0, let y) ->
+    print "on the y-axis with a y value of #y";
+  | let (x, y) ->
+    print "somewhere else at (#x, #y)";
+}
+// Prints "on the x-axis with an x value of 2"
+```
+
+A switch case can use a `where` clause to check for additional conditions.
+
+```swift
 point = (-1, 1);
 switch point {
-  case (x, y) where x == y ->
+  | let (x, y) when x == y ->
     print "(#x, #y) is on the line x == y";
-  case (x, y) where x == -y ->
+  | let (x, y) when x == -y ->
     print "(#x, #y) is on the line x == -y";
-  case (x, y) ->
+  | let (x, y) ->
     print "(#x, #y) is just some arbitrary point";
 }
 // Prints "(1, -1) is on the line x == -y"
 ```
 
-You can use data structures to test multiple values, such as arrays, tuples, records, maps and objects in the same switch statement, where each mentioned value you put in the structure is destructured and tested.
+Compound cases can also include value bindings. All of the patterns of a compound case have to include the same set of value bindings, and each binding has to get a value of the same type from all of the patterns in the compound case.
 
-Alternatively, leave the space blank `()` or insert a wildcard placeholder `$`, to match any possible value.
-
-```res
-point = {x: 1.5, y: 1.5};
-switch point {
-  case {x: 0, y: 0} ->
-    print "#point is at the origin";
-  case {x: 0} ->
-    print "#point is on the x-axis";
-  case {y: 0} ->
-    print "#point is on the y-axis";
-  case {x: -2 <= $ <= 2, y: -2 <= $ <= 2} ->
-    print "#point is inside the box";
-  else ->
-    print "#point is outside of the box";
+```swift
+stillAnotherPoint = (9, 0)
+switch stillAnotherPoint {
+  | (let distance, 0), (0, let distance) ->
+    print "On an axis, #distance from the origin"
+  | ->
+    print "Not on an axis"
 }
-// Prints "(1, 1) is inside the box"
+// Prints "On an axis, 9 from the origin"
+```
+
+Declaring `switch {}` without a parameter will implicitly invoke a default value `switch true {}`:
+
+```swift
+x = 1
+switch {
+  | x == 1 -> print 1;
+  | x in [2, 3] -> print [2, 3];
+  | -> print 4;
+}
+```
+
+Switch can also match against primitive values, but this this is highly disrecommended.
+
+```swift
+switch 2 + 3 {
+  | 5 -> print "2 + 3 = 5";
+  | -> { print ''; break; };
+}
 ```
 
 **Control transfer statements** change the order in which your code is executed, by transferring control from one piece of code to another. There are six control transfer statements in Eliph:
 
 - `continue`
 - `break`
-- `fall` and `rise`
+- `fallthrough`
 - `return`
 - `goto`
 - `throw`
 
-The `continue` statement tells a loop to stop what it's doing and start again at next iteration of the loop.
+The `continue` statement tells a loop to stop what it's doing and start again at the beginning of the next iteration through the loop.
 
-```res
+```swift
 text = "", i;
 for i in [1::5] {
   if (i == 3) continue;
@@ -958,24 +1443,11 @@ for i in [1::5] {
 }
 ```
 
-In a switch statement, `continue` stops the execution of the current branch and executes the labelled branch that immediately comes after it. The code below will skip printing `CLOSED`, and would print `NOW_CLOSED` instead.
+The `break` statement ends execution of an entire control flow statement immediately. The break statement can be used inside a `switch` or loop statement when you want to terminate the execution of the switch or loop statement earlier than would otherwise be the case.
 
-```res
-var command = 'CLOSED';
-switch (command) {
-  case 'CLOSED' -> {
-    continue nowClosed; // move to nowClosed without printing
-    print command;
-  };
-  nowClosed: case command1 := 'NOW_CLOSED' -> {
-    print command1;
-  };
-}
-```
+When used inside a loop statement, `break` ends the loop's execution immediately and transfers control to the code after the loop's closing brace. No further code from the current iteration of the loop is executed, and no further iterations of the loop are started.
 
-The `break` statement ends execution of an entire control flow statement immediately. The break statement can be used inside a `switch` or loop statement when you want to terminate the execution of the statement earlier than would otherwise be the case.
-
-```res
+```swift
 text = "", i;
 for i in [1::5] {
   if (i == 3) break;
@@ -983,42 +1455,88 @@ for i in [1::5] {
 }
 ```
 
-In switch statements, if you really need C-style fallthrough, can opt in to this behavior on a case-by-case basis with the `fallthru` keyword.
+When used inside a `switch` statement, break causes the `switch` statement to end its execution immediately and to transfer control to the code after the `switch` statement's closing brace.
 
-```res
-func isPrime(int n) bool { !('1' * n).match(/^1?$|^(11+?)\1+$/) }
-```
+`switch` statements don't fall through the bottom of each case and into the next one. That is, the entire switch statement completes its execution as soon as the first matching case is completed. By contrast, C requires you to insert an explicit `break` statement at the end of **every** switch case to prevent fallthrough.
 
-```res
+If you need C-style fallthrough behavior, you can opt in to this behavior on a case-by-case basis with the `fallthru` keyword.
+
+```swift
 integer := 5;
 description = "The number #integer is";
 switch integer {
-  case isPrime($) -> {
+  | isPrime($) -> {
     description += " a prime number, and also";
-    fall;
+    fallthru;
   };
-  else -> description += " an integer.";
+  | -> description += " an integer.";
 }
 print description;
 // Prints "The number 5 is a prime number, and also an integer."
 ```
 
-Similarly, `rise` will execute the branch above it.
+To execute a labelled statement, use `goto`, which is very similar to function calls without arguments. The following command runs for both `CLOSED` and `NOW_CLOSED`.
 
-```res
-integer := 5;
-desc = "The number #integer is";
-switch integer {
-  else -> desc += " an integer.";
-  case isPrime($) -> {
-    desc += " a prime number, and also";
-    rise;
+```swift
+var command = 'CLOSED';
+switch (command) {
+  case 'CLOSED' -> {
+    executeClosed();
+    goto nowClosed;
+  };
+  label nowClosed: case 'NOW_CLOSED' -> {
+    executeNowClosed();
   };
 }
-print desc;
-// Prints "The number 5 is a prime number, and also an integer."
+```
+
+You can nest statements inside other control flow statements to create complex control flow structures. However, loops and conditional statements can both use the `break` statement to end their execution prematurely.
+
+Therefore, it's sometimes useful to be explicit about which statement you want a `break` or `continue` statement to terminate, or a for-loop to execute. To achieve these aims, you can mark a statement, such as a `do`-block, with a statement label.
+
+```swift
+i = 0;
+label runThis: do {
+  i .+= 1;
+}
+print i; // 0
+goto runThis;
+print i; // 1
+```
+
+```swift
+board = [0 for _ in [0::finalSquare]];
+square = 0; diceRoll = 0; finalSquare = 25;
+
+label snakesAndLadders:
+while square != finalSquare {
+  diceRoll++;
+  if (diceroll) == 7 then diceRoll == 1;
+  switch square + diceRoll {
+    | finalSquare -> break snakesAndLadders;
+    | let newSquare when newSquare > finalSquare ->
+      continue snakesAndLadders;
+    | -> {
+      square += diceRoll;
+      square += board[square];
+    };
+  }
+}
+print "Game over!";
 ```
 
 ### Error Handling
 
-Marked as #TODO
+\#TODO
+
+## Functions
+
+\#TODO
+
+## Classes and Inheritance
+
+\#TODO
+
+## Advanced Types
+
+\#TODO
