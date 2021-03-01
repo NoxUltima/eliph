@@ -9,7 +9,7 @@
   "scopeName": "source.coffee",
   "patterns": [
     {
-      "match": "\\b(debugger|infix|unary|oper(?:at|ator)?|\\\\)\\b",
+      "match": "\\b(debugger|infix|oper(?:at|ator)?|\\\\)\\b",
       "name": "keyword.other.coffee"
     },
     {
@@ -244,8 +244,8 @@
       ]
     },
     {
-      "begin": "\\/{3}",
-      "end": "(\\/{3})([gimsuy]*)",
+      "begin": "///",
+      "end": "(///)([gimsuy]*)",
       "name": "string.regexp.multiline.coffee",
       "beginCaptures": {
         "0": { "name": "punctuation.definition.string.begin.coffee" }
@@ -314,7 +314,7 @@
       "name": "keyword.control.default.coffee"
     },
     {
-      "match": "\\b(?<![\\.\\$])(return|yield|goto|guard|label)(?!\\s*:)\\b",
+      "match": "\\b(?<![\\.\\$])(return|yield)(?!\\s*:)\\b",
       "name": "keyword.control.flow.coffee"
     },
     {
@@ -338,7 +338,7 @@
       "name": "keyword.control.then.coffee"
     },
     {
-      "match": "\\b(?<![\\.\\$])(when|into|where|(?:rise|fall)(?:thr(?:u|ough))?|other(?:wise)?)(?!\\s*:)\\b",
+      "match": "\\b(?<![\\.\\$])(when|into|where|fall(?:thr(?:u|ough))?|other(?:wise)?)(?!\\s*:)\\b",
       "name": "keyword.control.when.coffee"
     },
     {
@@ -354,7 +354,7 @@
       "name": "keyword.control.conditional.coffee"
     },
     {
-      "match": "\\b(?<![\\.\\$])(case|default|switch)(?!\\s*:)\\b",
+      "match": "\\b(?<![\\.\\$])(case|default|switch|label)(?!\\s*:)\\b",
       "name": "keyword.control.switch.coffee"
     },
     {
@@ -458,7 +458,7 @@
       "name": "storage.modifier.coffee"
     },
     {
-      "match": "\\b(?<![\\.\\$])((?:im|ex)pl|ext|[dr]ef|dele|mut|dyna?|trans?|pub|pvt|priv|prot?|(?:in|ex)tern?|abst?|virt?|over|seal|sync|stat?|part?|read|vola?|fin)(?!\\s*:)\\b",
+      "match": "\\b(?<![\\.\\$])((?:im|ex)pl|[dr]ef|dele|mut|dyna?|trans?|pub|pvt|priv|prot?|(?:in|ex)tern?|abst?|virt?|over|seal|sync|stat?|part?|read|vola?|fin)(?!\\s*:)\\b",
       "name": "storage.modifier.coffee"
     },
     {
@@ -903,17 +903,17 @@
       "patterns": [
         {
           "name": "constant.numeric.hex.coffee",
-          "match": "\\b(?<!\\$)0(?:x|X)[0-9a-fA-F][0-9a-fA-F_]*([[:alpha:]])?\\b(?!\\$)",
+          "match": "\\b(?<!\\$)0(?:x|X)[0-9a-fA-F][0-9a-fA-F_]*(n)?\\b(?!\\$)",
           "captures": { "1": { "name": "storage.type.numeric.bigint.coffee" } }
         },
         {
           "name": "constant.numeric.binary.coffee",
-          "match": "\\b(?<!\\$)0(?:b|B)[01][01_]*([[:alpha:]])?\\b(?!\\$)",
+          "match": "\\b(?<!\\$)0(?:b|B)[01][01_]*(n)?\\b(?!\\$)",
           "captures": { "1": { "name": "storage.type.numeric.bigint.coffee" } }
         },
         {
           "name": "constant.numeric.octal.coffee",
-          "match": "\\b(?<!\\$)0(?:o|O)?[0-7][0-7_]*([[:alpha:]])?\\b(?!\\$)",
+          "match": "\\b(?<!\\$)0(?:o|O)?[0-7][0-7_]*(n)?\\b(?!\\$)",
           "captures": { "1": { "name": "storage.type.numeric.bigint.coffee" } }
         },
         {
@@ -930,7 +930,7 @@
         },
         {
           "name": "constant.numeric.decimal.coffee",
-          "match": "\\b(?<!\\$)\\d[\\d]*(?:e[+-]\\d+)?([[:alpha:]])?\\b(?!\\$)",
+          "match": "\\b(?<!\\$)\\d[\\d]*(?:e[+-]\\d+)?(n)?\\b(?!\\$)",
           "captures": { "1": { "name": "storage.type.numeric.bigint.coffee" } }
         }
       ]
@@ -1047,10 +1047,6 @@
           "match": "<<<?|>>>?",
           "name": "keyword.operator.bitwise.shift.coffee"
         },
-        {
-          "match": "[<>]\\?|<=|>=|<>|<|>|<=>|<\\/|\\/>",
-          "name": "keyword.operator.relational.coffee"
-        },
         { "match": "<\\|>|::", "name": "keyword.operator.prototype.coffee" },
         { "match": "<\\|+|\\|+>", "name": "keyword.operator.pipe.coffee" },
         {
@@ -1060,6 +1056,10 @@
         {
           "match": "&&|!|\\|\\||\\^\\^",
           "name": "keyword.operator.logical.coffee"
+        },
+        {
+          "match": "<=|>=|<>|<|>|<=>|<\\/|\\/>",
+          "name": "keyword.operator.relational.coffee"
         },
         { "match": "--", "name": "keyword.operator.decrement.coffee" },
         { "match": "\\+\\+", "name": "keyword.operator.increment.coffee" },
