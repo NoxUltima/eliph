@@ -25,6 +25,8 @@ When invoking functions as arguments to methods, such as in `map` and `filter` o
 
 Valid variable or identifier names with a letter, underscore `_` or **any Unicode character** that is not punctuation or symbols. All other characters can include digits, `-` and `$`.
 
+Note: On using `-` as part of variable names, make sure to surround every `-` with spaces (you should also do the same with all infix operators). Leading `-` is parsed as a unary negation operator.
+
 If you need to give a constant or variable the same name as a reserved Eliph keyword, prefix `$`. Use `$$` in place of `$`. This is because a single `$` is considered a **topical identifier**.
 
 The following are a list of all the **keywords** of the language in Eliph:
