@@ -1,3 +1,0 @@
-# Functions
-
-Marked as #TODO
