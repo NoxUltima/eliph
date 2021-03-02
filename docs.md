@@ -4,7 +4,7 @@
 
 This reference is structured so that it can be read from top to bottom, if you like. Later sections use ideas and syntax previously introduced. Familiarity with JavaScript is assumed.
 
-First, the basics: lsScript uses significant whitespace to delimit blocks of code. You don't need to use semicolons `;` to terminate expressions, ending the line will do just as well (although semicolons can still be used to fit multiple expressions onto a single line).
+First, the basics: CoffeeScript uses significant whitespace to delimit blocks of code. You don't need to use semicolons `;` to terminate expressions, ending the line will do just as well (although semicolons can still be used to fit multiple expressions onto a single line).
 
 Instead of using curly braces `{ }` to surround blocks of code in functions, `if`-statements, `switch`, and `try`/`catch`, use indentation.
 
@@ -491,7 +491,7 @@ false ^^ false # false
 1 ^^ 1         # false
 ```
 
-Because the `==` operator frequently causes undesirable coercion, is intransitive, and has a different meaning than in other languages, lsScript compiles `==` into `===,` and `!=` into `!==`. In addition, `is` compiles into `===,` and `isnt` into `!==`.
+Because the `==` operator frequently causes undesirable coercion, is intransitive, and has a different meaning than in other languages, CoffeeScript compiles `==` into `===,` and `!=` into `!==`. In addition, `is` compiles into `===,` and `isnt` into `!==`.
 
 If you really want to use JavaScript's `==` and `!=`, use the _fuzzy equality_ operators `=~` and `!~`, or aliases `sim` or `diff` instead.
 
@@ -916,7 +916,7 @@ if half-year?
 
 ### Loops and Comprehensions
 
-There are three basic forms of for loop. One that iterates through a range of numbers, one that iterates through items in a list, and one that iterates through keys and values of an object.
+There are three basic forms of `for` loop. One that iterates through a range of numbers, one that iterates through items and indexes in a list, and one that iterates through keys and values of an object.
 
 We will first examine the for loop that iterates through a range of numbers. It has the structure of: `for (var|let|const) (VAR) in (RANGE) (when|lest COND)` - (almost everything is optional). By default, `VAR` is implicitly declared `let`.
 
