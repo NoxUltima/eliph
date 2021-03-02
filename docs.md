@@ -4,7 +4,7 @@
 
 This reference is structured so that it can be read from top to bottom, if you like. Later sections use ideas and syntax previously introduced. Familiarity with JavaScript is assumed.
 
-First, the basics: CoffeeScript uses significant whitespace to delimit blocks of code. You don't need to use semicolons `;` to terminate expressions, ending the line will do just as well (although semicolons can still be used to fit multiple expressions onto a single line).
+First, the basics: Eliph uses significant whitespace to delimit blocks of code. You don't need to use semicolons `;` to terminate expressions, ending the line will do just as well (although semicolons can still be used to fit multiple expressions onto a single line).
 
 Instead of using curly braces `{ }` to surround blocks of code in functions, `if`-statements, `switch`, and `try`/`catch`, use indentation.
 
@@ -113,7 +113,7 @@ If you want to simply declare a variable and not initialize it, you can use `let
 let x
 ```
 
-You can also declare constants in LiveScript using `constant := value`. They are checked at compile time - the compiled JS adds a `const` for you.
+You can also declare constants in Eliph  using `constant := value`. They are checked at compile time - the compiled JS adds a `const` for you.
 
 Attempting to compile the following:
 
@@ -491,7 +491,7 @@ false ^^ false # false
 1 ^^ 1         # false
 ```
 
-Because the `==` operator frequently causes undesirable coercion, is intransitive, and has a different meaning than in other languages, CoffeeScript compiles `==` into `===,` and `!=` into `!==`. In addition, `is` compiles into `===,` and `isnt` into `!==`.
+Because the `==` operator frequently causes undesirable coercion, is intransitive, and has a different meaning than in other languages, Eliph compiles `==` into `===,` and `!=` into `!==`. In addition, `is` compiles into `===,` and `isnt` into `!==`.
 
 If you really want to use JavaScript's `==` and `!=`, use the _fuzzy equality_ operators `=~` and `!~`, or aliases `sim` or `diff` instead.
 
@@ -1476,7 +1476,7 @@ util! # nothing
 
 ### Currying
 
-Curried functions are very powerful. Essentially, when called with less arguments than defined with, they return a partially applied function. This means that it returns a function whose arguments are those which you didn't supply, with the values for what you did supply already bound. They are defined in LiveScript using the long arrow. Perhaps an example will make things more clear:
+Curried functions are very powerful. Essentially, when called with less arguments than defined with, they return a partially applied function. This means that it returns a function whose arguments are those which you didn't supply, with the values for what you did supply already bound. They are defined in Eliph  using the long arrow. Perhaps an example will make things more clear:
 
 ```ls
 times = (x, y) --> x * y
@@ -1565,7 +1565,7 @@ alert 'hi'
 
 ### Async and Await
 
-If you will be running your compiled code on a platform that supports the async and await JavaScript keywords, then you can write true asynchronous functions in LiveScript. To mark a function as async, either add an extra `>` to the function arrow (`->>`, `~>>`, `-->>`, etc.), or write `async func` instead of `func` for named functions. Inside an `async` function, you can use the `await` keyword as you would in JavaScript.
+If you will be running your compiled code on a platform that supports the async and await JavaScript keywords, then you can write true asynchronous functions in Eliph . To mark a function as async, either add an extra `>` to the function arrow (`->>`, `~>>`, `-->>`, etc.), or write `async func` instead of `func` for named functions. Inside an `async` function, you can use the `await` keyword as you would in JavaScript.
 
 ```ls
 f1 = (x) ->> await x
