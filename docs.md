@@ -82,7 +82,9 @@ console module native global require exports
 
 ## the Basics
 
-Valid variable or identifier names with a letter, underscore `_` or **any Unicode character** that is not punctuation or symbols. All other characters can include digits, `-` and `$`.
+Valid variable or identifier names begin with  a letter or **any Unicode character** that is not punctuation or symbols. All other characters can include digits, `-` and `$`. All variable names are case-sensitive in JavaScript. However, leading `$` and `_` are ignored in identifier names, as `$` and `_` are considered **placeholders** used a lot in the language, so double them (`$$`, `__` if you want to use them as standalone variables).
+
+The first `_` and `$` will be ignored, so `f`, `f` and `$f` refer to the same variable `f`, while `f$` is distinct from `f`. Similarly, a kebab-case variable will compile to snake-case, so `from-to` is the same as `from_to`.
 
 Basic assignment is as you would expect, `variable = value`, and there is no need for variable declarations with `var`, `let` or `const` as they are built into the operators.
 
@@ -1631,3 +1633,7 @@ h.next!.value + h.next!.value # "foobar"
 You can create generators by either appending a star `*` to the function keyword, or appending it to the arrow notation. This works with the variety of function arrows we have.
 
 `yield` and `yield*` is simply the same as in JavaScript.
+
+---
+
+More coming soon...
