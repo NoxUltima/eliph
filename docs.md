@@ -59,9 +59,6 @@ struct | package | namespace
 and nand or nor xor xnor not
 super len ctor size typeof instof del void
 
-# Statements
-print puts echo assert debug info warn error
-
 # Types
 any unknown other never
 num int float deci frac comp
@@ -82,7 +79,7 @@ console module native global require exports
 
 ## the Basics
 
-Valid variable or identifier names begin with  a letter or **any Unicode character** that is not punctuation or symbols. All other characters can include digits, `-` and `$`. All variable names are case-sensitive in JavaScript. However, leading `$` and `_` are ignored in identifier names, as `$` and `_` are considered **placeholders** used a lot in the language, so double them (`$$`, `__` if you want to use them as standalone variables).
+Valid variable or identifier names begin with a letter or **any Unicode character** that is not punctuation or symbols. All other characters can include digits, `-` and `$`. All variable names are case-sensitive in JavaScript. However, leading `$` and `_` are ignored in identifier names, as `$` and `_` are considered **placeholders** used a lot in the language, so double them (`$$`, `__` if you want to use them as standalone variables).
 
 The first `_` and `$` will be ignored, so `f`, `f` and `$f` refer to the same variable `f`, while `f$` is distinct from `f`. Similarly, a kebab-case variable will compile to snake-case, so `from-to` is the same as `from_to`.
 
@@ -115,7 +112,7 @@ If you want to simply declare a variable and not initialize it, you can use `let
 let x
 ```
 
-You can also declare constants in Eliph  using `constant := value`. They are checked at compile time - the compiled JS adds a `const` for you.
+You can also declare constants in Eliph using `constant := value`. They are checked at compile time - the compiled JS adds a `const` for you.
 
 Attempting to compile the following:
 
@@ -125,6 +122,24 @@ x = 0
 ```
 
 ## Literals
+
+There are a total of twelve basic primitive types, many of which are covered in different programming languages. All primitive types are immutable, as in they cannot be modified directly through methods.
+
+| Type     | Decription                                                               | Example                                                              |
+| -------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------- |
+| `int`    | integers (arbitrary precision), JS `bigint`                              | `1`, `4` `1e6`, `2**30` , `0030`, `0o450`, `0b01101`, `0x30f`, `30n` |
+| `float`  | double-precision 64-bit binary float                                     | `1.0`, `.4`, `40.`, `inf`, `nan`                                     |
+| `frac`   | arbitrary-precision rational number (Not covered in this document)       | `0.1f`, `0.(3)f`, `(1/3)f`, `frac(1,3)`                              |
+| `deci`   | arbitrary-precision floating point number (Not covered in this document) | `10m`, `1.(3)m`                                                      |
+| `comp`   | complex number (Not covered in this document)                            | `(10+1)j`, `comp(1,10)`                                              |
+| `char`   | any Unicode character                                                    | `` ` ` ``, `` `0x` ``, `` `0x` ``, `` `0x` ``                        |
+| `str`    | string                                                                   | `\hello`, `'hello world'`, `"hello world"`                           |
+| `bool`   | boolean value                                                            | `true`, `false`, `yes`, `no`, `on`, `off`                            |
+| `sym`    | symbol                                                                   | Not covered in this document                                         |
+| `null`   | null                                                                     | `null`                                                               |
+| `undef`  | undefined                                                                | `undef`                                                              |
+| `tuple`  | tuple (immutable heterogeneous array)                                    | `tuple(1)`, `(1, '2', 3)`                                            |
+| `record` | record (immutable object)                                                | <code>(\| a : 1, b: 2, c: 3 \|)</code>                               |
 
 ### Booleans, Void, Undefined
 
@@ -436,7 +451,7 @@ Some things to note:
 - If the range counts **out of bounds**, it will coerce that to count in the right direction.
 - So, if `c + d > 0 && a > b || c + d < 0 && a < b`, then all numbers following `a` and `b` will be negated: `c` would be `-c` and `d` would be `-d`.
 
-````ls
+```ls
 [1,2,3] # [1, 2, 3]
 [1::10] # [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 [1::10:2] # [1, 3, 5, 7, 9]
@@ -445,7 +460,193 @@ Some things to note:
 # String literals
 ['a'::'j'] # ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
 ['a'::'f':2] # ['a', 'c', 'e']
-``
+```
+
+A regular expression is an object that describes a pattern of characters. Regular expressions have the type `regex` are used to perform pattern-matching and "search-and-replace" functions on text.
+
+You construct a regular expression in one of two ways:
+
+Using a regular expression literal, which consists of a pattern enclosed between slashes, as follows:
+
+```ls
+patt: regex = /w3schools/i
+```
+
+or surround your pattern in a set of three slashes, to turn it into a **block regular expression**. `///`. You can interpolate and transform variables and embed code and expressions, by using the hash interpolation syntax `#{expression}` and `#variable` described earlier.
+
+```ls
+NUMBER     = ///
+  ^ 0b[01]+    |              # binary
+  ^ 0o[0-7]+   |              # octal
+  ^ 0x[\da-f]+ |              # hex
+  ^ \d*\.?\d+ (?:e[+-]?\d+)?  # decimal
+///i
+```
+
+Eliph (aims to) natively support(s) the regex definitions in XRegExp, which is a superset of JavaScript regular expressions, as well as most of the features as described in [RegularExpressions.info](https://www.regular-expressions.info/).
+
+The following tables below is actually a cheat sheet and is taken from [this Perl documentation](https://perldoc.perl.org/perlre), but with some edits. This list is non-exhaustive, as it does not include all the features covered in the site. Although, we can try.
+
+```
+           PURPOSE                                  WHERE
+\   Escape the next character                    Always, except when
+                                                 escaped by another \
+^   Match the beginning of the string            Not in []
+      (or line, if /m is used)
+^   Complement the [] class                      At the beginning of []
+.   Match any single character except newline    Not in []
+      (under /s, includes newline)
+$   Match the end of the string                  Not in [], but can
+      (or before newline at the end of the       mean interpolate a
+      string; or before any newline if /m is     scalar
+      used)
+|   Alternation                                  Not in []
+()  Grouping                                     Not in []
+[   Start bracketed character class              Not in []
+]   End bracketed character class                Only in [], and
+                                                   not first
+*   Matches the preceding element 0 or more      Not in []
+      times
++   Matches the preceding element 1 or more      Not in []
+      times
+?   Matches the preceding element 0 or 1         Not in []
+      times
+{   Starts a sequence that gives number(s)       Not in []
+      of times the preceding element can be
+      matched
+{   when following certain escape sequences
+      starts a modifier to the meaning of the
+      sequence
+}   End sequence started by {
+-   Indicates a range                            Only in [] interior
+#  Beginning of comment, extends to line end     Only with /x modifier
+###  Beginning of block comment                  Only with /x modifier
+```
+
+Quantifiers
+
+```* Match 0 or more times
++           Match 1 or more times
+?           Match 1 or 0 times
+{n}         Match exactly n times
+{n,}        Match at least n times
+{n,m}       Match at least n but not more than m times
+
+*?          Match 0 or more times, not greedily
++?          Match 1 or more times, not greedily
+??          Match 0 or 1 time, not greedily
+{n}?        Match exactly n times, not greedily (redundant)
+{n,}?       Match at least n times, not greedily
+{n,m}?      Match at least n but not more than m times, not greedily
+
+*+          Match 0 or more times and give nothing back
+++          Match 1 or more times and give nothing back
+?+          Match 0 or 1 time and give nothing back
+{n}+        Match exactly n times and give nothing back (redundant)
+{n,}+       Match at least n times and give nothing back
+{n,m}+      Match at least n but not more than m times and give nothing back
+```
+
+Characters
+
+```
+\t          tab                   (HT, TAB)
+\n          newline               (LF, NL)
+\r          return                (CR)
+\f          form feed             (FF)
+\a          alarm (bell)          (BEL)
+\e          escape (think troff)  (ESC)
+\cK         control char          (example: VT)
+\x{}, \x00  character whose ordinal is the given hexadecimal number
+\N{name}    named Unicode character or character sequence
+\N{U+263D}  Unicode character     (example: FIRST QUARTER MOON)
+\o{}, \000  character whose ordinal is the given octal number
+\l          lowercase next char
+\u          uppercase next char
+\L          lowercase until \E
+\U          uppercase until \E
+\Q          quote (disable) pattern metacharacters until \E
+\E          end either case modification or quoted section
+```
+
+Character Classes
+
+```
+Sequence   Description
+[...]         Match a character according to the rules of the
+                bracketed character class defined by the "...".
+                Example: [a-z] matches "a" or "b" or "c" ... or "z"
+[[:...:]]     Match a character according to the rules of the POSIX
+                character class "..." within the outer bracketed
+                character class.  Example: [[:upper:]] matches any
+                uppercase character.
+[...-[...]]   Class subtraction. Exclude characters from the first '...' as defined by the second.
+[...+[...]]   Class intersection. Include characters that are present in both '...'.
+(?[...])      Extended bracketed character class
+\w            Match a "word" character (alphanumeric plus "_", plus
+              other connector punctuation chars plus Unicode
+              marks)
+\W            Match a non-"word" character
+\s            Match a whitespace character
+\S            Match a non-whitespace character
+\d            Match a decimal digit character
+\D            Match a non-digit character
+\pP           Match P, named property. Use \p{Prop} for longer names
+\PP           Match non-P
+\X            Match Unicode "eXtended grapheme cluster"
+\1            Backreference to a specific capture group or buffer.
+                1 may actually be any positive integer.
+\g1           Backreference to a specific or previous group,
+\g{-1}        The number may be negative indicating a relative
+                previous group and may optionally be wrapped in
+                curly brackets for safer parsing.
+\g{name}      Named backreference
+\k<name>      Named backreference (ES6 syntax)
+\K            Keep the stuff left of the \K, don't include it in $&
+\N            Any character but \n.  Not affected by /s modifier
+\v            Vertical whitespace
+\V            Not vertical whitespace
+\h            Horizontal whitespace
+\H            Not horizontal whitespace
+\R            Linebreak
+```
+
+Assertions
+
+```
+\b{}   Match at Unicode boundary of specified type
+\B{}   Match where corresponding \b{} doesn't match
+\b     Match a \w\W or \W\w boundary
+\B     Match except at a \w\W or \W\w boundary
+\A     Match only at beginning of string
+\Z     Match only at end of string, or before newline at the end
+\z     Match only at end of string
+\G     Match only at pos() (e.g. at the end-of-match position
+       of prior m//g)
+```
+
+Flags
+
+```
+MODIFIER  MODE
+i         With this flag the search is case-insensitive: no difference between A and a.
+g        With this flag the search looks for all matches, without it – only the first match is returned.
+m         Multiline mode.
+s         Enables "dotall" mode, that allows a dot . to match newline character \n.
+u         Enables full Unicode support. The flag enables correct processing of surrogate pairs.
+y         "Sticky" mode: searching at the exact position in the text
+n         Explicit capture
+x         Free-spacing and line comments (aka extended mode)
+a         Astral
+p         Preserve the string matched such that PREMATCH, MATCH, and POSTMATCH are available for use after matching.
+c         Keep the current position during repeated matching
+e         Evaluate the right-hand side as an expression
+o         Pretend to optimize your code, but actually introduce bugs
+r         Perform non-destructive substitution and return the new value
+l{locale} Sets the character set to that of whatever Locale is in effect at the time of the execution of the pattern match.
+a         Sets the character set to Unicode, BUT adds several restrictions for ASCII-safe matching.
+d         Default character set.
+```
 
 ### Miscellaneous
 
@@ -453,7 +654,7 @@ Labels (useful for nested loops):
 
 ```ls
 label l: 4 + 2
-````
+```
 
 Constructor shorthand.
 
@@ -804,7 +1005,7 @@ import 'prelude-ls'
 import [fs, path]
 import fs, path
 
-import jQuery: $
+import jQuery as $$
 
 import {
   fs
@@ -828,6 +1029,261 @@ Filenames are automatically extracted.
 ```ls
 import 'lib.js'
 import './dir/lib1.js'
+```
+
+## Assignment
+
+### Operators
+
+Compound assignment: (`?`, `&&`, `||`, `^^`, `!&`, `!|`, `!^`, can prefix any compound assign.)
+
+```ls
+x = 2    # 2
+x += 2   # 4
+x -= 1   # 3
+x *= 3   # 9
+x /= 3   # 3
+x %= 3   # 0
+x %%= 3  # 0
+x <?= -1 # -1
+x >?= 2  # 2
+x **= 2  # 4
+x ^= 2   # 16
+
+x ?= 10
+x        # 16
+
+x ||= 5  # 16
+x &&= 5  # 5
+
+x &&+= 3 # 8
+x ?*= 2  # 16
+
+xs = [1 2]
+xs ++= [3]
+xs # [1 2 3]
+```
+
+Unary Assignment:
+
+```ls
+y = \45
++  = y   # 45   (make into number)
+!! = y   # true (make into boolean)
+-~-~ = y # 3    (intcasting bicrement)
+```
+
+Assignment defaults - you can use ``?`, `&&`, `||`, `^^`, `!&`, `!|`, `!^`.
+
+You can use `=` instead of `?` in function parameters.
+
+```ls
+x ? y = 10
+y        # 10
+
+f = (z = 7) -> z
+f 9      # 9
+f!       # 7
+```
+
+Soak assign - performs assign only if the right operand exists:
+
+```ls
+age = 21
+x? = age
+x # 21
+
+x? = years
+x # 21
+```
+
+You can destructure from virtually any data structure, like in Swift, Reason or JavaScript:
+
+```ls
+(x, y, , z) = (0, 0, 1, 0);
+[x, y, , z] = [0, 0, 1, 0];
+{x, y, z} = {x: 0, y: 0, z: 0, a: 1};
+{| 'x': x, 'y': y, 'z': z |} = {| 'x': 0, 'y': 0, 'z': 0 |};
+```
+
+You can also use splats when destructuring:
+
+```ls
+[head, ...tail] = [1::5]
+head # 1
+tail # [2,3,4,5]
+
+[first, ...middle, last] = [1::5]
+first  # 1
+middle # [2,3,4]
+last   # 5
+```
+
+...and objects too!
+
+```ls
+{name, ...rest} = {weight: 110, name: 'emma', age: 20}
+name # 'emma'
+rest # {weight: 110, age, 20}
+```
+
+You can also name the entity which you are destructuring using `:label`, as well as arbitrarily nest the destructuring.
+
+```ls
+[[x, ...xs]:list1, [y, ...ys]:list2] = [[1,2,3],[4,5,6]]
+x # 1
+xs # [2,3]
+list1 # [1,2,3]
+y # 4
+ys # [5,6]
+list2 # [4,5,6]
+```
+
+### Substructuring
+
+Easily set properties of lists and objects.
+
+```ls
+mitch =
+  age:    21
+  height: 180cm
+  pets:    [\dog, \goldfish]
+
+phile = {}
+phile{height, pets} = mitch
+phile.height # 180
+phile.pets   # ['dog', 'goldfish']
+```
+
+## Property Access
+
+The standard:
+
+```ls
+[1, 2, 3][1]     # 2
+{a: 1, b: 2}.b # 2
+```
+
+Dot Access - dot operators can accept many more things other than identifiers as their right operand, including numbers, strings, parentheses, brackets, and braces.
+
+```ls
+x = "hello world": [4, [5 boom: 6]]
+x.'hello world'.1.[0] # 5
+```
+
+Accessignment using `..=`.
+
+```ls
+document.title ..= upper! # HELLO WORLD!...
+```
+
+Length dollar sign `$`. Alternatively, use `-1` in place of `$-1`, and so on, similar to Python.
+
+```ls
+list = [1, 2, 3, 4, 5]
+list[$] = 6
+list        # [1,2,3,4,5,6]
+list[$-1]   # 6
+list[-1]   # 6
+```
+
+Slicing and splicing. The placeholder `$` stands for the length of the array or string it refers to.
+
+```ls
+c = 'hello' # Slicing
+s = c[1] # e
+s = c[1,2] # el (specific indices)
+s = c[:>$] # hello (string cloning)
+s = c[$>:] # olleh (specific indices)
+```
+
+When splicing, each individual index must be assigned a literal value, and for subranges a tuple of values.
+
+- `a=1,b=2` - Assign `1` to index `a` and `2` to `b`.
+- `a::b:c=<1,2>` - Assign to every index evaluated by the range expression `a::b:c`, alternating between values `1, 2`. This would also override any previous values assigned.
+
+```ls
+t = '123' # Splicing
+t = t + '45' # '12345'
+t = t * 2 # '1234512345'
+t = '12345'[$>:] # '54321'
+t = '12345'[-1='6'] # '123456'
+```
+
+Object slice:
+
+```ls
+obj = one: 1, two: 2
+obj{first: one, two} # {first: 1, two: 2}
+```
+
+Semiautovivification `.{}`, `.[]` ensures that the property exists as an object or as an array.
+
+```ls
+x = "hello world": [4 [5 boom: 6]]
+x.[]'hello world'.1.{}1.boom # 6
+
+x.[]arr.{}1.y = 9
+x.arr.1.y # 9
+```
+
+Binding access `.~` retrieves an object's method as bound to the object. With automatic dot insertion you can just use` ~`.
+
+Note that this is not the same as the `.bind` method on `Function`. With` .~`, the method is dynamically bound; `foo~bar` will refer to the value of bar on foo at the time the bound function is invoked, not at the time the binding access is made.
+
+```ls
+obj =
+  x: 5
+  add: (y) -> @x + y
+
+target =
+  x: 600
+  not-bound: obj.add
+  bound: obj~add
+
+target.not-bound 5 # 605
+target.bound 5     # 10
+
+# Binding access is dynamic:
+obj.add = (y) -> @x + 1000*y
+target.bound 5     # 5005
+```
+
+A cascade always evaluates to the item being accessed, and not to the return value of the accessing operations.
+
+Beautiful chaining:
+
+```ls
+a = [2 7 1 8]
+  ..push 3
+  ..shift!
+  ..sort!
+a # [1,3,7,8]
+
+document.querySelector \h1
+  ..style
+    ..color = \red
+    ..font-size = \large
+  ..inner-HTML = "LET'S FLIPPIN' GO!"
+```
+
+Cascades are callable, and can include arbitrary code.
+
+```ls
+console.log
+  x = 1
+  y = 2
+  .. x, y
+# prints `1 2` to the console
+```
+
+You can use with to specify the part of the preceding expression to cascade.
+
+```ls
+x = with {a: 1, b: 2}
+  ..a = 7
+  ..b += 9
+x #  {a: 7, b: 11}
 ```
 
 ## Control Flow
@@ -1233,7 +1689,6 @@ try => ...
 finally => doSomething!
 ```
 
-
 ## Functions
 
 Functions are defined by an optional list of parameters in parentheses, an arrow, and the function body. The empty function looks like this: `->`
@@ -1478,7 +1933,7 @@ util! # nothing
 
 ### Currying
 
-Curried functions are very powerful. Essentially, when called with less arguments than defined with, they return a partially applied function. This means that it returns a function whose arguments are those which you didn't supply, with the values for what you did supply already bound. They are defined in Eliph  using the long arrow. Perhaps an example will make things more clear:
+Curried functions are very powerful. Essentially, when called with less arguments than defined with, they return a partially applied function. This means that it returns a function whose arguments are those which you didn't supply, with the values for what you did supply already bound. They are defined in Eliph using the long arrow. Perhaps an example will make things more clear:
 
 ```ls
 times = (x, y) --> x * y
@@ -1636,4 +2091,328 @@ You can create generators by either appending a star `*` to the function keyword
 
 ---
 
-More coming soon...
+### Object-Oriented Programming
+
+Classes are simple sugar for the definition of constructor functions and the setting of their prototype.
+
+The constructor function is defined as function literal at the top level of the class definition.
+
+Properties of its prototype are defined by object literals at the top level.
+
+```ls
+class A
+  (num) ->
+    @x = num
+  property: 1
+  method: (y) ->
+    @x + @property + y
+
+a = new A 3
+a.x        #=> 3
+a.property #=> 1
+a.method 6 #=> 10
+```
+
+Static properties (properties attached to the constructor) are defined by adding properties to this at the top level. These properties can be accessed in methods by accessing constructor (shorthand `@@`).
+
+```ls
+class A
+  @static-prop = 10
+  get-static: ->
+    @@static-prop + 2
+
+A.static-prop #=> 10
+a = new A
+a.get-static! #=> 12
+```
+
+Private static properties are defined as just regular variables in the class body. (note: private instance properties are not possible in JavaScript, and thus, LiveScript.)
+
+```ls
+class A
+  secret = 10
+
+  get-secret: ->
+    secret
+
+a = new A
+a.get-secret! #=> 10
+```
+
+You can define bound methods (using `~>`, which have their definition of this bound to the instance.
+
+```ls
+class A
+  x: 10
+  bound-func: (x) ~>
+    @x
+  reg-func: (x) ->
+    @x
+
+a = new A
+obj =
+  x: 1
+  bound: a.bound-func
+  reg: a.reg-func
+
+obj.bound! #=> 10
+obj.reg!   #=> 1
+```
+
+You can easily set properties in constructor functions and in methods using the object setting parameter shorthand.
+
+```ls
+class A
+  (@x) ->
+
+  f: (@y) ->
+    @x + @y
+
+a = new A 2
+a.x   #=> 2
+a.f 3 #=> 5
+a.y   #=> 3
+```
+
+If you define the constructor as a bound function ~>, you don't need to use new when making a new instance.
+
+```ls
+class A
+  (@x) ~>
+
+a = A 4
+a.x #=> 4
+```
+
+For higher level libraries and frameworks, there is the ability to define the constructor as an external function, by setting the property `struct`. This is not recommended for regular coding.
+
+```ls
+f = (@x) ->
+
+class A
+  struct: f
+
+a = new A 5
+a.x #=> 5
+```
+
+You can inherit with `extends`, `from`, or C-style `:`.
+
+```ls
+class A
+  ->
+    @x = 1
+  @static-prop = 8
+  method: ->
+    @x + 2
+
+class B : A
+  ->
+    @x = 10
+
+B.static-prop #=> 8
+b = new B
+b.x       #=> 10
+b.method! #=> 12
+```
+
+This is especially useful with super. If bare, super is a reference to the appropriate function. If you want to call it with all arguments, use super ....
+
+```ls
+class A
+  ->
+    @x = 1
+  method: (num) ->
+    @x + num
+
+class B : A
+  ->
+    @y = 2
+    super!
+
+  method: (num) ->
+    @y + super ...
+
+b = new B
+b.y #=> 2
+b.method 10 #=> 13
+```
+
+You can use mixins through `implements`, Dart-style `with` or `+`. You can only inherit from one class, but can mixin as many objects as you like. Remember, if you want to implement a class, not just a simple object, you must implement the class's prototype.
+
+```ls
+Renameable =
+  set-name: (@name) ->
+  get-name: -> @name ? @id
+
+class A + Renameable
+  ->
+    @id = Math.random! * 1000
+
+a = new A
+a.get-name! #=> some random number
+a.set-name 'moo'
+a.get-name! #=> 'moo'
+```
+
+To modify the prototype, you can use the shorthand `::`, and you can use the `::=` operator if you wish to modify several properties.
+
+```ls
+class A
+  prop: 10
+  f: ->
+    @prop
+
+a = new A
+b = new A
+a.f! #=> 10
+
+A::prop = 6
+a.f! #=> 6
+b.f! #=> 6
+
+A ::=
+  prop: 5
+  f: ->
+    @prop + 4
+a.f! #=> 9
+b.f! #=> 9
+```
+
+If you don't wish to support older browsers, and desire the use of Object.defineProperty, you can use the following shorthand:
+
+```ls
+class Box
+  dimensions:~
+    -> @d
+    ([width, height]) -> @d = "#{width}x#height"
+
+b = new Box
+b.dimensions = [10, 5]
+b.dimensions #=> '10x5'
+```
+
+## Types
+
+The binding below is named count, is of type int, and has a value of 42. Its type was inferred, we did not explicitly write down that it is an int.
+
+Everything in Eliph has an inherent type, even if you do not write it down.
+
+```ls
+count = 42;
+```
+
+Types can be explicitly added with an annotation:
+
+```ls
+count: int = 42;
+```
+
+Because count has a type the compiler knows what we are and are not allowed to do with its value:
+
+```ls
+# Allowed: addition
+nextCount = count + 1
+
+# Error: count is not a list
+x = count.map (.a)
+```
+
+### Annotations
+
+Type annotations can appear almost anywhere. They are not often necessary due to Eliph's type inference, but they can be helpful to confirm your own understanding of the program's types.
+
+`int` and `str` are annotations used throughout these examples:
+
+```ls
+five: int = 5
+nine = (five: int) + (4: int)
+add = (x: int, y: int): int => x + y
+drawCircle = (~radius: int): str => "hi"
+```
+
+### Aliases
+
+Aliases can be defined for types. This is helpful to attach meaning to simple types and when working with complex types that become long to write down.
+
+```ls
+type Seconds = int
+type TimeInterval = (Seconds, Seconds)
+```
+
+Using the alias seconds it is clear how the sleep function works. If int were used it might not be obvious:
+
+```ls
+sleep = (time: Seconds) => { ... }
+```
+
+Note, it is common practice to write types as `PascalCase`.
+
+### Parameters (Generics)
+
+Types can accept type parameters, which are similar to generics in other languages. Parameterized types are useful when defining structures that work with many types of values.
+
+Parameters are prefixed with a single `#` when defining the type:
+
+```ls
+type list($item) = ...
+```
+
+When using this type as an annotation the parameter can be filled in with a concrete type:
+
+```ls
+x: list(int) = [1, 2, 3]
+y: list(string) = ["one", "two", "three"]
+```
+
+Types can have multiple parameters and be nested:
+
+```ls
+type pair($a, $b) = ($a, $b);
+
+x: pair(int, string) = (1, "one")
+y: pair(string, list(int)) = ("123", [1, 2, 3])
+```
+
+### Type Variants
+
+Union types model values that may assume one of many known variations. Each variant form may optionally specify data that is carried along with it.
+
+Unions require a type definition that specifies all of the types which can be accepted, separated by a vertical bar.
+
+```ls
+type void = undef | null
+type num = int | float | frac | deci | comp
+type NullableInt = void | num
+```
+
+Intersection types are closely related to union types, but they are used very differently. An intersection type combines multiple types into one. This allows you to add together existing types to get a single type that has all the features you need.
+
+```ls
+# More on interfaces in later sections
+interface ErrorHandling
+  success: bool
+  error?: { message: str
+interface ArtworksData
+  artworks: { title: str }[]
+interface ArtistsData
+  artists: { name: str }[]
+
+# These interfaces are composed to have
+# consistent error handling, and their own data.
+
+type ArtworksResponse = ArtworksData & ErrorHandling
+type ArtistsResponse = ArtistsData & ErrorHandling
+```
+
+### Enumerations `enum` 
+
+```
+Coming soon
+```
+
+### Interfaces
+
+```
+Coming soon
+```
