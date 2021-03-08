@@ -188,7 +188,7 @@ Highlighting can be fine-tuned through the use of custom code, such as highlight
 
 ---
 
-|## Overview of Features
+## Overview of Features
 
 This is an overview of most language features in Eliph. It does not explain them in detail, but should serve as a quick reference. Please see the guides on the left for additional details about each feature.
 
@@ -391,6 +391,8 @@ Just like in LiveScript, use `~>` in place of CoffeeScript's `=>` (bound functio
 | Backcalls                 | `b <- (a << c) x` &rightarrow; `b(c(a(x)))`                                                                                 |
 
 More sections #TODO
+
+### Regular Expressions
 
 ### Arrays
 
