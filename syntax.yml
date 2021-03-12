@@ -1,0 +1,1547 @@
+---
+information_for_contributors:
+- This file has been converted from https://github.com/atom/language-coffee-script/blob/master/grammars/coffeescript.cson
+- This is an improved and expanded version of the CoffeeScript grammar files, which
+  allows for more JavaScript syntax scopes and syntax highlighting support for embedded
+  languages.
+- Note that this grammar file is incomplete, many more changes will be made soon.
+version: https://github.com/atom/language-coffee-script/commit/0f6db9143663e18b1ad00667820f46747dba495e
+name: CoffeeScript
+scopeName: source.coffee
+patterns:
+- include: "#coffeex"
+- match: "\\b(debugger|infix|unary|oper(?:at|ator)?|\\\\)\\b"
+  name: keyword.other.coffee
+- name: support.variable.dom.coffee
+  match: "\\b(document|event|navigator|performance|screen|window|(?:local|session)Storage)\\b"
+- name: support.class.builtin.coffee
+  match: |-
+    (?x)\b(Array|ArrayBuffer|Atomics|BigInt|BigInt64Array|BigUint64Array|Boolean|DataView|Date|Float32Array
+      |Float64Array|Function|Generator|GeneratorFunction|Int8Array|Int16Array|Int32Array|Intl|Map|Number|Object|Proxy
+      |Reflect|RegExp|Set|SharedArrayBuffer|SIMD|String|Symbol|TypedArray
+      |Uint8Array|Uint16Array|Uint32Array|Uint8ClampedArray|WeakMap|WeakSet)\b
+- name: support.class.node.coffee
+  match: |-
+    (?x)\b(Buffer|EventEmitter|Server|Pipe|Socket|REPLServer|ReadStream|WriteStream|Stream
+      |Inflate|Deflate|InflateRaw|DeflateRaw|GZip|GUnzip|Unzip|Zip)\b
+- name: support.module.node.coffee
+  match: "\\b(natives|buffer|child_process|cluster|crypto|dgram|dns|fs|http|https|net|os|path|punycode|string|string_decoder|readline|repl|tls|tty|util|vm|zlib)\\b"
+- match: "\\b(console)\\b"
+  name: support.type.object.console.coffee
+- name: support.constant.math.coffee
+  match: "\\b(Math)\\b"
+- name: support.constant.json.coffee
+  match: "\\b(JSON)\\b"
+- match: "\\b((Eval|Internal|Range|Reference|Syntax|Type|URI)?Error)\\b"
+  name: support.class.error.coffee
+- name: support.class.dom.coffee
+  match: |-
+    (?x)\b(AnalyserNode|ArrayBufferView|Attr|AudioBuffer|AudioBufferSourceNode|AudioContext|AudioDestinationNode|AudioListener
+      |AudioNode|AudioParam|BatteryManager|BeforeUnloadEvent|BiquadFilterNode|Blob|BufferSource|ByteString|CSS|CSSConditionRule
+      |CSSCounterStyleRule|CSSGroupingRule|CSSMatrix|CSSMediaRule|CSSPageRule|CSSPrimitiveValue|CSSRule|CSSRuleList|CSSStyleDeclaration
+      |CSSStyleRule|CSSStyleSheet|CSSSupportsRule|CSSValue|CSSValueList|CanvasGradient|CanvasImageSource|CanvasPattern
+      |CanvasRenderingContext2D|ChannelMergerNode|ChannelSplitterNode|CharacterData|ChromeWorker|CloseEvent|Comment|CompositionEvent
+      |Console|ConvolverNode|Coordinates|Credential|CredentialsContainer|Crypto|CryptoKey|CustomEvent|DOMError|DOMException
+      |DOMHighResTimeStamp|DOMImplementation|DOMString|DOMStringList|DOMStringMap|DOMTimeStamp|DOMTokenList|DataTransfer
+      |DataTransferItem|DataTransferItemList|DedicatedWorkerGlobalScope|DelayNode|DeviceProximityEvent|DirectoryEntry
+      |DirectoryEntrySync|DirectoryReader|DirectoryReaderSync|Document|DocumentFragment|DocumentTouch|DocumentType|DragEvent
+      |DynamicsCompressorNode|Element|Entry|EntrySync|ErrorEvent|Event|EventListener|EventSource|EventTarget|FederatedCredential
+      |FetchEvent|File|FileEntry|FileEntrySync|FileException|FileList|FileReader|FileReaderSync|FileSystem|FileSystemSync
+      |FontFace|FormData|GainNode|Gamepad|GamepadButton|GamepadEvent|Geolocation|GlobalEventHandlers|HTMLAnchorElement
+      |HTMLAreaElement|HTMLAudioElement|HTMLBRElement|HTMLBaseElement|HTMLBodyElement|HTMLButtonElement|HTMLCanvasElement
+      |HTMLCollection|HTMLContentElement|HTMLDListElement|HTMLDataElement|HTMLDataListElement|HTMLDialogElement|HTMLDivElement
+      |HTMLDocument|HTMLElement|HTMLEmbedElement|HTMLFieldSetElement|HTMLFontElement|HTMLFormControlsCollection|HTMLFormElement
+      |HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLIFrameElement|HTMLImageElement|HTMLInputElement
+      |HTMLKeygenElement|HTMLLIElement|HTMLLabelElement|HTMLLegendElement|HTMLLinkElement|HTMLMapElement|HTMLMediaElement
+      |HTMLMetaElement|HTMLMeterElement|HTMLModElement|HTMLOListElement|HTMLObjectElement|HTMLOptGroupElement|HTMLOptionElement
+      |HTMLOptionsCollection|HTMLOutputElement|HTMLParagraphElement|HTMLParamElement|HTMLPreElement|HTMLProgressElement
+      |HTMLQuoteElement|HTMLScriptElement|HTMLSelectElement|HTMLShadowElement|HTMLSourceElement|HTMLSpanElement|HTMLStyleElement
+      |HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableElement|HTMLTableHeaderCellElement
+      |HTMLTableRowElement|HTMLTableSectionElement|HTMLTextAreaElement|HTMLTimeElement|HTMLTitleElement|HTMLTrackElement
+      |HTMLUListElement|HTMLUnknownElement|HTMLVideoElement|HashChangeEvent|History|IDBCursor|IDBCursorWithValue|IDBDatabase
+      |IDBEnvironment|IDBFactory|IDBIndex|IDBKeyRange|IDBMutableFile|IDBObjectStore|IDBOpenDBRequest|IDBRequest|IDBTransaction
+      |IDBVersionChangeEvent|IIRFilterNode|IdentityManager|ImageBitmap|ImageBitmapFactories|ImageData|Index|InputDeviceCapabilities
+      |InputEvent|InstallEvent|InstallTrigger|KeyboardEvent|LinkStyle|LocalFileSystem|LocalFileSystemSync|Location|MIDIAccess
+      |MIDIConnectionEvent|MIDIInput|MIDIInputMap|MIDIOutputMap|MediaElementAudioSourceNode|MediaError|MediaKeyMessageEvent
+      |MediaKeySession|MediaKeyStatusMap|MediaKeySystemAccess|MediaKeySystemConfiguration|MediaKeys|MediaRecorder|MediaStream
+      |MediaStreamAudioDestinationNode|MediaStreamAudioSourceNode|MessageChannel|MessageEvent|MessagePort|MouseEvent
+      |MutationObserver|MutationRecord|NamedNodeMap|Navigator|NavigatorConcurrentHardware|NavigatorGeolocation|NavigatorID
+      |NavigatorLanguage|NavigatorOnLine|Node|NodeFilter|NodeIterator|NodeList|NonDocumentTypeChildNode|Notification
+      |OfflineAudioCompletionEvent|OfflineAudioContext|OscillatorNode|PageTransitionEvent|PannerNode|ParentNode|PasswordCredential
+      |Path2D|PaymentAddress|PaymentRequest|PaymentResponse|Performance|PerformanceEntry|PerformanceFrameTiming|PerformanceMark
+      |PerformanceMeasure|PerformanceNavigation|PerformanceNavigationTiming|PerformanceObserver|PerformanceObserverEntryList
+      |PerformanceResourceTiming|PerformanceTiming|PeriodicSyncEvent|PeriodicWave|Plugin|Point|PointerEvent|PopStateEvent
+      |PortCollection|Position|PositionError|PositionOptions|PresentationConnectionClosedEvent|PresentationConnectionList
+      |PresentationReceiver|ProcessingInstruction|ProgressEvent|PromiseRejectionEvent|PushEvent|PushRegistrationManager
+      |RTCCertificate|RTCConfiguration|RTCPeerConnection|RTCSessionDescriptionCallback|RTCStatsReport|RadioNodeList|RandomSource
+      |Range|ReadableByteStream|RenderingContext|SVGAElement|SVGAngle|SVGAnimateColorElement|SVGAnimateElement|SVGAnimateMotionElement
+      |SVGAnimateTransformElement|SVGAnimatedAngle|SVGAnimatedBoolean|SVGAnimatedEnumeration|SVGAnimatedInteger|SVGAnimatedLength
+      |SVGAnimatedLengthList|SVGAnimatedNumber|SVGAnimatedNumberList|SVGAnimatedPoints|SVGAnimatedPreserveAspectRatio
+      |SVGAnimatedRect|SVGAnimatedString|SVGAnimatedTransformList|SVGAnimationElement|SVGCircleElement|SVGClipPathElement
+      |SVGCursorElement|SVGDefsElement|SVGDescElement|SVGElement|SVGEllipseElement|SVGEvent|SVGFilterElement|SVGFontElement
+      |SVGFontFaceElement|SVGFontFaceFormatElement|SVGFontFaceNameElement|SVGFontFaceSrcElement|SVGFontFaceUriElement
+      |SVGForeignObjectElement|SVGGElement|SVGGlyphElement|SVGGradientElement|SVGHKernElement|SVGImageElement|SVGLength
+      |SVGLengthList|SVGLineElement|SVGLinearGradientElement|SVGMPathElement|SVGMaskElement|SVGMatrix|SVGMissingGlyphElement
+      |SVGNumber|SVGNumberList|SVGPathElement|SVGPatternElement|SVGPoint|SVGPolygonElement|SVGPolylineElement|SVGPreserveAspectRatio
+      |SVGRadialGradientElement|SVGRect|SVGRectElement|SVGSVGElement|SVGScriptElement|SVGSetElement|SVGStopElement|SVGStringList
+      |SVGStylable|SVGStyleElement|SVGSwitchElement|SVGSymbolElement|SVGTRefElement|SVGTSpanElement|SVGTests|SVGTextElement
+      |SVGTextPositioningElement|SVGTitleElement|SVGTransform|SVGTransformList|SVGTransformable|SVGUseElement|SVGVKernElement
+      |SVGViewElement|ServiceWorker|ServiceWorkerContainer|ServiceWorkerGlobalScope|ServiceWorkerRegistration|ServiceWorkerState
+      |ShadowRoot|SharedWorker|SharedWorkerGlobalScope|SourceBufferList|StereoPannerNode|Storage|StorageEvent|StyleSheet
+      |StyleSheetList|SubtleCrypto|SyncEvent|Text|TextMetrics|TimeEvent|TimeRanges|Touch|TouchEvent|TouchList|Transferable
+      |TreeWalker|UIEvent|USVString|VRDisplayCapabilities|ValidityState|WaveShaperNode|WebGL|WebGLActiveInfo|WebGLBuffer
+      |WebGLContextEvent|WebGLFramebuffer|WebGLProgram|WebGLRenderbuffer|WebGLRenderingContext|WebGLShader|WebGLShaderPrecisionFormat
+      |WebGLTexture|WebGLTimerQueryEXT|WebGLTransformFeedback|WebGLUniformLocation|WebGLVertexArrayObject|WebGLVertexArrayObjectOES
+      |WebSocket|WebSockets|WebVTT|WheelEvent|Window|WindowBase64|WindowEventHandlers|WindowTimers|Worker|WorkerGlobalScope
+      |WorkerLocation|WorkerNavigator|XMLHttpRequest|XMLHttpRequestEventTarget|XMLSerializer|XPathExpression|XPathResult
+      |XSLTProcessor)\b
+- match: "(instanceof)\\s+(?:(?:(class)\\s+(\\w+(?:\\.\\w*)*)?)|(\\w+(?:\\.\\w*)*))"
+  name: meta.class.instance.constructor.coffee
+  captures:
+    '1':
+      name: keyword.operator.expression.instanceof.coffee
+    '2':
+      name: storage.type.class.coffee
+    '3':
+      name: entity.name.type.instance.coffee
+    '4':
+      name: entity.name.type.instance.coffee
+- match: "(new)\\s+(?:(?:(class)\\s+(\\w+(?:\\.\\w*)*)?)|(\\w+(?:\\.\\w*)*))"
+  name: meta.class.instance.constructor.coffee
+  captures:
+    '1':
+      name: keyword.operator.new.coffee
+    '2':
+      name: storage.type.class.coffee
+    '3':
+      name: entity.name.type.instance.coffee
+    '4':
+      name: entity.name.type.instance.coffee
+- match: "(type)\\s+(?:(?:(class)\\s+(\\w+(?:\\.\\w*)*)?)|(\\w+(?:\\.\\w*)*))"
+  name: meta.class.instance.constructor.coffee
+  captures:
+    '1':
+      name: storage.type.type.coffee
+    '2':
+      name: storage.type.class.coffee
+    '3':
+      name: entity.name.type.alias.coffee
+    '4':
+      name: entity.name.type.alias.coffee
+- match: "(enum)\\s+(?:(?:(class)\\s+(\\w+(?:\\.\\w*)*)?)|(\\w+(?:\\.\\w*)*))"
+  name: meta.class.instance.constructor.coffee
+  captures:
+    '1':
+      name: storage.type.enum.coffee
+    '2':
+      name: storage.type.class.coffee
+    '3':
+      name: entity.name.type.enum.coffee
+    '4':
+      name: entity.name.type.enum.coffee
+- match: "(namespace)\\s+(?:(?:(class)\\s+(\\w+(?:\\.\\w*)*)?)|(\\w+(?:\\.\\w*)*))"
+  name: meta.class.instance.constructor.coffee
+  captures:
+    '1':
+      name: storage.type.namespace.coffee
+    '2':
+      name: storage.type.class.coffee
+    '3':
+      name: entity.name.type.module.coffee
+    '4':
+      name: entity.name.type.module.coffee
+- match: "(interface)\\s+(?:(?:(class)\\s+(\\w+(?:\\.\\w*)*)?)|(\\w+(?:\\.\\w*)*))"
+  name: meta.class.instance.constructor.coffee
+  captures:
+    '1':
+      name: storage.type.interface.coffee
+    '2':
+      name: storage.type.class.coffee
+    '3':
+      name: entity.name.type.interface.coffee
+    '4':
+      name: entity.name.type.interface.coffee
+- patterns:
+  - begin: "\\\\([\\\\)\\s,\\};\\]])?"
+    beginCaptures:
+      '0':
+        name: string.template.coffee
+    end: "([\\\\)\\s\\}\\.,;:\\n\\r\\t\\]])"
+    endCaptures:
+      '0':
+        name: punctuation.definition.string.end.coffee
+    contentName: string.template.coffee
+- begin: "'"
+  beginCaptures:
+    '0':
+      name: punctuation.definition.string.begin.coffee
+  end: "'"
+  endCaptures:
+    '0':
+      name: punctuation.definition.string.end.coffee
+  name: string.quoted.single.heredoc.coffee
+  patterns:
+  - captures:
+      '1':
+        name: punctuation.definition.escape.backslash.coffee
+    match: "(\\\\)."
+    name: constant.character.escape.backslash.coffee
+- begin: "'{3}"
+  beginCaptures:
+    '0':
+      name: punctuation.definition.string.begin.coffee
+  end: "'{3}"
+  endCaptures:
+    '0':
+      name: punctuation.definition.string.end.coffee
+  name: string.quoted.single.heredoc.coffee
+  patterns:
+  - captures:
+      '1':
+        name: punctuation.definition.escape.backslash.coffee
+    match: "(\\\\)."
+    name: constant.character.escape.backslash.coffee
+- begin: "\""
+  beginCaptures:
+    '0':
+      name: punctuation.definition.string.begin.coffee
+  end: "\""
+  endCaptures:
+    '0':
+      name: punctuation.definition.string.end.coffee
+  name: string.quoted.double.heredoc.coffee
+  patterns:
+  - captures:
+      '1':
+        name: punctuation.definition.escape.backslash.coffee
+    match: "(\\\\)."
+    name: constant.character.escape.backslash.coffee
+  - include: "#interpolated_coffee"
+- begin: "\"{3}"
+  beginCaptures:
+    '0':
+      name: punctuation.definition.string.begin.coffee
+  end: "\"{3}"
+  endCaptures:
+    '0':
+      name: punctuation.definition.string.end.coffee
+  name: string.quoted.double.heredoc.coffee
+  patterns:
+  - captures:
+      '1':
+        name: punctuation.definition.escape.backslash.coffee
+    match: "(\\\\)."
+    name: constant.character.escape.backslash.coffee
+  - include: "#interpolated_coffee"
+- begin: "`"
+  beginCaptures:
+    '0':
+      name: punctuation.definition.string.begin.coffee
+  end: "`"
+  endCaptures:
+    '0':
+      name: punctuation.definition.string.end.coffee
+  name: source.coffee.embedded.coffee
+  patterns:
+  - include: source.js
+  - include: "#interpolated_coffee"
+- begin: "`{3}"
+  beginCaptures:
+    '0':
+      name: punctuation.definition.string.begin.coffee
+  end: "`{3}"
+  endCaptures:
+    '0':
+      name: punctuation.definition.string.end.coffee
+  name: source.coffee.embedded.coffee
+  patterns:
+  - include: source.js
+  - include: "#interpolated_coffee"
+- begin: "/{3}"
+  end: "(/{3})([a-z]*)"
+  name: string.regexp.multiline.coffee
+  beginCaptures:
+    '0':
+      name: punctuation.definition.string.begin.coffee
+  endCaptures:
+    '1':
+      name: punctuation.definition.string.end.coffee
+    '2':
+      name: keyword.other.coffee
+  patterns:
+  - include: "#heregexp"
+- begin: "(?<![\\p{L}$_])(/)(?=(?![/*+?])(.+)(/)[a-z]*(?!\\s*[\\w$/(]))"
+  beginCaptures:
+    '1':
+      name: punctuation.definition.string.begin.coffee
+  end: "(/)([a-z\\pL]*)(?!\\s*[\\w$/(])"
+  endCaptures:
+    '1':
+      name: punctuation.definition.string.end.coffee
+    '2':
+      name: keyword.other.coffee
+  name: string.regexp.coffee
+  patterns:
+  - include: "#regexp"
+- begin: "(?<!#)#{3}(?!#)"
+  beginCaptures:
+    '0':
+      name: punctuation.definition.comment.coffee
+  end: "#{3}"
+  endCaptures:
+    '0':
+      name: punctuation.definition.comment.coffee
+  name: comment.block.coffee
+  patterns:
+  - include: text.html.markdown#fenced_code_block
+  - include: source.ts#docblock
+  - include: text.html.markdown#inline
+  - match: "(?<=^|\\s)@\\w*(?=\\s)"
+    name: storage.type.annotation.coffee
+- begin: "#"
+  beginCaptures:
+    '0':
+      name: punctuation.definition.comment.coffee
+  end: "$"
+  name: comment.line.number-sign.coffee
+- match: "\\b(?<![\\.\\$])(async|await)(?!\\s*:)\\b"
+  name: storage.modifier.async.coffee
+- match: "\\b(?<![\\.\\$])(imports?|require)(?!\\s*:)\\b"
+  name: keyword.control.import.coffee
+- match: "\\b(?<![\\.\\$])(exports?)(?!\\s*:)\\b"
+  name: keyword.control.export.coffee
+- match: "\\b(?<![\\.\\$])(default|module)(?!\\s*:)\\b"
+  name: keyword.control.default.coffee
+- match: "\\b(?<![\\.\\$])(return|yield|goto|guard|label)(?!\\s*:)\\b"
+  name: keyword.control.flow.coffee
+- match: "\\b(?<![\\.\\$])([gs]et)(?!\\s*:)\\b"
+  name: storage.type.property.coffee
+- match: "\\b(?<![\\.\\$])(begin|start|end|stop)(?!\\s*:)\\b"
+  name: keyword.control.proc.coffee
+- match: "\\b(?<![\\.\\$])(with|skip)(?!\\s*:)\\b"
+  name: keyword.control.with.coffee
+- match: "\\b(?<![\\.\\$])(then)(?!\\s*:)\\b"
+  name: keyword.control.then.coffee
+- match: "\\b(?<![\\.\\$])(when|where|lest)(?!\\s*:)\\b"
+  name: keyword.control.when.coffee
+- match: "\\b(?<![\\.\\$])(catch|finally|throw|try|raise|except)(?!\\s*:)\\b"
+  name: keyword.control.trycatch.coffee
+- match: "\\b(?<![\\.\\$])(for|foreach|each|break|continue|pass|while|until|do|loop|repeat|till)(?!\\s*:)\\b"
+  name: keyword.control.loop.coffee
+- match: "\\b(?<![\\.\\$])(if|else|unless|el(?:se?)?(?:if|un(?:less)?|ell?ess))(?!\\s*:)\\b"
+  name: keyword.control.conditional.coffee
+- match: "\\b(?<![\\.\\$])(switch|case|default|(?:rise|fall)(?:thr(?:u|ough))?|other(?:wise)?)(?!\\s*:)\\b"
+  name: keyword.control.switch.coffee
+- name: keyword.operator.expression.delete.coffee
+  match: "(?<![\\w\\pL\\pN$_])(?:(?<=\\.\\.\\.)|(?<!\\.))(?:del|delete)(?![\\w\\pL\\pN$_])(?:(?=\\.\\.\\.)|(?!\\.))"
+- name: keyword.operator.expression.in.coffee
+  match: "(?<![\\w\\pL\\pN$_])(?:(?<=\\.\\.\\.)|(?<!\\.))in(?![\\w\\pL\\pN$_])(?:(?=\\.\\.\\.)|(?!\\.))(?!\\()"
+- name: keyword.operator.expression.of.coffee
+  match: "(?<![\\w\\pL\\pN$_])(?:(?<=\\.\\.\\.)|(?<!\\.))of(?![\\w\\pL\\pN$_])(?:(?=\\.\\.\\.)|(?!\\.))(?!\\()"
+- name: keyword.control.from.coffee
+  match: "(?<![\\w\\pL\\pN$_])(?:(?<=\\.\\.\\.)|(?<!\\.))from(?![\\w\\pL\\pN$_])(?:(?=\\.\\.\\.)|(?!\\.))(?!\\()"
+- name: keyword.control.as.coffee
+  match: "(?<![\\w\\pL\\pN$_])(?:(?<=\\.\\.\\.)|(?<!\\.))a[st](?![\\w\\pL\\pN$_])(?:(?=\\.\\.\\.)|(?!\\.))(?!\\()"
+- name: keyword.operator.expression.to.coffee
+  match: "(?<![\\w\\pL\\pN$_])(?:(?<=\\.\\.\\.)|(?<!\\.))to(?![\\w\\pL\\pN$_])(?:(?=\\.\\.\\.)|(?!\\.))(?!\\()"
+- name: keyword.operator.expression.til.coffee
+  match: "(?<![\\w\\pL\\pN$_])(?:(?<=\\.\\.\\.)|(?<!\\.))til(?![\\w\\pL\\pN$_])(?:(?=\\.\\.\\.)|(?!\\.))(?!\\()"
+- name: keyword.operator.expression.downto.coffee
+  match: "(?<![\\w\\pL\\pN$_])(?:(?<=\\.\\.\\.)|(?<!\\.))downto(?![\\w\\pL\\pN$_])(?:(?=\\.\\.\\.)|(?!\\.))(?!\\()"
+- name: keyword.operator.expression.downtil.coffee
+  match: "(?<![\\w\\pL\\pN$_])(?:(?<=\\.\\.\\.)|(?<!\\.))downtil(?![\\w\\pL\\pN$_])(?:(?=\\.\\.\\.)|(?!\\.))(?!\\()"
+- name: keyword.operator.expression.by.coffee
+  match: "(?<![\\w\\pL\\pN$_])(?:(?<=\\.\\.\\.)|(?<!\\.))by(?![\\w\\pL\\pN$_])(?:(?=\\.\\.\\.)|(?!\\.))(?!\\()"
+- name: keyword.operator.expression.own.coffee
+  match: "(?<![\\w\\pL\\pN$_])(?:(?<=\\.\\.\\.)|(?<!\\.))own(?![\\w\\pL\\pN$_])(?:(?=\\.\\.\\.)|(?!\\.))(?!\\()"
+- name: keyword.operator.new.coffee
+  match: "(?<![\\w\\pL\\pN$_])(?:(?<=\\.\\.\\.)|(?<!\\.))new(?![\\w\\pL\\pN$_])(?:(?=\\.\\.\\.)|(?!\\.))"
+- name: keyword.operator.expression.void.coffee
+  match: "(?<![\\w\\pL\\pN$_])(?:(?<=\\.\\.\\.)|(?<!\\.))void(?![\\w\\pL\\pN$_])(?:(?=\\.\\.\\.)|(?!\\.))"
+- name: keyword.operator.expression.typeof.coffee
+  match: "(?<![\\w\\pL\\pN$_])(?:(?<=\\.\\.\\.)|(?<!\\.))typeof(?![\\w\\pL\\pN$_])(?:(?=\\.\\.\\.)|(?!\\.))"
+- name: keyword.operator.expression.length.coffee
+  match: "(?<![\\w\\pL\\pN$_])(?:(?<=\\.\\.\\.)|(?<!\\.))len(?:gth)?(?![\\w\\pL\\pN$_])(?:(?=\\.\\.\\.)|(?!\\.))"
+- name: keyword.operator.expression.sizeof.coffee
+  match: "(?<![\\w\\pL\\pN$_])(?:(?<=\\.\\.\\.)|(?<!\\.))size(?:of)?(?![\\w\\pL\\pN$_])(?:(?=\\.\\.\\.)|(?!\\.))"
+- name: keyword.operator.expression.instanceof.coffee
+  match: "(?<![\\w\\pL\\pN$_])(?:(?<=\\.\\.\\.)|(?<!\\.))inst(?:ance)?of(?![\\w\\pL\\pN$_])(?:(?=\\.\\.\\.)|(?!\\.))"
+- match: "\\b(?<![\\.\\$])(va[rl]|defn?|define|let|const)(?!\\s*:)\\b"
+  name: storage.type.coffee
+- match: "\\b(?<![\\.\\$])(fn|fun(?:|c|ct|ction)|gen(?:fn)?)(?!\\s*:)\\b"
+  name: storage.type.function.coffee
+- match: "\\b(?<![\\.\\$])(enum)(?!\\s*:)\\b"
+  name: storage.type.enum.coffee
+- match: "\\b(?<![\\.\\$])(alias|type(?:alias|def)?)(?!\\s*:)\\b"
+  name: storage.type.type.coffee
+- match: "\\b(?<![\\.\\$])(interface)(?!\\s*:)\\b"
+  name: storage.type.interface.coffee
+- match: "\\b(?<![\\.\\$])((?:constru)?ctor|struct|@@)(?!\\s*:)\\b"
+  name: storage.type.struct.coffee
+- match: "\\b(?<![\\.\\$])(pkg|package|namespace)(?!\\s*:)\\b"
+  name: storage.type.namespace.coffee
+- match: "\\b(?<![\\.\\$])(native|__hasProp|__extends|__slice|__bind|__indexOf)(?!\\s*:)\\b"
+  name: keyword.reserved.coffee
+- match: "(?i)\\b(?<!\\.|::)(true|on|yes)(?!\\s*[:=][^=])\\b"
+  name: constant.language.boolean.true.coffee
+- match: "(?i)\\b(?<!\\.|::)(false|off|no)(?!\\s*[:=][^=])\\b"
+  name: constant.language.boolean.false.coffee
+- match: "(?i)\\b(?<!\\.|::)(null|nix|nil)(?!\\s*[:=][^=])\\b"
+  name: constant.language.null.coffee
+- match: "\\b(?<!\\.|::)(extends|implements|declare)(?!\\s*[:=])\\b"
+  name: storage.modifier.coffee
+- match: "(?<!\\.)\\b(?<!\\$)(super)(?!\\s*[:=][^=]|\\$)\\b"
+  name: variable.language.super.coffee
+- match: "(?<!\\.)\\b(?<!\\$)(this|that|it)(?!\\s*[:=][^=]|\\$)\\b"
+  name: variable.language.this.coffee
+- match: "(?<!\\.)\\b(?<!\\$)(arguments|args?|params?)(?!\\s*[:=][^=]|\\$)\\b"
+  name: variable.language.arguments.coffee
+- name: storage.modifier.coffee
+  match: "\\b(?<![\\.\\$])((?:in|ex)tern(?:al)?|public|protected|internal|private|abstract|virtual|override|sealed|static|partial|readonly|volatile|extern|unsafe|final|mutable|transient|synchronized|dynamic|lock(?:ed)?|(?:im|ex)plicit|[dr]efer|delegate|(?:un)?check(?:ed)?|(?:im|ex)pl|ext|[dr]ef|dele|mut|dyna?|trans?|pub|pvt|priv|prot?|(?:in|ex)tern?|abst?|virt?|over|seal|sync|stat?|part?|read|vola?|fin)(?!\\s*:)\\b"
+- begin: |-
+    (?x)
+    (?<=\s|^)((@)?[\w\pL\pN$_][\p{L}$_]*)
+    \s*([:=])\s*
+    (?=(\([^\(\)]*\)\s*)?[=-]>)
+  beginCaptures:
+    '1':
+      name: entity.name.function.coffee
+    '2':
+      name: variable.other.readwrite.instance.coffee
+    '3':
+      name: keyword.operator.assignment.coffee
+  end: "[=-]>"
+  endCaptures:
+    '0':
+      name: storage.type.function.arrow.coffee
+  name: meta.function.coffee
+  patterns:
+  - include: "#function_params"
+- begin: |-
+    (?x)
+    (?<=\s|^)(?:((')([^']*?)('))|((")([^"]*?)(")))
+    \s*([:=])\s*
+    (?=(\([^\(\)]*\)\s*)?[=-]>)
+  beginCaptures:
+    '1':
+      name: string.quoted.single.coffee
+    '2':
+      name: punctuation.definition.string.begin.coffee
+    '3':
+      name: entity.name.function.coffee
+    '4':
+      name: punctuation.definition.string.end.coffee
+    '5':
+      name: string.quoted.double.coffee
+    '6':
+      name: punctuation.definition.string.begin.coffee
+    '7':
+      name: entity.name.function.coffee
+    '8':
+      name: punctuation.definition.string.end.coffee
+    '9':
+      name: keyword.operator.assignment.coffee
+  end: "[=-]>"
+  endCaptures:
+    '0':
+      name: storage.type.function.arrow.coffee
+  name: meta.function.coffee
+  patterns:
+  - include: "#function_params"
+- begin: "(?=(\\([^\\(\\)]*\\)\\s*)?[=-]>)"
+  end: "[=-]>"
+  endCaptures:
+    '0':
+      name: storage.type.function.arrow.coffee
+  name: meta.function.inline.coffee
+  patterns:
+  - include: "#function_params"
+- begin: (?<=\s|^)({)(?=[^'"#]+?}[\s\]}]*=)
+  beginCaptures:
+    '1':
+      name: punctuation.definition.destructuring.begin.bracket.curly.coffee
+  end: "}"
+  endCaptures:
+    '0':
+      name: punctuation.definition.destructuring.end.bracket.curly.coffee
+  name: meta.variable.assignment.destructured.object.coffee
+  patterns:
+  - include: "$self"
+  - match: "[\\p{L}$_][\\w\\pL\\pN$_]*"
+    name: variable.assignment.coffee
+- begin: (?<=\s|^)(\[)(?=[^'"#]+?\][\s\]}]*=)
+  beginCaptures:
+    '1':
+      name: punctuation.definition.destructuring.begin.bracket.square.coffee
+  end: "\\]"
+  endCaptures:
+    '0':
+      name: punctuation.definition.destructuring.end.bracket.square.coffee
+  name: meta.variable.assignment.destructured.array.coffee
+  patterns:
+  - include: "$self"
+  - match: "[\\p{L}$_][\\w\\pL\\pN$_]*"
+    name: variable.assignment.coffee
+- captures:
+    '1':
+      name: storage.type.class.coffee
+    '2':
+      name: keyword.control.inheritance.coffee
+    '3':
+      name: entity.other.inherited-class.coffee
+  match: "(?<=\\s|^|\\[|\\()(class)\\s+(extends?|ext|implements?|impl)\\s+(@?[\\p{L}$_][\\w\\pL\\pN\\.$]*)"
+  name: meta.class.coffee
+- captures:
+    '1':
+      name: storage.type.class.coffee
+    '2':
+      name: entity.name.type.class.coffee
+    '3':
+      name: keyword.control.inheritance.coffee
+    '4':
+      name: entity.other.inherited-class.coffee
+  match: "(?<=\\s|^|\\[|\\()(class\\b)\\s+(@?[\\p{L}$_][\\w\\pL\\pN\\.$]*)?(?:\\s+(extends?|ext|implements?|impl)\\s+(@?[\\p{L}$_][\\w\\pL\\pN\\.$]*))?"
+  name: meta.class.coffee
+- match: "(?<!\\.)\\b(module|exports|__filename|__dirname|global|globalThis|process)(?!\\s*:)\\b"
+  name: support.variable.coffee
+- match: "(?i)\\b(infi?n?|infinity)\\b"
+  name: constant.language.infinity.coffee
+- match: "(?i)\\b(undef(?:ined)?)\\b"
+  name: constant.language.coffee
+- match: "(?i)\\b(NaN)\\b"
+  name: constant.language.nan.coffee
+- match: "::"
+  name: keyword.operator.prototype.coffee
+- include: "#operators"
+- include: "#method_calls"
+- include: "#function_calls"
+- include: "#numbers"
+- include: "#objects"
+- include: "#properties"
+- match: "(?<!\\$)\\b\\d+[\\p{L}$_]*"
+  name: invalid.illegal.identifier.coffee
+- match: ";"
+  name: punctuation.terminator.statement.coffee
+- match: ","
+  name: punctuation.separator.delimiter.coffee
+- begin: "{"
+  beginCaptures:
+    '0':
+      name: meta.brace.curly.coffee
+  end: "}"
+  endCaptures:
+    '0':
+      name: meta.brace.curly.coffee
+  patterns:
+  - include: "$self"
+- match: "\\s*+(\\#?)(\\$)([\\p{L}$_][\\w\\pL\\pN$_]*)"
+  captures:
+    '1':
+      name: keyword.operator.private.coffee
+    '2':
+      name: punctuation.definition.variable.coffee
+    '3':
+      name: variable.other.coffee
+- match: "\\b([\\p{Lu}][\\p{Lu}\\pN$_]*)\\b"
+  name: variable.other.coffee
+- begin: "\\["
+  beginCaptures:
+    '0':
+      name: punctuation.definition.array.begin.bracket.square.coffee
+  end: "\\]"
+  endCaptures:
+    '0':
+      name: punctuation.definition.array.end.bracket.square.coffee
+  patterns:
+  - match: "\\.{3}"
+    name: keyword.operator.slice.exclusive.coffee
+  - match: "\\.{2}"
+    name: keyword.operator.slice.inclusive.coffee
+  - match: "[<>]:"
+    name: keyword.operator.expression.of.coffee
+  - match: ":[<>]"
+    name: keyword.operator.expression.by.coffee
+  - match: "><|<>"
+    name: keyword.operator.expression.in.coffee
+  - match: "::"
+    name: keyword.operator.prototype.coffee
+  - match: "\\$"
+    name: keyword.other.coffee
+  - include: "$self"
+- begin: "\\("
+  beginCaptures:
+    '0':
+      name: meta.brace.round.coffee
+  end: "\\)"
+  endCaptures:
+    '0':
+      name: meta.brace.round.coffee
+  patterns:
+  - include: "$self"
+- include: "#instance_variable"
+- include: "#single_quoted_string"
+- include: "#double_quoted_string"
+- name: variable.other.constant.js.coffee
+  match: "([\\p{Lu}][\\p{Lu}\\pN$_]*)(?![\\w\\pL\\pN$_])"
+- name: variable.other.readwrite.js.coffee
+  match: "[\\p{L}$_][\\w\\pL\\pN$_]*"
+repository:
+  arguments:
+    patterns:
+    - begin: "\\("
+      beginCaptures:
+        '0':
+          name: punctuation.definition.arguments.begin.bracket.round.coffee
+      end: "\\)"
+      endCaptures:
+        '0':
+          name: punctuation.definition.arguments.end.bracket.round.coffee
+      name: meta.arguments.coffee
+      patterns:
+      - include: "$self"
+    - begin: (?=(@|@?[\w\pL\pN$_]+|[=-]>|\-\d|\[|{|"|'))
+      end: "(?=\\s*(?<![\\w\\pL\\pN$_])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by|instanceof|(?:namespac|interfac|packag|ra?is|wh(?:il|er)|siz|els)e|c(?:ontinue|lass|atch|ase)|(?:debugge|supe|xno|cto|[fx]o)r|(?:finall|tr)y|(?:defaul|s(?:t(?:ruc|a)|e)|repea|excep|expor|impor|awai|cons|p(?:ro|v)|mu)t|(?:retur|elu|ow)n|(?:typeo|eli)f|i(?:n(?:stof|fix)|mpl|[ft])|unless|switch|b(?:reak|y)|async|t(?:h(?:row|en)|ill|o)|unary|until|l(?:abel|oop|e(?:st|[nt]))|(?:guar|yiel|n?an|rea)d|t(?:ype|il)|g(?:oto|e[nt])|when|f(?:unc|rom)|(?:arg|pas|thi)s|with|skip|v(?:oid|ar)|fin|def|no[rt]|pub|ext|d(?:el|o)|as|in|at|o[fr])(?![\\w\\pL\\pN$_]))|(?=\\s*(}|\\]|\\)|#|$))"
+      name: meta.arguments.coffee
+      patterns:
+      - include: "$self"
+  double_quoted_string:
+    patterns:
+    - begin: "\""
+      beginCaptures:
+        '0':
+          name: punctuation.definition.string.begin.coffee
+      end: "\""
+      endCaptures:
+        '0':
+          name: punctuation.definition.string.end.coffee
+      name: string.quoted.double.coffee
+      patterns:
+      - captures:
+          '1':
+            name: punctuation.definition.escape.backslash.coffee
+        match: "(\\\\)(x[0-9A-Fa-f]{2}|[0-2][0-7]{0,2}|3[0-6][0-7]|37[0-7]?|[4-7][0-7]?|.)"
+        name: constant.character.escape.backslash.coffee
+      - include: "#interpolated_coffee"
+  function_calls:
+    patterns:
+    - match: "(@)?([\\w\\pL\\pN$_]+)(!)"
+      captures:
+        '1':
+          name: variable.other.readwrite.instance.coffee
+        '2':
+          patterns:
+          - include: "#function_names"
+        '3':
+          patterns:
+          - include: "#operators"
+    - begin: "(@)?([\\w\\pL\\pN$_]+)(?=\\()"
+      beginCaptures:
+        '1':
+          name: variable.other.readwrite.instance.coffee
+        '2':
+          patterns:
+          - include: "#function_names"
+      end: "(?<=\\))"
+      name: meta.function-call.coffee
+      patterns:
+      - include: "#arguments"
+    - begin: |-
+        (?x)
+        (@)?([\w\pL\pN$_]+)
+        \s*
+        (?=\s+(?!(?<![\w\pL\pN$_])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by|instanceof|(?:namespac|interfac|packag|ra?is|wh(?:il|er)|siz|els)e|c(?:ontinue|lass|atch|ase)|(?:debugge|supe|xno|cto|[fx]o)r|(?:finall|tr)y|(?:defaul|s(?:t(?:ruc|a)|e)|repea|excep|expor|impor|awai|cons|p(?:ro|v)|mu)t|(?:retur|elu|ow)n|(?:typeo|eli)f|i(?:n(?:stof|fix)|mpl|[ft])|unless|switch|b(?:reak|y)|async|t(?:h(?:row|en)|ill|o)|unary|until|l(?:abel|oop|e(?:st|[nt]))|(?:guar|yiel|n?an|rea)d|t(?:ype|il)|g(?:oto|e[nt])|when|f(?:unc|rom)|(?:arg|pas|thi)s|with|skip|v(?:oid|ar)|fin|def|no[rt]|pub|ext|d(?:el|o)|as|in|at|o[fr])(?![\w\pL\pN$_]))(?=(@?[\w\pL\pN$_]+|[=-]>|\-\d|\[|{|"|')))
+      beginCaptures:
+        '1':
+          name: variable.other.readwrite.instance.coffee
+        '2':
+          patterns:
+          - include: "#function_names"
+      end: "(?=\\s*(?<![\\w\\pL\\pN$_])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by|instanceof|(?:namespac|interfac|packag|ra?is|wh(?:il|er)|siz|els)e|c(?:ontinue|lass|atch|ase)|(?:debugge|supe|xno|cto|[fx]o)r|(?:finall|tr)y|(?:defaul|s(?:t(?:ruc|a)|e)|repea|excep|expor|impor|awai|cons|p(?:ro|v)|mu)t|(?:retur|elu|ow)n|(?:typeo|eli)f|i(?:n(?:stof|fix)|mpl|[ft])|unless|switch|b(?:reak|y)|async|t(?:h(?:row|en)|ill|o)|unary|until|l(?:abel|oop|e(?:st|[nt]))|(?:guar|yiel|n?an|rea)d|t(?:ype|il)|g(?:oto|e[nt])|when|f(?:unc|rom)|(?:arg|pas|thi)s|with|skip|v(?:oid|ar)|fin|def|no[rt]|pub|ext|d(?:el|o)|as|in|at|o[fr])(?![\\w\\pL\\pN$_]))|(?=\\s*(}|\\]|\\)|#|$))"
+      name: meta.function-call.coffee
+      patterns:
+      - include: "#arguments"
+  function_names:
+    patterns:
+    - match: "\\b(?<![\\.\\$])(index(?:es)?|keys?|values?|indices)(?!\\s*:)\\b"
+      name: keyword.other.coffee
+    - match: "\\b(?<![\\.\\$])(add|join|remove|select|insert|drop|group|sub|replace)(?!\\s*:)\\b"
+      name: keyword.operator.expression.sub.coffee
+    - match: "\\b(?<![\\.\\$])((?:a|de)sc(?:end|ending)?)(?!\\s*:)\\b"
+      name: keyword.control.then.coffee
+    - match: "\\b(?<![\\.\\$])(into|order(?:by)?)(?!\\s*:)\\b"
+      name: keyword.control.when.coffee
+    - name: support.type.primitive.coffee
+      match: "\\b(b(?:ig(?:decimal|float|int)|igdeci|oolean|ool|yte)|u(?:float(?:1(?:28|6)|64|32)|int(?:1(?:28|6)|64|32|8))|fraction|(?:c|i)?decimal|c(?:omplex|ha?r)|(?:c|i)?double|number|(?:ux?|x)?long|string|(?:symbo|(?:c|i)?db)l|(?:ushor|[ci]floa|shor|floa|in)t|fract?|(?:c|i)?deci|(?:c|i)?real|sbyte|comp|c?dec|idec|uint|num|s(?:ym|tr))\\b"
+    - name: support.type.builtin.coffee
+      match: "\\b((?:c(?:ollecti|s)|[bj]s)on|frozenmap|(?:(?:frozen|weak)?se|objec|dic)t|a(?:rr(?:ay)?list|rr(?:ay)?|uto|ny)|datetime|weakmap|(?:de)?queue|unknown|s(?:tylu|[ac]s)s|re(?:gexp|cord)|re(?:gex|c)|d(?:equ|at)e|t(?:uple|ime|oml)|never|coll?|styl|tupl?|(?:ht|ya|x)ml|list|obj|que|css|map)\\b"
+    - match: |-
+        (?x)
+        \b(isNaN|isFinite|eval|uneval|parseInt|parseFloat|decodeURI|
+        decodeURIComponent|encodeURI|encodeURIComponent|escape|unescape|
+        require|set(Interval|Timeout)|clear(Interval|Timeout))\b
+      name: support.function.coffee
+    - match: "[\\p{L}$_][\\w\\pL\\pN$_]*"
+      name: entity.name.function.coffee
+    - include: "$self"
+    - match: "\\d[^\\s\\t\\r\\n]*"
+      name: invalid.illegal.identifier.coffee
+  function_params:
+    patterns:
+    - begin: "\\("
+      beginCaptures:
+        '0':
+          name: punctuation.definition.parameters.begin.bracket.round.coffee
+      end: "\\)"
+      endCaptures:
+        '0':
+          name: punctuation.definition.parameters.end.bracket.round.coffee
+      name: meta.parameters.coffee
+      patterns:
+      - include: "$self"
+      - match: "([\\p{L}$_][\\w\\pL\\pN$_]*)(\\.\\.\\.)?"
+        captures:
+          '1':
+            name: variable.parameter.function.coffee
+          '2':
+            name: keyword.operator.splat.coffee
+      - match: "(@(?:[\\p{L}$_][\\w\\pL\\pN$_]*)?)(\\.\\.\\.)?"
+        captures:
+          '1':
+            name: variable.parameter.function.readwrite.instance.coffee
+          '2':
+            name: keyword.operator.splat.coffee
+  embedded_comment:
+    patterns:
+    - captures:
+        '1':
+          name: punctuation.definition.comment.coffee
+      match: "(?<!\\\\)(#).*$\\n?"
+      name: comment.line.number-sign.coffee
+  instance_variable:
+    patterns:
+    - match: "(@)([\\p{L}$_][\\w\\pL\\pN$_]*)?"
+      name: variable.other.readwrite.instance.coffee
+  interpolated_coffee:
+    patterns:
+    - begin: "\\#\\{"
+      captures:
+        '0':
+          name: punctuation.section.embedded.coffee
+      end: "\\}"
+      name: source.coffee.embedded.source
+      patterns:
+      - include: "$self"
+  method_calls:
+    patterns:
+    - match: "(?:(\\.)|(::))\\s*([\\w\\pL\\pN$_]+)\\s*(!)"
+      captures:
+        '1':
+          name: punctuation.separator.method.period.coffee
+        '2':
+          name: keyword.operator.prototype.coffee
+        '3':
+          patterns:
+          - include: "#method_names"
+        '4':
+          patterns:
+          - include: "#operators"
+    - begin: "(?:(\\.)|(::))\\s*([\\w\\pL\\pN$_]+)\\s*(?=\\()"
+      beginCaptures:
+        '1':
+          name: punctuation.separator.method.period.coffee
+        '2':
+          name: keyword.operator.prototype.coffee
+        '3':
+          patterns:
+          - include: "#method_names"
+      end: "(?<=\\))"
+      name: meta.method-call.coffee
+      patterns:
+      - include: "#arguments"
+    - begin: (?:(\.)|(::))\s*([\w\pL\pN$_]+)\s*(?=\s+(?!(?<![\w\pL\pN$_])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by|instanceof|(?:namespac|interfac|packag|ra?is|wh(?:il|er)|siz|els)e|c(?:ontinue|lass|atch|ase)|(?:debugge|supe|xno|cto|[fx]o)r|(?:finall|tr)y|(?:defaul|s(?:t(?:ruc|a)|e)|repea|excep|expor|impor|awai|cons|p(?:ro|v)|mu)t|(?:retur|elu|ow)n|(?:typeo|eli)f|i(?:n(?:stof|fix)|mpl|[ft])|unless|switch|b(?:reak|y)|async|t(?:h(?:row|en)|ill|o)|unary|until|l(?:abel|oop|e(?:st|[nt]))|(?:guar|yiel|n?an|rea)d|t(?:ype|il)|g(?:oto|e[nt])|when|f(?:unc|rom)|(?:arg|pas|thi)s|with|skip|v(?:oid|ar)|fin|def|no[rt]|pub|ext|d(?:el|o)|as|in|at|o[fr])(?![\w\pL\pN$_]))(?=(@|@?[\w\pL\pN$_]+|[=-]>|\-\d|\[|{|"|')))
+      beginCaptures:
+        '1':
+          name: punctuation.separator.method.period.coffee
+        '2':
+          name: keyword.operator.prototype.coffee
+        '3':
+          patterns:
+          - include: "#method_names"
+      end: "(?=\\s*(?<![\\w\\pL\\pN$_])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by|instanceof|(?:namespac|interfac|packag|ra?is|wh(?:il|er)|siz|els)e|c(?:ontinue|lass|atch|ase)|(?:debugge|supe|xno|cto|[fx]o)r|(?:finall|tr)y|(?:defaul|s(?:t(?:ruc|a)|e)|repea|excep|expor|impor|awai|cons|p(?:ro|v)|mu)t|(?:retur|elu|ow)n|(?:typeo|eli)f|i(?:n(?:stof|fix)|mpl|[ft])|unless|switch|b(?:reak|y)|async|t(?:h(?:row|en)|ill|o)|unary|until|l(?:abel|oop|e(?:st|[nt]))|(?:guar|yiel|n?an|rea)d|t(?:ype|il)|g(?:oto|e[nt])|when|f(?:unc|rom)|(?:arg|pas|thi)s|with|skip|v(?:oid|ar)|fin|def|no[rt]|pub|ext|d(?:el|o)|as|in|at|o[fr])(?![\\w\\pL\\pN$_]))|(?=\\s*(}|\\]|\\)|#|$))"
+      name: meta.method-call.coffee
+      patterns:
+      - include: "#arguments"
+  method_names:
+    patterns:
+    - match: "\\b(print|echo|put[sf]|debug|warn|info|log|error|time|timeEnd|assert)\\b"
+      name: support.function.console.coffee
+    - match: "\\b(sorted(?:Last)?IndexOf|(?:(?:sort(?:ed(?:(?:Last)?Index|Uniq))?|uniq)B|is(?:Empt|Arra)|groupB|ever)y|(?:intersection|pullAll|union|xor)(?:With|By)|sort(?:ed(?:(?:Last)?Index|Uniq))?|to(?:Locale)?String|difference(?:With|By)|(?:take(?:Right)?Whil|drop(?:Right)?Whil|toSourc|revers|exclud|s(?:huff|amp)l|uniqu|s(?:p?lic|om)|c(?:reat|lon)|non)e|(?:zipObjectDee|po)p|f(?:i(?:nd(?:Last)?Index|l(?:ter|l))|lat(?:tenDee|Ma)p|nFromIndex)|intersection|flattenDepth|lastIndexOf|(?:re(?:duceRigh|moveA|s)|withou|unshif|inser|shif|(?:lea|mo)s|firs)t|d(?:ifference|rop(?:Right)?)|i(?:n(?:GroupsOf|itial|dexOf)|sEqual)|c(?:o(?:pyWithin|nstruct|mpact|(?:nca|un)t)|hunk)|zip(?:Object)?|in(?:tersect|Groups)|take(?:Right)?|(?:fromPair|key)s|(?:un(?:zip|iq)|zip)With|(?:includ|valu)es|subtract|f(?:lat(?:ten)?|rom|ind)|pullAll|entries|(?:forEac|pus|nt)h|a(?:verage|(?:ppen|d)d|t)|re(?:mov|duc)e|pullAt|m(?:edia|i)n|object|un(?:zip|iq)|union|range|pull|last|tail|join|head|xor|sum|ma[px]|to|of)\\b"
+      name: support.function.method.array.coffee
+    - match: "\\b(c(?:o(?:mpareExchange|ntains)|l(?:one|amp))|(?:isLockFre|exchang|stor)e|intersect|toString|dateUnit|(?:toArra|notif)y|(?:isVali|loa)d|union|every|s(?:pan|ub)|wait|x?or|a[dn]d)\\b"
+      name: support.function.method.atomics.coffee
+    - match: "\\b(to(?:Locale)?String|valueOf|as(?:Ui|I)ntN)\\b"
+      name: support.function.method.bigint.coffee
+    - match: "\\b(toS(?:tring|ource)|valueOf)\\b"
+      name: support.function.method.boolean.coffee
+    - match: "\\b(f(?:latMapDe(?:pth|ep)|i(?:ndWhere|lter))|forEachRight|reduceRight|s(?:ampleSiz|huffl|om|iz)e|p(?:artition|luck)|invokeMap|eachRight|(?:findLas|rejec)t|includes|co(?:ntains|untBy)|f(?:latMap|ind)|forEach|(?:toArra|ever)y|(?:order|index|group|key)By|(?:sampl|invok)e|reduce|sortBy|where|each|m(?:in|a[px]))\\b"
+      name: support.function.method.collection.coffee
+    - match: "\\b([gs]et(?:Big(?:Ui|I)nt64|Float32|Float64|(?:Ui|I)nt(?:16|8)|(?:Ui|I)nt32))\\b"
+      name: support.function.method.dataview.coffee
+    - match: "\\b(to(?:(?:Locale)?Time|(?:Locale)?Date|Locale|UTC|ISO|GMT)?String|beginningOf(?:ISOWeek|Unit)|(?:set(?:(?:(?:UTC)?Millis|(?:UTC)?S)econd|(?:UTC)?Minute|(?:UTC)?Hour)|get(?:(?:(?:UTC)?Millis|(?:UTC)?S)econd|AllLocaleCode|(?:UTC)?Minute|(?:UTC)?Hour))s|(?:get(?:Timezone|UTC)Offse|isPas|forma|shor|rese)t|set(?:UTC)?FullYear|get(?:(?:UTC)?FullYear|(?:UTC)?Weekday|AllLocales|Option|(?:UTC)?Day|Year)|(?:unitsFromN|n)ow|endOf(?:ISOWeek|Unit)|(?:remove|set|get)Locale|(?:set(?:UTC)?M|get(?:UTC)?M)onth|daysInMonth|relativeTo|setWeekday|isLeapYear|unitsUntil|is(?:This|Next|Last)Unit|[gs]etISOWeek|(?:get(?:UTC)?Dat|set(?:UTC)?Dat|unitsSinc|is(?:Futu|Befo)r|toSourc|setTim|c(?:reat|lon)|rang|pars)e|isBetween|setOption|ad(?:d(?:Locale|Units)|vance)|relative|unitsAgo|get(?:Time)?|valueOf|is(?:Valid|UTC|o)|isAfter|setYear|set(?:UTC)?|toJSON|medium|rewind|isDay|long|full|UTC|is)\\b"
+      name: support.function.method.date.coffee
+    - match: "\\b((?:(?:symmetricDifference|d(?:ropRepeats|ifference)|memoize|starts|group|union|uniq|sort|ends|zip|use)Wi|composeWi|len(?:sPa|g)|pipeWi|bo)th|symmetricDifference|(?:forEachObjIndexe|mapObjIndexe|mathMo|unfol|sprea|xpro|hea)d|(?:merge(?:Deep)?WithKe|(?:splitEve|eve|nA)r|thunkif|reduceB|m(?:ultipl|inB|axB)|i(?:dentit|ndexB)|unappl|groupB|isEmpt|countB|bin(?:dKe|ar)|uniqB|sortB|pickB|unar|e(?:mpt|qB)|dela|laz)y|(?:(?:m(?:erge(?:Deep)?|apAccum)|partial|reduce)Righ|merge(?:Deep)?Lef|c(?:urryRigh|o(?:mplemen|nca))|(?:subtra|reje)c|withou|splitA|pro(?:je|du)c|repea|omi|jux|ini)t|m(?:erge(?:DeepWith|With)?|a(?:p(?:Accum)?|x)|in)|(?:takeLastWhil|d(?:rop(?:Last)?Whil|ebounc|ivid)|i(?:ntersper|fEl)s|(?:reduc|tak)eWhil|(?:transpo|otherwi|(?:tra|re)ver)s|(?:t(?:ransdu|oSour)|repla|sli|on)c|throttl|sequenc|c(?:onverg|lon)|updat|n(?:egat|on)|remov|evolv|rang|typ|mov)e|(?:restArgument|(?:p(?:rop|ath)Satisfi|tim)e|fromPair|overArg|include|contain|eq(?:Prop|ual)|propI)s|findLastIndex|(?:intersectio|(?:toPair|value)sI|partitio|(?:innerJ|j)oi|(?:me(?:di)?|sc)a|keysI|hasI|chai)n|d(?:rop(?:Repeats|Last)?|ifference)|(?:lastIndex|obj)Of|c(?:o(?:n(?:structN|d)|mpose[KP])|urryN|lamp)|dissocPath|(?:comparato|p(?:ropO|a(?:thO|i))|defe|xo)r|c(?:o(?:nstruct|mpose)|urry)|in(?:vertObj|dexOf|to)|(?:i(?:dentica|sNi)|ca(?:nce|l)|(?:unt|ta)i)l|(?:insert|merge|pick)All|(?:defaultT|modul)o|splitWhen|(?:lens|find)Index|a(?:ssocPath|p(?:p(?:ly(?:Spec|To)|end)|erture)|d(?:dIndex|just)|ndThen|nyPass|l(?:lPas|way)s|scend|fter|ry)|takeLast|findLast|uncurryN|toString|(?:lensPro|wra|fli)p|(?:tryC|m)atch|partial|(?:toPair|value)s|f(?:orEach|ind)|memoize|reduced|whereEq|bindAll|hasPath|(?:prep|desc)end|flatten|(?:to(?:Upp|Low)|invok|eith)er|re(?:duce|st)|i(?:n(?:[sv]ert|c)|s)|dissoc|p(?:rop(?:Eq|s)|ath(?:Eq|s))|n(?:thArg|ot)|zipObj|before|unless|filter|(?:unn|t)est|where|s(?:pli|or)t|union|a(?:ssoc|p(?:ply)?|nd|ny|ll|dd)|rearg|pluck|liftN|pipe[KP]|take|uniq|p(?:rop|ick|ath)|o(?:ver)?|l(?:ens|ast)|keys|lift|pipe|bind|when|view|t(?:rim|ap)|lock|zip|nth|has|s(?:um|et)|lte|gte|dec|lt|gt|o[fr]|__|[FT])\\b"
+      name: support.function.method.function.coffee
+    - match: "\\b(return|throw|next)\\b"
+      name: support.function.method.generator.coffee
+    - match: "\\b(stringify|value|parse|chain)\\b"
+      name: support.function.method.json.coffee
+    - match: "\\b(is(?:Ar(?:ray(?:LikeObject|Buffer)|guments)|PlainObject|(?:(?:Safe)?Integ|Numb)er|(?:ObjectLik|Nativ)e|Undefined|Function|WeakMap|Boolean|(?:(?:Weak)?Se|Elemen)t|String|RegExp|Symbol|Finite|Buffer|Error|N(?:(?:ul|i)l|aN)|Date|Map)|to(?:PlainObject|(?:(?:Safe)?Integ|Numb)er|String|Finite)|c(?:lone(?:Deep)?With|onformsTo|lone(?:Deep)?|astArray)|is(?:Array(?:Like)?|Object)|i(?:Setual|sMatch)With|(?:to|is)Length|i(?:Setual|sMatch)|is(?:Prox|Empt)y|toArray|[gl]te|[gl]t|eq)\\b"
+      name: support.function.method.lang.coffee
+    - match: "\\b(forEach|entries|values|delete|clear|(?:key|ha)s|[gs]et)\\b"
+      name: support.function.method.map.coffee
+    - match: "\\b(c(?:o(?:mbinationsWithRep|nj)|ompareNatural|o(?:mpositio|lum)n|(?:transpos|ompil|ub)e|atalan|l(?:z32|one)|eil)|(?:getMatrixDataTyp|(?:set(?:Sym)?Differ|kldiverg)enc|hasNumericValu|r(?:a(?:tionaliz|ng)|esiz)|isPositiv|isNegativ|d(?:erivativ|otDivid|i(?:stanc|vid))|transpos|evaluat|varianc|s(?:quee|etSi)z|isPrim|reshap|(?:lu?|u)solv|s(?:quar|iz)|trac)e|(?:right(?:Arith|Log)Shif|partitionSelec|setIntersec|s(?:et(?:Power|IsSub)|ub)se|s(?:etDistin|ubtra)c|c(?:o(?:mpareTex|nca|un)|br)|leftShif|intersec|(?:randomI|pri)n|equalTex|forma|sor|oc)t|(?:setMultiplicit|s(?:implif|umB)|identit|m(?:(?:ea|i)n|ax)B)y|ro(?:tat(?:ionMatrix|e)|w)|com(?:binations|pare)|(?:setCartes|med)ian|(?:permutation|bellNumber|unary(?:Min|Pl)u|zero|cros|one|eig)s|quantileSeq|(?:(?:(?:multinom|factor)i|deepEqu|unequ)a|imu)l|dotMultiply|(?:pickRando|nor)m|stirlingS2|smallerEq|i(?:s(?:N(?:umeric|aN)|Zero)|nv)|(?:(?:isInteg|pars)e|filte|floo|xo)r|n(?:thRoots|ot)|l(?:argerEq|og(?:1[0p]|2)|up|cm)|(?:setUnio|flatte|sig|kro)n|multiply|nthRoot|smaller|numeric|f(?:orEach|ix)|r(?:andom|e)|l(?:arger|og)|(?:typeO|er)f|d(?:otPow|iff|et)|bi(?:t(?:(?:Xo|O)r|Not)|n)|(?:f?roun|bitAn|xgc|pro|gc)d|e(?:qual|xpm?)|s(?:qrtm|td|lu)|trunc|gamma|expm1|hypot|a(?:tan[2h]|pply|s(?:in|ec)h|c(?:sc|o[st])h|tan|s(?:in|ec)|c(?:sc|o[st])|rg|[dn]d|bs)|sqrt|m(?:(?:ea|i)n|od|ax)|m(?:ode|a[dp])|help|diag|(?:s(?:in|ec)|co[st]|tan|csc)h|sum|dot|s(?:in|ec)|co[st]|tan|csc|hex|pow|im|to|qr|or)\\b"
+      name: support.function.method.math.coffee
+    - match: "\\b(d(?:ateUnit(?:FromNow|Before|Ago)|uration|ownto)|to(?:Locale)?String|toExponential|(?:(?:is(?:Safe)?Integ|toNumb)e|dateUnitAfte|floo|ch)r|is(?:MultipleOf|Odd|NaN)|toPrecision|parseFloat|(?:ordinaliz|toSourc|i(?:sFinit|nRang)|rang)e|dateUnit|parseInt|(?:toFixe|roun)d|valueOf|random|m(?:etric|ath)|format|isEven|c(?:(?:lam|a)p|eil)|times|bytes|upto|abbr|pad|log|hex)\\b"
+      name: support.function.method.number.coffee
+    - match: "\\b(get(?:OwnPropertyDescriptors|PrototypeOf)|get(?:OwnPropertyDescriptor)?|(?:getOwnPropertySymbol|(?:getOwnPropertyNam|fromEntri|mapValu)e|p(?:reventExtension|air)|definePropertie|isArgument)s|(?:propertyIsEnumerabl|i(?:sExtensibl|nvok)|toSourc|isFinit|exclud|re(?:mov|duc)|freez|c(?:reat|lon)|som|siz|non)e|__(?:lookup[GS]|define[GS])etter__|f(?:romQueryString|ilter)|(?:set|is)PrototypeOf|toLocaleString|(?:hasOwnPropert|i(?:sTypedArra|nvertB)|find(?:Last)?Ke|isEmpt|(?:pick|omit)B)y|def(?:ineProperty|aultsDeep)|toQueryString|(?:is(?:ArrayBuff|Numb)|match)er|a(?:ssign(?:In)?With|verage|llKeys|ddAll|t)|is(?:Undefined|Dat(?:aView|e)|Se(?:aled|t)|NaN|Map)|(?:function|toPair|key)sIn|(?:for(?:Ow|I)nRigh|(?:mapObj|sel|rej)ec|i(?:s(?:WeakSe|Objec)|ntersec)|subtrac|resul|leas|unse|mos)t|(?:property|value)Of|(?:is(?:F(?:unctio|roze)|Boolea)|m(?:edia|i)|hasI)n|(?:extend|merge|set)With|updateWith|(?:function|toPair|key)s|(?:transfor|su)m|e(?:xtendOwn|ntriesIn|very)|(?:is(?:WeakMa|RegEx)|ta)p|isElement|property|defaults|a(?:ssign(?:In)?|dd)|(?:to|is)String|valuesIn|(?:is(?:Symbo|Equa|Nul)|sea)l|mergeAll|i(?:s(?:Array|Type)?|nvert)|e(?:ntries|xtend)|isError|(?:isMatc|forEac|toPat)h|mapKeys|f(?:or(?:Ow|I)n|ind)|values|update|m(?:erge|ap)|count|pick|omit|set|has|max)\\b"
+      name: support.function.method.object.coffee
+    - match: "\\b(a(?:ll(?:Settled)?|ny)|r(?:e(?:solve|ject)|ace)|finally|catch|then)\\b"
+      name: support.function.method.promise.coffee
+    - match: "\\b(get(?:OwnPropertyDescriptor|PrototypeOf)|(?:preventExtension|ownKey)s|setPrototypeOf|de(?:let|fin)eProperty|isExtensible|(?:un)?register|construct|apply|[gs]et|has)\\b"
+      name: support.function.method.proxy.coffee
+    - match: "\\b((?:google_analytic|coordinate)s|(?:c(?:urrency_pai|haracte|olo)|(?:integ|gend)e|(?:twi|le)tte|hou)r|(?:millisecon|w(?:eighte|or)|secon|tl)d|a(?:pple_token|n(?:droid_id|imal)|(?:reacod|ltitud|g)e|ddress|vatar|mpm)|(?:professio|(?:doma|mix)i|bb_pi|coi|ss)n|(?:hammertim|c(?:apitaliz|c_typ)|l(?:ong|at)itud|timezon|s(?:yllab|huff)l|(?:sente|provi)nc|postcod|p(?:ick|h)on|uniqu|local|(?:minu|sta)t|prim|nam|d(?:ic|at))e|wp8_anid2|t(?:imestamp|v)|(?:paragrap|geohas)h|(?:exp_)?month|c(?:urrency|c)|f(?:loating|irst)|birthday|(?:(?:exp_)?ye|doll)ar|(?:wp7_an|gu|fb)id|(?:hashta|rp)g|(?:(?:picks|stre)e|klou|las)t|(?:c(?:o(?:untr|mpan)|it)|fals)y|weekday|natural|suffix|p(?:refix|ad)|string|hidden|(?:posta|emai|boo|ur)l|normal|radio|depth|pick|hash|ipv6|euro|exp|zip|set|cp?f|ip|n)\\b"
+      name: support.function.method.random.coffee
+    - match: "\\b((?:remove|[gs]et)Flags|t(?:oString|est)|(?:toSourc|escap)e|addFlags|compile|exec)\\b"
+      name: support.function.method.regexp.coffee
+    - match: "\\b(prototype|valueOf|reverse|t(?:oJSON|hru|ap)|(?:commi|plan|nex|a)t|value|chain)\\b"
+      name: support.function.method.seq.coffee
+    - match: "\\b(forEach|entries|values|delete|clear|has|add)\\b"
+      name: support.function.method.set.coffee
+    - match: "\\b((?:toLocaleUpper|toLocaleLower|to(?:Upp|Low)er|is(?:Upp|Low)er|start|upper|lower|s(?:nake|wap)|kebab)Case|(?:r(?:everseGraphem|ang)|(?:localeCompa|undersco)r|fromCharCod|(?:parameter|decapital|singular|dasher|(?:plur|norm)al|human|fonts)iz|t(?:emplat|oSourc)|s(?:trik|plic|lic)|prun)e|c(?:o(?:(?:unt(?:Substring|Grapheme|Word)|de(?:Point)?)s|(?:dePointA|mpac|nca)t)|har(?:(?:Code)?At|s)|ountWhere|a(?:pitaliz|mel(?:Cas|iz))e)|(?:tr(?:uncateOnWor|imEn)|padEn|fixe)d|(?:f(?:romCodePoin|irs)|i(?:s(?:Alpha)?Digi|nser)|(?:upp|low)erFirs|graphemeA|trim(?:Righ|Lef)|(?:trim|pad)Star|hasScrip|pad(?:Righ|Lef)|isScrip|parseIn|(?:repe|form)a|shif)t|unescapeHTML|e(?:scape(?:RegExp|HTML|URL)|ndsWith)|encodeBase64|decodeBase64|(?:unescapeHtm|(?:re(?:plac|mov)eA|matchA|sma)l|escapeHtm)l|lastIndexOf|unescapeURL|startsWith|(?:(?:remove|strip)Tag|(?:match|lin)e|italic)s|a(?:dd(?:Acronym|Plural|Human)|nchor|t)|i(?:s(?:Numeric|Empty)|ndexOf)|graphemes|title(?:Cas|iz)e|(?:subs|toS|isS)tring|fontcolor|(?:unescap|valu)e|t(?:r(?:uncate)?|o(?:Upper|Lower)?)|katakana|h(?:iragana|ankaku)|wordWrap|includes|latinise|(?:toNumbe|debur)r|stripBom|re(?:vers|plac|mov)e|isAlpha|s(?:pac|lug)ify|(?:v(?:alueO|print)|sprint)f|zenkaku|(?:forEa|sear)ch|isBlank|sub(?:str)?|escape|match|count|words|s(?:plit|up)|b(?:link|old|ig)|chain|trim|last|from|link|thru|pad|raw)\\b"
+      name: support.function.method.string.coffee
+    - match: "\\b(toS(?:tring|ource)|valueOf|(?:keyF|f)or)\\b"
+      name: support.function.method.symbol.coffee
+    - match: "\\b(to(?:Locale)?String|lastIndexOf|(?:reduceRigh|s(?:or|e)|a)t|copyWithin|f(?:i(?:ndIndex|l(?:ter|l))|orEach|rom)|subarray|(?:includ|valu)es|reverse|indexOf|e(?:ntries|very)|reduce|s(?:lic|om)e|find|keys|join|map|of)\\b"
+      name: support.function.method.typedarray.coffee
+    - match: "\\b(matchesProperty|(?:r(?:unInContex|esul)|stubObjec|noConflic|rangeRigh|flowRigh|constan)t|stubString|propertyOf|(?:stubArra|overEver)y|(?:stub(?:Fals|Tru)|templat|overSom|iterate)e|defaultTo|property|uniqueId|m(?:ethodOf|ixin)|identity|(?:un)?escape|con(?:forms|d)|m(?:atches|ethod)|bindAll|attempt|toPath|random|n(?:thArg|o(?:op|w))|range|times|over|flow)\\b"
+      name: support.function.method.util.coffee
+    - match: "\\b(instantiate(?:Streaming)?|compile(?:Streaming)?|validate)\\b"
+      name: support.function.method.webassembly.coffee
+    - match: |-
+        (?x)
+        \bon(Rowsinserted|Rowsdelete|Rowenter|Rowexit|Resize|Resizestart|Resizeend|Reset|
+        Readystatechange|Mouseout|Mouseover|Mousedown|Mouseup|Mousemove|
+        Before(cut|deactivate|unload|update|paste|print|editfocus|activate)|
+        Blur|Scrolltop|Submit|Select|Selectstart|Selectionchange|Hover|Help|
+        Change|Contextmenu|Controlselect|Cut|Cellchange|Clock|Close|Deactivate|
+        Datasetchanged|Datasetcomplete|Dataavailable|Drop|Drag|Dragstart|Dragover|
+        Dragdrop|Dragenter|Dragend|Dragleave|Dblclick|Unload|Paste|Propertychange|Error|
+        Errorupdate|Keydown|Keyup|Keypress|Focus|Load|Activate|Afterupdate|Afterprint|Abort)\b
+      name: support.function.event-handler.coffee
+    - match: |-
+        (?x)
+        \b(shift|showModelessDialog|showModalDialog|showHelp|scroll|scrollX|scrollByPages|
+        scrollByLines|scrollY|scrollTo|stop|strike|sizeToContent|sidebar|signText|sort|
+        sup|sub|substr|substring|splice|split|send|set(Milliseconds|Seconds|Minutes|Hours|
+        Month|Year|FullYear|Date|UTC(Milliseconds|Seconds|Minutes|Hours|Month|FullYear|Date)|
+        Time|Hotkeys|Cursor|ZOptions|Active|Resizable|RequestHeader)|search|slice|
+        savePreferences|small|home|handleEvent|navigate|char|charCodeAt|charAt|concat|
+        contextual|confirm|compile|clear|captureEvents|call|createStyleSheet|createPopup|
+        createEventObject|to(GMTString|UTCString|String|Source|UpperCase|LowerCase|LocaleString)|
+        test|taint|taintEnabled|indexOf|italics|disableExternalCapture|dump|detachEvent|unshift|
+        untaint|unwatch|updateCommands|join|javaEnabled|pop|push|plugins.refresh|paddings|parse|
+        print|prompt|preference|enableExternalCapture|exec|execScript|valueOf|UTC|find|file|
+        fileModifiedDate|fileSize|fileCreatedDate|fileUpdatedDate|fixed|fontsize|fontcolor|
+        forward|fromCharCode|watch|link|load|lastIndexOf|anchor|attachEvent|atob|apply|alert|
+        abort|routeEvents|resize|resizeBy|resizeTo|recalc|returnValue|replace|reverse|reload|
+        releaseCapture|releaseEvents|go|get(Milliseconds|Seconds|Minutes|Hours|Month|Day|Year|FullYear|
+        Time|Date|TimezoneOffset|UTC(Milliseconds|Seconds|Minutes|Hours|Day|Month|FullYear|Date)|
+        Attention|Selection|ResponseHeader|AllResponseHeaders)|moveBy|moveBelow|moveTo|
+        moveToAbsolute|moveAbove|mergeAttributes|match|margins|btoa|big|bold|borderWidths|blink|back)\b
+      name: support.function.coffee
+    - match: |-
+        (?x)
+        \b(acceptNode|add|addEventListener|addTextTrack|adoptNode|after|animate|append|
+        appendChild|appendData|before|blur|canPlayType|captureStream|
+        caretPositionFromPoint|caretRangeFromPoint|checkValidity|clear|click|
+        cloneContents|cloneNode|cloneRange|close|closest|collapse|
+        compareBoundaryPoints|compareDocumentPosition|comparePoint|contains|
+        convertPointFromNode|convertQuadFromNode|convertRectFromNode|createAttribute|
+        createAttributeNS|createCaption|createCDATASection|createComment|
+        createContextualFragment|createDocument|createDocumentFragment|
+        createDocumentType|createElement|createElementNS|createEntityReference|
+        createEvent|createExpression|createHTMLDocument|createNodeIterator|
+        createNSResolver|createProcessingInstruction|createRange|createShadowRoot|
+        createTBody|createTextNode|createTFoot|createTHead|createTreeWalker|delete|
+        deleteCaption|deleteCell|deleteContents|deleteData|deleteRow|deleteTFoot|
+        deleteTHead|detach|disconnect|dispatchEvent|elementFromPoint|elementsFromPoint|
+        enableStyleSheetsForSet|entries|evaluate|execCommand|exitFullscreen|
+        exitPointerLock|expand|extractContents|fastSeek|firstChild|focus|forEach|get|
+        getAll|getAnimations|getAttribute|getAttributeNames|getAttributeNode|
+        getAttributeNodeNS|getAttributeNS|getBoundingClientRect|getBoxQuads|
+        getClientRects|getContext|getDestinationInsertionPoints|getElementById|
+        getElementsByClassName|getElementsByName|getElementsByTagName|
+        getElementsByTagNameNS|getItem|getNamedItem|getSelection|getStartDate|
+        getVideoPlaybackQuality|has|hasAttribute|hasAttributeNS|hasAttributes|
+        hasChildNodes|hasFeature|hasFocus|importNode|initEvent|insertAdjacentElement|
+        insertAdjacentHTML|insertAdjacentText|insertBefore|insertCell|insertData|
+        insertNode|insertRow|intersectsNode|isDefaultNamespace|isEqualNode|
+        isPointInRange|isSameNode|item|key|keys|lastChild|load|lookupNamespaceURI|
+        lookupPrefix|matches|move|moveAttribute|moveAttributeNode|moveChild|
+        moveNamedItem|namedItem|nextNode|nextSibling|normalize|observe|open|
+        parentNode|pause|play|postMessage|prepend|preventDefault|previousNode|
+        previousSibling|probablySupportsContext|queryCommandEnabled|
+        queryCommandIndeterm|queryCommandState|queryCommandSupported|queryCommandValue|
+        querySelector|querySelectorAll|registerContentHandler|registerElement|
+        registerProtocolHandler|releaseCapture|releaseEvents|remove|removeAttribute|
+        removeAttributeNode|removeAttributeNS|removeChild|removeEventListener|
+        removeItem|replace|replaceChild|replaceData|replaceWith|reportValidity|
+        requestFullscreen|requestPointerLock|reset|scroll|scrollBy|scrollIntoView|
+        scrollTo|seekToNextFrame|select|selectNode|selectNodeContents|set|setAttribute|
+        setAttributeNode|setAttributeNodeNS|setAttributeNS|setCapture|
+        setCustomValidity|setEnd|setEndAfter|setEndBefore|setItem|setNamedItem|
+        setRangeText|setSelectionRange|setSinkId|setStart|setStartAfter|setStartBefore|
+        slice|splitText|stepDown|stepUp|stopImmediatePropagation|stopPropagation|
+        submit|substringData|supports|surroundContents|takeRecords|terminate|toBlob|
+        toDataURL|toggle|toString|values|write|writeln)\b
+      name: support.function.dom.coffee
+    - match: "[\\p{L}$_][\\w\\pL\\pN$_]*"
+      name: entity.name.function.coffee
+    - match: "\\d[^\\s\\t\\r\\n]*"
+      name: invalid.illegal.identifier.coffee
+      patterns:
+      - include: "$self"
+  numbers:
+    patterns:
+    - name: constant.numeric.hex.coffee
+      match: "\\b(?<!\\$)0(?:x|X)[0-9a-fA-F][0-9a-fA-F_]*([a-z\\pL]+)?\\b(?!\\$)"
+      captures:
+        '1':
+          name: storage.type.numeric.bigint.coffee
+    - name: constant.numeric.binary.coffee
+      match: "\\b(?<!\\$)0(?:b|B)[01][01_]*([a-z\\pL]+)?\\b(?!\\$)"
+      captures:
+        '1':
+          name: storage.type.numeric.bigint.coffee
+    - name: constant.numeric.octal.coffee
+      match: "\\b(?<!\\$)0(?:o|O)?[0-7][0-7_]*([a-z\\pL]+)?\\b(?!\\$)"
+      captures:
+        '1':
+          name: storage.type.numeric.bigint.coffee
+    - match: |-
+        (?x)
+        (?<!\$)(?:
+          (?:\b[\d_]+(\.)[\d_]+[eE][+-]?[\d_]+\b)| # 1.1E+3
+          (?:\b[\d_]+(\.)[eE][+-]?[\d_]+\b)|       # 1.E+3
+          (?:\B(\.)[\d_]+[eE][+-]?[\d_]+\b)|       # .1E+3
+          (?:\b[\d_]+[eE][+-]?[\d_]+\b)|            # 1E+3
+          (?:\b[\d_]+(\.)[\d_]+\b)|                # 1.1
+          (?:\b[\d_]+(?=\.{2,3}))|                  # 1 followed by a slice
+          (?:\b[\d_]+(\.)\B)|                      # 1.
+          (?:\B(\.)[\d_]+\b)|                      # .1
+          (?:\b[\d_]+\b(?!\.))                     # 1
+        )(?!\$)
+      captures:
+        '0':
+          name: constant.numeric.decimal.coffee
+        '1':
+          name: punctuation.separator.decimal.period.coffee
+        '2':
+          name: punctuation.separator.decimal.period.coffee
+        '3':
+          name: punctuation.separator.decimal.period.coffee
+        '4':
+          name: punctuation.separator.decimal.period.coffee
+        '5':
+          name: punctuation.separator.decimal.period.coffee
+        '6':
+          name: punctuation.separator.decimal.period.coffee
+    - name: constant.numeric.decimal.coffee
+      match: "\\b(?<!\\$)\\d[\\d_]*(?:e[+-]\\d+)?([a-z\\pL]+)?\\b(?!\\$)"
+      captures:
+        '1':
+          name: storage.type.numeric.bigint.coffee
+  objects:
+    patterns:
+    - match: "[\\p{Lu}][\\p{Lu}\\pN$_]*(?=\\s*\\??(\\.\\s*[\\p{Lu}][\\p{Lu}\\pN$_]*|::))"
+      name: constant.other.object.coffee
+    - match: "[\\p{L}$_][\\w\\pL\\pN$_]*(?=\\s*\\??(\\.\\s*[\\p{L}$_][\\w\\pL\\pN$_]*|::))"
+      name: variable.other.object.coffee
+  properties:
+    patterns:
+    - match: |-
+        (?x) (?:(\.)|(\?\.(?!\s*[[:digit:]]))) \s* (?:
+          (ATTRIBUTE_NODE|CDATA_SECTION_NODE|COMMENT_NODE|DOCUMENT_FRAGMENT_NODE|DOCUMENT_NODE|DOCUMENT_TYPE_NODE
+          |DOMSTRING_SIZE_ERR|ELEMENT_NODE|ENTITY_NODE|ENTITY_REFERENCE_NODE|HIERARCHY_REQUEST_ERR|INDEX_SIZE_ERR
+          |INUSE_ATTRIBUTE_ERR|INVALID_CHARACTER_ERR|NO_DATA_ALLOWED_ERR|NO_MODIFICATION_ALLOWED_ERR|NOT_FOUND_ERR
+          |NOT_SUPPORTED_ERR|NOTATION_NODE|PROCESSING_INSTRUCTION_NODE|TEXT_NODE|WRONG_DOCUMENT_ERR)
+          |
+          (_content|[xyz]|abbr|above|accept|acceptCharset|accessKey|action|align|[av]Link(?:color)?|all|alt|anchors|appCodeName
+          |appCore|applets|appMinorVersion|appName|appVersion|archive|areas|arguments|attributes|availHeight|availLeft|availTop
+          |availWidth|axis|background|backgroundColor|backgroundImage|below|bgColor|body|border|borderBottomWidth|borderColor
+          |borderLeftWidth|borderRightWidth|borderStyle|borderTopWidth|borderWidth|bottom|bufferDepth|callee|caller|caption
+          |cellPadding|cells|cellSpacing|ch|characterSet|charset|checked|childNodes|chOff|cite|classes|className|clear
+          |clientInformation|clip|clipBoardData|closed|code|codeBase|codeType|color|colorDepth|cols|colSpan|compact|complete
+          |components|content|controllers|cookie|cookieEnabled|cords|cpuClass|crypto|current|data|dateTime|declare|defaultCharset
+          |defaultChecked|defaultSelected|defaultStatus|defaultValue|defaultView|defer|description|dialogArguments|dialogHeight
+          |dialogLeft|dialogTop|dialogWidth|dir|directories|disabled|display|docmain|doctype|documentElement|elements|embeds
+          |enabledPlugin|encoding|enctype|entities|event|expando|external|face|fgColor|filename|firstChild|fontFamily|fontSize
+          |fontWeight|form|formName|forms|frame|frameBorder|frameElement|frames|hasFocus|hash|headers|height|history|host
+          |hostname|href|hreflang|hspace|htmlFor|httpEquiv|id|ids|ignoreCase|images|implementation|index|innerHeight|innerWidth
+          |input|isMap|label|lang|language|lastChild|lastIndex|lastMatch|lastModified|lastParen|layer[sXY]|left|leftContext
+          |lineHeight|link|linkColor|links|listStyleType|localName|location|locationbar|longDesc|lowsrc|lowSrc|marginBottom
+          |marginHeight|marginLeft|marginRight|marginTop|marginWidth|maxLength|media|menubar|method|mimeTypes|multiline|multiple
+          |name|nameProp|namespaces|namespaceURI|next|nextSibling|nodeName|nodeType|nodeValue|noHref|noResize|noShade|notationName
+          |notations|noWrap|object|offscreenBuffering|onLine|onreadystatechange|opener|opsProfile|options|oscpu|outerHeight
+          |outerWidth|ownerDocument|paddingBottom|paddingLeft|paddingRight|paddingTop|page[XY]|page[XY]Offset|parent|parentLayer
+          |parentNode|parentWindow|pathname|personalbar|pixelDepth|pkcs11|platform|plugins|port|prefix|previous|previousDibling
+          |product|productSub|profile|profileend|prompt|prompter|protocol|publicId|readOnly|readyState|referrer|rel|responseText
+          |responseXML|rev|right|rightContext|rowIndex|rows|rowSpan|rules|scheme|scope|screen[XY]|screenLeft|screenTop|scripts
+          |scrollbars|scrolling|sectionRowIndex|security|securityPolicy|selected|selectedIndex|selection|self|shape|siblingAbove
+          |siblingBelow|size|source|specified|standby|start|status|statusbar|statusText|style|styleSheets|suffixes|summary
+          |systemId|systemLanguage|tagName|tags|target|tBodies|text|textAlign|textDecoration|textIndent|textTransform|tFoot|tHead
+          |title|toolbar|top|type|undefined|uniqueID|updateInterval|URL|URLUnencoded|useMap|userAgent|userLanguage|userProfile
+          |vAlign|value|valueType|vendor|vendorSub|version|visibility|vspace|whiteSpace|width|X[MS]LDocument|zIndex))\b(?!\$|\s*(<\s*([_$[:alpha:]]|(\{([^\{\}]|(\{([^\{\}]|\{[^\{\}]*\})*\}))*\})|(\(([^\(\)]|(\(([^\(\)]|\([^\(\)]*\))*\)))*\))|(\[([^\[\]]|(\[([^\[\]]|\[[^\[\]]*\])*\]))*\]))([^=<>]|=[^<]|\<\s*([_$[:alpha:]]|(\{([^\{\}]|(\{([^\{\}]|\{[^\{\}]*\})*\}))*\})|(\(([^\(\)]|(\(([^\(\)]|\([^\(\)]*\))*\)))*\))|(\[([^\[\]]|(\[([^\[\]]|\[[^\[\]]*\])*\]))*\]))([^=<>]|=[^<]|\<\s*([_$[:alpha:]]|(\{([^\{\}]|(\{([^\{\}]|\{[^\{\}]*\})*\}))*\})|(\(([^\(\)]|(\(([^\(\)]|\([^\(\)]*\))*\)))*\))|(\[([^\[\]]|(\[([^\[\]]|\[[^\[\]]*\])*\]))*\]))([^=<>]|=[^<])*\>)*\>)*>\s*)?\()
+      captures:
+        '1':
+          name: punctuation.accessor.coffee
+        '2':
+          name: punctuation.accessor.optional.coffee
+        '3':
+          name: support.constant.dom.js.coffee
+        '4':
+          name: support.variable.property.dom.js.coffee
+    - match: |-
+        (?x) (?:(\.)|(\?\.(?!\s*[[:digit:]]))) \s* (?:
+          (?:(constructor|length|prototype|__proto__)\b(?!\$|\s*(<\s*([_$[:alpha:]]|(\{([^\{\}]|(\{[^\{\}]*\}))*\})|(\(([^\(\)]|(\([^\(\)]*\)))*\))|(\[([^\[\]]|(\[[^\[\]]*\]))*\]))([^=<>]|=[^<]|\<\s*([_$[:alpha:]]|(\{([^\{\}]|(\{[^\{\}]*\}))*\})|(\(([^\(\)]|(\([^\(\)]*\)))*\))|(\[([^\[\]]|(\[[^\[\]]*\]))*\]))([^=<>]|=[^<]|\<\s*([_$[:alpha:]]|(\{([^\{\}]|(\{[^\{\}]*\}))*\})|(\(([^\(\)]|(\([^\(\)]*\)))*\))|(\[([^\[\]]|(\[[^\[\]]*\]))*\]))([^=<>]|=[^<])*\>)*\>)*>\s*)?\())
+          |
+          (?:(EPSILON|MAX_SAFE_INTEGER|MAX_VALUE|MIN_SAFE_INTEGER|MIN_VALUE|NEGATIVE_INFINITY|POSITIVE_INFINITY)\b(?!\$)))
+      captures:
+        '1':
+          name: punctuation.accessor.coffee
+        '2':
+          name: punctuation.accessor.optional.coffee
+        '3':
+          name: support.variable.property.js.coffee
+        '4':
+          name: support.constant.js.coffee
+    - match: "(?<![\\p{L}$_][\\w\\pL\\pN$_]*)(?:(?<=\\.\\.\\.)|(?<!\\.))(?:(exports)|(module)(?:(?:(\\.)|(\\?\\.(?!\\s*[[:digit:]])))(exports|id|filename|loaded|parent|children))?)\\b(?!\\$)"
+      captures:
+        '1':
+          name: support.type.object.module.coffee
+        '2':
+          name: support.type.object.module.coffee
+        '3':
+          name: punctuation.accessor.coffee
+        '4':
+          name: punctuation.accessor.optional.coffee
+        '5':
+          name: support.type.object.module.coffee
+    - match: "(?:(\\.)|(::)|(\\?\\.))\\s*([\\p{Lu}][\\p{Lu}\\pN$_]*\\b\\$*)"
+      captures:
+        '1':
+          name: punctuation.accessor.coffee
+        '2':
+          name: keyword.operator.prototype.coffee
+        '3':
+          name: punctuation.accessor.optional.coffee
+        '4':
+          name: meta.var.expr.coffee
+    - match: "(?:(\\.)|(::)|(\\?\\.))\\s*(\\$*[\\p{L}$_][\\w\\pL\\pN$_]*)"
+      captures:
+        '1':
+          name: punctuation.accessor.coffee
+        '2':
+          name: keyword.operator.prototype.coffee
+        '3':
+          name: punctuation.accessor.optional.coffee
+        '4':
+          name: variable.other.property.coffee
+    - match: "(?:(\\.)|(::)|(\\?\\.))\\s*(\\d[\\w\\pL\\pN$_]*)"
+      captures:
+        '1':
+          name: punctuation.accessor.coffee
+        '2':
+          name: keyword.operator.prototype.coffee
+        '3':
+          name: punctuation.accessor.optional.coffee
+        '4':
+          name: invalid.illegal.identifier.coffee
+          patterns:
+          - include: "$self"
+  operators:
+    patterns:
+    - match: "(?:([\\w\\pL\\pN$_][\\p{L}$_]*)?\\s+|(?<![\\p{L}$_]))((?:l?(n?and|x?n?or|not|iff)|neg|[lg]te?|eq|ne|sim|diff?is(?:nt)?)=)"
+      captures:
+        '1':
+          name: variable.assignment.coffee
+        '2':
+          name: keyword.operator.assignment.compound.coffee
+    - match: "([\\w\\pL\\pN$_][\\p{L}$_]*)?\\s*(%%?=|\\+=|-=|\\*\\*?=|~\\/=|\\/\\/?=|&&?=|\\|\\|?=|\\?=|(?<!\\()/=)"
+      captures:
+        '1':
+          name: variable.assignment.coffee
+        '2':
+          name: keyword.operator.assignment.compound.coffee
+    - match: "([\\w\\pL\\pN$_][\\p{L}$_]*)?\\s*(&=|\\^=|<<=|>>=|>>>=|\\|=|[<>]\\?=|<\\/=|\\/>=)"
+      captures:
+        '1':
+          name: variable.assignment.coffee
+        '2':
+          name: keyword.operator.assignment.compound.bitwise.coffee
+    - match: "([\\w\\pL\\pN$_][\\p{L}$_]*)?\\s*(\\=\\~)"
+      captures:
+        '1':
+          name: variable.other.readwrite.js.coffee
+        '2':
+          name: keyword.operator.comparison.coffee
+    - match: "~=|!~=?|\\s*=~|!~|[!=]==?"
+      name: keyword.operator.comparison.coffee
+    - match: "<<<?|>>>?"
+      name: keyword.operator.bitwise.shift.coffee
+    - match: "<\\|>|::"
+      name: keyword.operator.prototype.coffee
+    - match: "<\\|+|\\|+>"
+      name: keyword.operator.pipe.coffee
+    - match: "[<>]\\?|<=|>=|<>|<|>|<=>|<\\/|\\/>"
+      name: keyword.operator.relational.coffee
+    - match: "(?:~~?|==?|--)>|<(?:~~?|==|--?)"
+      name: storage.type.function.arrow.coffee
+    - match: "&&|!|\\|\\||\\^\\^"
+      name: keyword.operator.logical.coffee
+    - match: "--"
+      name: keyword.operator.decrement.coffee
+    - match: "\\+\\+"
+      name: keyword.operator.increment.coffee
+    - match: "\\.\\.\\."
+      name: keyword.operator.splat.coffee
+    - match: "[+\\-*%]|~?\\/"
+      name: keyword.operator.arithmetic.coffee
+    - match: "&|\\||\\^|~"
+      name: keyword.operator.bitwise.coffee
+    - match: "(?m)\\\\n"
+      name: keyword.operator.ternary.coffee
+    - match: "(@)?([\\p{L}$_][\\w\\pL\\pN$_]*)?(:)(.+)(:\\.=(?!:))(?![>=])"
+      captures:
+        '1':
+          name: variable.other.readwrite.instance.coffee
+        '2':
+          name: variable.other.coffee
+        '3':
+          name: keyword.operator.assignment.coffee
+        '4':
+          patterns:
+          - include: "#type_annotations"
+        '5':
+          name: keyword.operator.assignment.coffee
+    - match: "(@)?([\\p{L}$_][\\w\\pL\\pN$_]*)?(:)(.+)(:=(?!:))(?![>=])"
+      captures:
+        '1':
+          name: variable.other.readwrite.instance.coffee
+        '2':
+          name: variable.other.constant.coffee
+        '3':
+          name: keyword.operator.assignment.coffee
+        '4':
+          patterns:
+          - include: "#type_annotations"
+        '5':
+          name: keyword.operator.assignment.coffee
+    - match: "(@)?([\\p{L}$_][\\w\\pL\\pN$_]*)?(:)(.+)(\\.=(?!:))(?![>=])"
+      captures:
+        '1':
+          name: variable.other.readwrite.instance.coffee
+        '2':
+          name: meta.var.expr.coffee
+        '3':
+          name: keyword.operator.assignment.coffee
+        '4':
+          patterns:
+          - include: "#type_annotations"
+        '5':
+          name: keyword.operator.assignment.coffee
+    - match: "(@)?([\\p{L}$_][\\w\\pL\\pN$_]*)?(:)(.+)( ?=(?!:))(?![>=])"
+      captures:
+        '1':
+          name: variable.other.readwrite.instance.coffee
+        '2':
+          name: variable.assignment.coffee
+        '3':
+          name: keyword.operator.assignment.coffee
+        '4':
+          patterns:
+          - include: "#type_annotations"
+        '5':
+          name: keyword.operator.assignment.coffee
+    - match: "([\\p{L}$_][\\w\\pL\\pN$_]*)?\\s*(=(?!:))(?![>=])"
+      captures:
+        '1':
+          name: variable.assignment.coffee
+        '2':
+          name: keyword.operator.assignment.coffee
+    - match: "([\\p{L}$_][\\w\\pL\\pN$_]*)?\\s*(:=(?!:))(?![>=])"
+      captures:
+        '1':
+          name: variable.other.constant.coffee
+        '2':
+          name: keyword.operator.assignment.coffee
+    - match: "([\\p{L}$_][\\w\\pL\\pN$_]*)?\\s*(\\.=(?!:))(?![>=])"
+      captures:
+        '1':
+          name: meta.var.expr.coffee
+        '2':
+          name: keyword.operator.assignment.coffee
+    - match: "([\\p{L}$_][\\w\\pL\\pN$_]*)?\\s*(:\\.=(?!:))(?![>=])"
+      captures:
+        '1':
+          name: variable.other.coffee
+        '2':
+          name: keyword.operator.assignment.coffee
+    - match: "([\\p{L}$_][\\w\\pL\\pN$_]*)?\\s*(:(?!:))(?![>=])"
+      captures:
+        '1':
+          name: meta.object-literal.key.coffee
+        '2':
+          name: keyword.operator.assignment.coffee
+    - match: "(\\?)[^\\.\\?]+?|(\\?\\.)\\s*(\\$*[\\w\\pL\\pN$_][\\p{L}$_]*)"
+      captures:
+        '1':
+          name: keyword.operator.existential.coffee
+        '2':
+          name: punctuation.accessor.optional.coffee
+        '3':
+          name: variable.other.property.coffee
+    - match: |-
+        (?x)
+        \b(?<![\.\$])
+        (?:
+          (n?and|x?n?or|n(?:ot|eg)|iff) # logical
+          |([lg]te?|leg) # relational
+          |
+          (is(?:nt)?|eq|ne|sim|diff?) # comparison
+        )
+        (?!\s*:)\b
+      captures:
+        '1':
+          name: keyword.operator.logical.coffee
+        '2':
+          name: keyword.operator.relational.coffee
+        '3':
+          name: keyword.operator.comparison.coffee
+  type_annotations:
+    patterns:
+    - match: "<<<?|>>>?|&|\\||\\^"
+      name: keyword.operator.type.coffee
+    - name: support.type.primitive.coffee
+      match: "\\b(b(?:ig(?:decimal|float|int)|igdeci|oolean|ool|yte)|u(?:float(?:1(?:28|6)|64|32)|int(?:1(?:28|6)|64|32|8))|fraction|(?:c|i)?decimal|c(?:omplex|ha?r)|(?:c|i)?double|number|(?:ux?|x)?long|string|(?:symbo|(?:c|i)?db)l|(?:ushor|[ci]floa|shor|floa|in)t|fract?|(?:c|i)?deci|(?:c|i)?real|sbyte|comp|c?dec|idec|uint|num|s(?:ym|tr))\\b"
+    - name: support.type.builtin.coffee
+      match: "\\b((?:c(?:ollecti|s)|[bj]s)on|frozenmap|(?:(?:frozen|weak)?se|objec|dic)t|a(?:rr(?:ay)?list|rr(?:ay)?|uto|ny)|datetime|weakmap|(?:de)?queue|unknown|s(?:tylu|[ac]s)s|re(?:gexp|cord)|re(?:gex|c)|d(?:equ|at)e|t(?:uple|ime|oml)|never|coll?|styl|tupl?|(?:ht|ya|x)ml|list|obj|que|css|map|void)\\b"
+    - match: |-
+        (?x)
+        \b(isNaN|isFinite|eval|uneval|parseInt|parseFloat|decodeURI|
+        decodeURIComponent|encodeURI|encodeURIComponent|escape|unescape|
+        require|set(Interval|Timeout)|clear(Interval|Timeout))\b
+      name: support.function.coffee
+    - begin: "\\("
+      beginCaptures:
+        '0':
+          name: punctuation.definition.arguments.begin.bracket.round.coffee
+      end: "\\)"
+      endCaptures:
+        '0':
+          name: punctuation.definition.arguments.end.bracket.round.coffee
+      name: meta.arguments.coffee
+      patterns:
+      - match: "([\\p{L}$_][\\w\\pL\\pN$_]*)?\\s*(:(?!:))"
+        captures:
+          '1':
+            name: entity.label.coffee
+          '2':
+            name: keyword.operator.assignment.coffee
+      - include: "#type_annotations"
+      - include: "$self"
+    - begin: "\\["
+      beginCaptures:
+        '1':
+          name: punctuation.definition.destructuring.begin.bracket.square.coffee
+      end: "\\]"
+      endCaptures:
+        '0':
+          name: punctuation.definition.destructuring.end.bracket.square.coffee
+      name: meta.variable.assignment.destructured.array.coffee
+      patterns:
+      - match: "([\\p{L}$_][\\w\\pL\\pN$_]*)?\\s*(:(?!:))"
+        captures:
+          '1':
+            name: entity.label.coffee
+          '2':
+            name: keyword.operator.assignment.coffee
+      - include: "#type_annotations"
+      - include: "$self"
+    - begin: "\\{"
+      beginCaptures:
+        '1':
+          name: punctuation.definition.destructuring.begin.bracket.curly.coffee
+      end: "\\}"
+      endCaptures:
+        '0':
+          name: punctuation.definition.destructuring.end.bracket.curly.coffee
+      name: meta.variable.assignment.destructured.object.coffee
+      patterns:
+      - match: "([\\p{L}$_][\\w\\pL\\pN$_]*)?\\s*(:(?!:))"
+        captures:
+          '1':
+            name: entity.label.coffee
+          '2':
+            name: keyword.operator.assignment.coffee
+      - include: "#type_annotations"
+      - include: "$self"
+    - match: "[\\p{Lu}][\\w\\pL\\pN$_]*"
+      name: entity.other.inherited-class.coffee
+    - match: "[\\p{L}$_][\\w\\pL\\pN$_]*"
+      name: entity.name.type.instance.coffee
+    - include: "$self"
+    - match: "\\d[^\\s\\t\\r\\n]*"
+      name: invalid.illegal.identifier.coffee
+  single_quoted_string:
+    patterns:
+    - begin: "'"
+      beginCaptures:
+        '0':
+          name: punctuation.definition.string.begin.coffee
+      end: "'"
+      endCaptures:
+        '0':
+          name: punctuation.definition.string.end.coffee
+      name: string.quoted.single.coffee
+      patterns:
+      - captures:
+          '1':
+            name: punctuation.definition.escape.backslash.coffee
+        match: "(\\\\)(x[0-9A-Fa-f]{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)"
+        name: constant.character.escape.backslash.coffee
+  heregexp:
+    patterns:
+    - match: "\\\\[bB]|\\^|\\$"
+      name: keyword.control.anchor.regexp
+    - match: "\\\\[1-9]\\d*"
+      name: keyword.other.back-reference.regexp
+    - match: "[?+*]|\\{(\\d+,\\d+|\\d+,|,\\d+|\\d+)\\}\\??"
+      name: keyword.operator.quantifier.regexp
+    - match: "\\|"
+      name: keyword.operator.or.regexp
+    - begin: "(\\()((\\?=)|(\\?!))"
+      beginCaptures:
+        '1':
+          name: punctuation.definition.group.regexp
+        '3':
+          name: meta.assertion.look-ahead.regexp
+        '4':
+          name: meta.assertion.negative-look-ahead.regexp
+      end: "(\\))"
+      endCaptures:
+        '1':
+          name: punctuation.definition.group.regexp
+      name: meta.group.assertion.regexp
+      patterns:
+      - include: "#heregexp"
+    - begin: "\\((\\?:)?"
+      beginCaptures:
+        '0':
+          name: punctuation.definition.group.regexp
+      end: "\\)"
+      endCaptures:
+        '0':
+          name: punctuation.definition.group.regexp
+      name: meta.group.regexp
+      patterns:
+      - include: "#heregexp"
+    - begin: "(\\[)(\\^)?"
+      beginCaptures:
+        '1':
+          name: punctuation.definition.character-class.regexp
+        '2':
+          name: keyword.operator.negation.regexp
+      end: "(\\])"
+      endCaptures:
+        '1':
+          name: punctuation.definition.character-class.regexp
+      name: constant.other.character-class.set.regexp
+      patterns:
+      - captures:
+          '1':
+            name: constant.character.numeric.regexp
+          '2':
+            name: constant.character.control.regexp
+          '3':
+            name: constant.character.escape.backslash.regexp
+          '4':
+            name: constant.character.numeric.regexp
+          '5':
+            name: constant.character.control.regexp
+          '6':
+            name: constant.character.escape.backslash.regexp
+        match: "(?:.|(\\\\(?:[0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[A-Z])|(\\\\.))\\-(?:[^\\]\\\\]|(\\\\(?:[0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[A-Z])|(\\\\.))"
+        name: constant.other.character-class.range.regexp
+      - include: "#regex-character-class"
+    - include: "#regexp"
+    - include: "#regex-character-class"
+    - include: "#interpolated_coffee"
+    - include: "#embedded_comment"
+  regexp:
+    patterns:
+    - name: keyword.control.anchor.regexp
+      match: "\\\\[bB]|\\^|\\$"
+    - match: "\\\\[1-9]\\d*|\\\\k<([\\p{L}$_][\\w\\pL\\pN$_]*)>"
+      captures:
+        '0':
+          name: keyword.other.back-reference.regexp
+        '1':
+          name: variable.other.regexp
+    - name: keyword.operator.quantifier.regexp
+      match: "[?+*]|\\{(\\d+,\\d+|\\d+,|,\\d+|\\d+)\\}\\??"
+    - name: keyword.operator.or.regexp
+      match: "\\|"
+    - name: meta.group.assertion.regexp
+      begin: "(\\()((\\?=)|(\\?!)|(\\?<=)|(\\?<!))"
+      beginCaptures:
+        '1':
+          name: punctuation.definition.group.regexp
+        '2':
+          name: punctuation.definition.group.assertion.regexp
+        '3':
+          name: meta.assertion.look-ahead.regexp
+        '4':
+          name: meta.assertion.negative-look-ahead.regexp
+        '5':
+          name: meta.assertion.look-behind.regexp
+        '6':
+          name: meta.assertion.negative-look-behind.regexp
+      end: "(\\))"
+      endCaptures:
+        '1':
+          name: punctuation.definition.group.regexp
+      patterns:
+      - include: "#regexp"
+    - name: meta.group.regexp
+      begin: "\\((?:(\\?:)|(?:\\?<([\\p{L}$_][\\w\\pL\\pN$_]*)>))?"
+      beginCaptures:
+        '0':
+          name: punctuation.definition.group.regexp
+        '1':
+          name: punctuation.definition.group.no-capture.regexp
+        '2':
+          name: variable.other.regexp
+      end: "\\)"
+      endCaptures:
+        '0':
+          name: punctuation.definition.group.regexp
+      patterns:
+      - include: "#regexp"
+    - name: constant.other.character-class.set.regexp
+      begin: "(\\[)(\\^)?"
+      beginCaptures:
+        '1':
+          name: punctuation.definition.character-class.regexp
+        '2':
+          name: keyword.operator.negation.regexp
+      end: "(\\])"
+      endCaptures:
+        '1':
+          name: punctuation.definition.character-class.regexp
+      patterns:
+      - name: constant.other.character-class.range.regexp
+        match: "(?:.|(\\\\(?:[0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[A-Z])|(\\\\.))\\-(?:[^\\]\\\\]|(\\\\(?:[0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[A-Z])|(\\\\.))"
+        captures:
+          '1':
+            name: constant.character.numeric.regexp
+          '2':
+            name: constant.character.control.regexp
+          '3':
+            name: constant.character.escape.backslash.regexp
+          '4':
+            name: constant.character.numeric.regexp
+          '5':
+            name: constant.character.control.regexp
+          '6':
+            name: constant.character.escape.backslash.regexp
+      - include: "#regex-character-class"
+    - include: "#regex-character-class"
+  regex-character-class:
+    patterns:
+    - name: constant.other.character-class.regexp
+      match: "\\\\[wWsSdDtrnvf]|\\."
+    - name: constant.character.numeric.regexp
+      match: "\\\\([0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4})"
+    - name: constant.character.control.regexp
+      match: "\\\\c[A-Z]"
+    - name: constant.character.escape.backslash.regexp
+      match: "\\\\."
+  coffeex:
+    patterns:
+    - include: "#coffeex-tag"
+    - include: "#coffeex-end-tag"
+  coffeex-expression:
+    begin: "{"
+    beginCaptures:
+      '0':
+        name: meta.brace.curly.coffee
+    end: "}"
+    endCaptures:
+      '0':
+        name: meta.brace.curly.coffee
+    patterns:
+    - include: "#double_quoted_string"
+    - include: "$self"
+  coffeex-attribute:
+    patterns:
+    - captures:
+        '1':
+          name: entity.other.attribute-name.coffee
+        '2':
+          name: keyword.operator.assignment.coffee
+      match: "(?:^|\\s+)([-\\w.]+)\\s*(=)"
+    - include: "#double_quoted_string"
+    - include: "#single_quoted_string"
+    - include: "#coffeex-expression"
+  coffeex-tag:
+    patterns:
+    - begin: "(<)([\\p{L}$_][\\w\\pL\\pN$_]*)"
+      beginCaptures:
+        '1':
+          name: punctuation.definition.tag.coffee
+        '2':
+          name: entity.name.tag.coffee
+      end: "(/?>)"
+      name: meta.tag.coffee
+      patterns:
+      - include: "#coffeex-attribute"
+  coffeex-end-tag:
+    patterns:
+    - begin: "(</)([\\p{L}$_][\\w\\pL\\pN$_]*)"
+      beginCaptures:
+        '1':
+          name: punctuation.definition.tag.coffee
+        '2':
+          name: entity.name.tag.coffee
+      end: "(/?>)"
+      name: meta.tag.coffee
+  jsdocbody:
+    begin: "(?<=/\\*\\*)([^*]|\\*(?!/))*$"
+    while: "(^|\\G)\\s*\\*(?!/)(?=([^*]|[*](?!/))*$)"
+    patterns:
+    - include: text.html.markdown#fenced_code_block
+    - include: "#example"
+    - include: source.ts#docblock
+    - include: text.html.markdown#inline
+  example:
+    begin: "((@)example)\\s+(?=([^*]|[*](?!/))*$).*$"
+    while: "(^|\\G)\\s(?!@)(?=([^*]|[*](?!/))*$)"
+    beginCaptures:
+      '1':
+        name: storage.type.class.jsdoc
+      '2':
+        name: punctuation.definition.block.tag.jsdoc
+    contentName: meta.embedded.block.example.source.ts
+    patterns:
+    - include: source.js.jsx
