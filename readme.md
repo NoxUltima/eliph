@@ -2,14 +2,11 @@
 
 This language is but a **concept**. The Standard Library and Compiler and everything else will be released soon (perhaps a few years from now). I need time to work on it and get my college and uni settled. I wrote this document a few months ago.
 
-# Eliph
+# Nyx
 
-**Eliph** is the language for folks who don't necessarily love JavaScript, but who still acknowledge its importance in the ecosystem.
-It embraces the full feature set of JavaScript, and also extends it with new and improved features, so to improve the readability and brevity of traditional JavaScript code.
+**Nyx** is the language for folks who don't necessarily love JavaScript but who still acknowledge its importance in the ecosystem. It fully embraces the evolving JavaScript language, extending it with new and exciting features that enhance the readability and conciseness of traditional JavaScript.
 
-It compiles to the highest quality of clean, readable and performant JS, directly runnable in browsers and Node. This means you can pick up Eliph and access the vast JS ecosystem and tooling as if you've known it for a long time!
-
-If you have an existing TypeScript or ReScript codebase, Eliph code can be compiled to both of these languages allowing you to slip it in any codebase almost unnoticed. The output preserves the general code structure, as all of the extra features that go along with Eliph is declared at the bottom of the file. Types would be inserted and inferred whenever necessary.
+Nyx compiles to clean, readable and performant JS, which you can run both in the browsers and Node. This means you can pick up Nyx and access the vast JS ecosystem and tooling as if you've known it for a long time! If you have an existing JavaScript or TypeScript codebase, Nyx code can be slipped in any codebase almost unnoticed.
 
 ```coffee
 query = select user.id from user
@@ -17,65 +14,50 @@ query = select user.id from user
     || user.name == 'bang' && user.id == 2
 ```
 
-Eliph has:
+Nyx has a syntax similar to Haskell, Swift, Ruby, OCaml, Nim, ReScript, Go, Python, and LiveScript. Some of the other languages which have inspired Nyx are C#, Bash, Julia, Elixir, F#, Crystal, PureScript and Elm.
 
-- a syntax similar to Nim, Ruby, OCaml, LiveScript, CoffeeScript, Bash, Julia and Elixir;
-- semantics, features and operators similar to F#, Crystal, Haskell, PureScript and Elm;
-- functions and modules based mostly on JavaScript (NPM such as Lodash, Ramda, Math.JS and more), as well as core and community libraries from Python and Ruby.
-
-## Why Eliph?
-
-Eliph aims to be a more concise cousin to the JavaScript language by introducing new concepts, functions and symbols implemented in other programming languages, making it easier to write code with fewer characters and more "syntactic sugar". This would make code typically written in tens or hundreds of lines much more readable and compact and allows you to write expressive code without redundant or verbose boilerplate.
-
-A necessary component of the language and its design has to do with its concise syntax: employing the right balance of words and symbols and minimizing the overuse of brackets and perhaps all the typable keys in the keyboard. So to simplify things, we do remove a number of things, although they really can be seen as optional.
+## Why Nyx?
 
 [coffeescript]: https://coffeescript.org/
 [wtfjs]: https://github.com/denysdovhan/wtfjs
 [stdlib]: https://stdlib.io/
 [npm packages]: https://medium.com/@thomasfuchs/what-if-we-had-a-great-standard-library-in-javascript-52692342ee3f
 
-**_Lagom_**. We deem curly braces, semicolons and even commas as unnecessary. Sometimes that applies too for parentheses. The only times you would need them are when you want to cram things into a single line. Some of the more unnecessary things that really become a big hassle for developers like me, such as verbosity, word length and excessive use of punctuation, have been removed.
+**_Lagom_**. We deem curly braces, semicolons and even commas as unnecessary. Sometimes that applies too for parentheses. The only times you would need them are when you want to cram things into a single line. Some of the more unnecessary things that become a big hassle for developers like me, such as verbosity, word length and excessive use of punctuation, have been removed.
 
-- **Shortened keyword and function names**: `function -> func`, `instanceof -> instof`, `extends -> from / of`, `implements -> with`
-- **Unnecessary punctuation have been removed**, such as semicolons `;`, commas `,`, and parentheses `()` in statements like `if ()` and `for ()`.
-- **Everything is an expression**, and can be assigned to variables and returned from functions, which includes control flow statements like `if`, `for` and `try`.
-- **Optional declarations** with `var`, `let` or `const` are only allowed when initializing a variable without a value or one in a loop.
-- **Implicit returns**: the last statement is automatically returned from a `do`-block (closure) or a function, unless otherwise specified with `return`.
+- Everything is an expression - even variable assignments and control blocks
+- Shortened keyword, function and method names to minimise space
+- Unnecessary punctuation have been removed, wherever it so fits: semicolons, commas and parentheses.
+- An elaborate feature and syntax set, borrowed from many programming languages
 
-**Static and robust**. JavaScript has a complete lack of types. It's also notorious for its [peculiar runtime behaviour][wtfjs], which can lead to unexpected and sometimes annoying side effects. TypeScript kind of _solves_ this, by adding static and inferred types to the language, but this doesn't change the fact that it inherits all of JavaScript's problems.
+**Static and robust**. JavaScript has a complete lack of types. It's also notorious for its [peculiar runtime behaviour][wtfjs], leading to unexpected and sometimes annoying side effects. TypeScript kind of _solves_ this by adding static and inferred types to the language, but this doesn't change the fact that it inherits all of JavaScript's problems.
 
-- Types in Eliph are **automatically inferred.** You don't need to explicitly assign a type to a variable. Use `any` or `dyn` to disable type-checking.
-- You can annotate **anywhere** within your code, such as the types of variables and function parameters, object values, return types, and even within expressions, so you can assure yourself that you really know what you're doing.
-- **A type should not change into another.** In JavaScript, your variable's type might change when the code runs, hence causing a wide range of side-effects.
-- **A type system that is sometimes incorrect can be dangerous** due to expectation mismatches.
-- **Types are erased after compilation** and don't exist at runtime. They are detected at compile time and will get reported in your IDE.
+- Types are inferred. You can even disable type-checking should you wish.
+- Annotate as little or as much as you want. They can go anywhere!
 
-**Dependency-free**. Eliph aims to provide a suite of built-in classes, methods and functions from its source code on the fly, so there is no need for you to litter your code and ship your product with loads of utility functions and algorithms (unless you're tailoring your own for the job).
-
-That's why we're trying to encode and consolidate these utility functions into a **standard library** (inspired by languages like Python, Ruby and Go). We feel we don't want to drag a lot of our dead code into our final codebase, when we can just take the ones we need.
-
-- Eliph can be used directly on Node.JS and even has its own standalone library with no dependencies, `@eliph/stdlib`. The code is automatically formed or imported from the compiler.
-- The standard library also can be used with virtually any language that compiles to javascript, allowing for smooth interop.
+- Types are erased after compilation and don't exist at runtime.
 
 **One-to-one mapping**. Unreadable boilerplate JS code generated from other compiled-to-JS languages makes it so that it could be, practically speaking, hard to debug, hard to learn from and hard to integrate with existing JS.
 
-For Eliph, we try to make sure that we preserve much of Eliph's syntax in the output, rather than try to cram boilerplate code in the middle of the output. This is especially important while learning, where users might want to understand how the code's compiled, and to audit for bugs.
+For Nyx, we try to ensure that we preserve much of Nyx's syntax in the output rather than try to cram boilerplate code in the middle of functions. This is especially important while learning, where users might want to understand how the code's compiled and to audit for bugs.
 
-- All **JS features** are preserved. Some mappings are less obvious, and may require some reordering of terms. This is all taken care by the compiler.
-- **Comments** are always preserved in the final output, even within interpolated strings and block regular expressions.
-- **Type annotations** are not "removed" from the output. Mainly, they exist as comments, if the compiled language does not have any types. They are distinguished separately from regular comments.
-- **Built-in and standard functions** are generated as prototype methods and functions at the top of the file, along with any import statements.
-- **Variables** with illegal identifier names, keyword names or variables that would eventually be deleted with `del`, are declared with an object at the top of its scope (if there are any) and accessed from that object.
+- All JS features are preserved; while some are not so obvious and require some ordering of terms.
+- Comments are permanently preserved in the final output, matching your source code as much as possible.
+- Type annotations are not "removed" from the output, but rather transformed into comments.
+- Standard Library functions and operations generated as prototype methods and functions at the top of the file.
+- Variables with "illegal" or invalid names are wrapped with an object.
 
 ---
 
-## History of Eliph
+## History of Nyx
 
-Eliph first began as a side gig in early 2020 when I developed algorithms and programs in Python and JavaScript during my free time. However, as I've gotten used to programming in JavaScript, and previously developed a lot of programs in Python, but having to go over to Stack Overflow and manually searching for the exact functions in my code, which uses highly specialised Python functions and libraries unavailable and difficult to find in JS.
+The story of Nyx began as a side gig in early 2020 when I was building JavaScript programs and algorithms that I used to collect from school for use in my projects. Some of these algorithms come from Stack Overflow, some from standard and third-party libraries and others I developed in my own. All these functions were written using an intermediary language CoffeeScript. Soon enough, these functions eventually would form the core of the Standard Library.
 
-Also, the functions which JavaScript offers are often too difficult to understand and may usually require some further explanation to comprehend after looking at the documentation. As I grew deeply obsessed with programming in JS due to the idea that one can design and develop everything they imagine using only one language, this lead me to pursue a goal of creating a new language that blends the simplicity and ease of Python with the malleability of JavaScript, along with syntaxes and operations inspired by different programming languages.
+As I was developing these algorithms in CoffeeScript, I experimented with code themes and regular expressions. I modified the original source code of the CoffeeScript syntax, and created a new theme based on One Dark Pro where I tweaked and modified its colors.
 
-Many programming languages and frameworks often have adequate language support in integrated development environments. Language support is a fancy term for things like code snippets, syntax highlighting, boilerplate, documentation, language references and even a big ecosystem of plugins, packages and Stack Overflow developers.
+---
+
+Many programming languages and frameworks often have adequate language support in integrated development environments. Language support is a fancy term for code snippets, syntax highlighting, boilerplate, documentation, language references and even an extensive ecosystem of plugins, packages and Stack Overflow developers.
 
 ## Roadmap
 
@@ -91,9 +73,8 @@ The roadmap for developing the language has to start with the documentation, as 
 
 ### Syntax Highlighting
 
-The next pattern is to do the syntax highlighting for the language. Syntax highlighting displays text, especially source code, in different colours and fonts according to the category of terms, while visually distinguishing structures and syntax errors.
-
-Code is parsed through a series of regular expressions, and each match is assigned a scope. These scopes are mapped to colors in stylesheets and themes in code editors and syntax highlighting engines in code editors.
+Syntax highlighting displays text, especially source code, in different colours and text styles according to the category of terms, while visually distinguishing structures and syntax errors.
+Code is parsed through a series of regular expressions, and each match is assigned a scope. These scopes are mapped to colors when you install themes in your IDE.
 
 Highlighting can be fine-tuned through the use of custom code, such as highlighting bracket encapsulations or indentation depth, HTML/XML tags and attributes, variable, function or class names, or even allowing for including other languages inside the code.
 
